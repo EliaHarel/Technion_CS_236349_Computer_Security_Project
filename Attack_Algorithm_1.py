@@ -116,33 +116,33 @@ for level in range(15):
 # out s5 after permutation - 3, 8, 14, 25
 # out s1 after permutation - 9, 17, 23, 31
 # mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
-# mask for ciphertext - out s1 || out s5 - 9, 17, 23, 31, 35, 40, 46, 57
 
-mask_for_plain = [3, 8, 14, 25, 41, 49, 55, 63]
-mask_for_cipher = [9, 17, 23, 31, 35, 40, 46, 57]
+# mask for both plaintext and ciphertext, assuming swap at the last round
+mask = [2, 7, 13, 24, 40, 48, 54, 62]
+
 
 
 # returns a substring which contains bits from specific places in str
-def get_sub_input(list, str):
+def get_sub_input(str):
     sub_str = []
-    for i in range(list.len()):
-        sub_str += str[list[i]]
+    for i in range(mask.len()):
+        sub_str += str[mask[i]]
 
 
-# reads the next pair of inputs and return the relevant bits from them
+# reads the next pair of inputs and return the relevant bits from them as integers
 # the relevant bits are the outputs bits of S1, S5
 def get_next_sub_input(index):
     (plain, cipher) = get_next_input_from_file(index)
     binary_plain = format(plain, '64b')
     binary_cipher = format(cipher, '64b')
-    sub_plain = get_sub_input(mask_for_plain, binary_plain)
-    sub_cipher = get_sub_input(mask_for_cipher, binary_cipher)
-    return (int(sub_plain), int(sub_cipher))
+    sub_plain = get_sub_input(binary_plain)
+    sub_cipher = get_sub_input(binary_cipher)
+    return (int(sub_plain), int(sub_cipher))   # check binary to decimal conversion
 
 
 num_of_inputs  #  from the file
 
-mat_summing = [[0 for j in range(size)]for i in range(size)]
+mat_summing = [[0 for j in range(size)] for i in range(size)]
 sum_for_plaintext =[0 for i in range(size)]
 
 for i in range(num_of_inputs):
@@ -156,6 +156,9 @@ for plain in range(size):
         mat_probabilities[plain][cipher] = mat_summing / sum_for_plaintext[plain]  # conditional probability
 
 
+distance = []
+for i in range(pow(2,14)):
+    distance += 
 #######################################################
 #                        Tests
 #######################################################

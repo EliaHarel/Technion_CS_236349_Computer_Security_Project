@@ -100,7 +100,7 @@ def calculate_2levels_matrix():
 
 # mat[levels][key][plaintext][ciphertext]
 mat = [[] for k in range(17)]
-for level in range(15):
+for level in range(17):
     if level == 0 or level % 2 == 1:
         continue
     mat[level]=[[] for k in range(pow(2,level))]
@@ -123,10 +123,10 @@ mask = [2, 7, 13, 24, 40, 48, 54, 62]
 
 
 # returns a substring which contains bits from specific places in str
-def get_sub_input(str):
-    sub_str = []
+def get_sub_input(str_input):
+    sub_str = ''
     for i in range(mask.len()):
-        sub_str += str[mask[i]]
+        sub_str += str_input[mask[i]]
     return sub_str
 
 
@@ -134,11 +134,11 @@ def get_sub_input(str):
 # the relevant bits are the outputs bits of S1, S5
 def get_next_sub_input(index):
     (plain, cipher) = get_next_input_from_file(index)
-    binary_plain = format(plain, '64b')
-    binary_cipher = format(cipher, '64b')
+    binary_plain = format(plain, '064b')
+    binary_cipher = format(cipher, '064b')
     sub_plain = get_sub_input(binary_plain)
     sub_cipher = get_sub_input(binary_cipher)
-    return (int(sub_plain), int(sub_cipher))   # check binary to decimal conversion
+    return (int(sub_plain,2), int(sub_cipher,2))   # check binary to decimal conversion
 
 
 num_of_inputs  #  from the file

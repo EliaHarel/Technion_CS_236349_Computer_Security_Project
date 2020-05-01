@@ -99,7 +99,7 @@ def calculate_2levels_matrix():
 
 
 # mat[levels][key][plaintext][ciphertext]
-mat = [[] for k in range(15)]
+mat = [[] for k in range(17)]
 for level in range(15):
     if level == 0 or level % 2 == 1:
         continue
@@ -156,9 +156,25 @@ for plain in range(size):
         mat_probabilities[plain][cipher] = mat_summing / sum_for_plaintext[plain]  # conditional probability
 
 
-distance = []
-for i in range(pow(2,14)):
-    distance += 
+# return the distance between the matrix of key and the matrix we calculated
+def calculate_distance(key):
+    sum = 0
+    for i in range(size):
+        for j in range(size):
+            part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2,16)
+            part_2 = mat[16][key][i][j] * num_of_inputs / pow(2,8) - num_of_inputs / pow(2,16) 
+            sum += part_1 * part_2
+    return abs(sum)
+
+
+max_distance = 0
+max_key = -1
+for key in range(pow(2,14)):
+    curr_dist = calculate_distance(key)
+    if curr_dist > max_distance:
+        max_distance = curr_dist
+        max_key = key 
+
 #######################################################
 #                        Tests
 #######################################################

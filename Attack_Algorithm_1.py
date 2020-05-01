@@ -127,6 +127,7 @@ def get_sub_input(str):
     sub_str = []
     for i in range(mask.len()):
         sub_str += str[mask[i]]
+    return sub_str
 
 
 # reads the next pair of inputs and return the relevant bits from them as integers

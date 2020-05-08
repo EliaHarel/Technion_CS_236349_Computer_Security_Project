@@ -3,6 +3,8 @@ import math
 matrix_size = 256
 num_of_rounds = 16
 tests = True
+file_name = ""
+
 
 S1_probability = [{0: 0.0625, 1: 0.03125, 2: 0.0625, 3: 0.0625, 4: 0.09375, 5: 0.09375, 6: 0.0625, 7: 0,
                    8: 0, 9: 0.09375, 10: 0.125, 11: 0.03125, 12: 0.0625, 13: 0.03125, 14: 0.0625, 15: 0.125},
@@ -14,6 +16,12 @@ S5_probability = [{0: 0, 1: 0.125, 2: 0.125, 3: 0, 4: 0.09375, 5: 0, 6: 0.03125,
                   {0: 0.125, 1: 0, 2: 0, 3: 0.125, 4: 0.03125, 5: 0.125, 6: 0.09375, 7: 0,
                    8: 0.0625, 9: 0.125, 10: 0.0625, 11: 0, 12: 0.03125, 13: 0.03125, 14: 0.0625, 15: 0.125}]
 
+# out s5 after permutation - 3, 8, 14, 25
+# out s1 after permutation - 9, 17, 23, 31
+# mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
+
+# mask for both plaintext and ciphertext, assuming swap at the last round
+mask = [2, 7, 13, 24, 40, 48, 54, 62]
 
 
 # comparing the 4 lsb of the 2 parameters
@@ -24,7 +32,7 @@ def equality_right_sides(plain, cipher):
     return True
 
 
-# returing the currect dicionary according to the inserted s-box value and plaintext
+# returning the correct dictionary according to the inserted s-box value and plaintext
 def prob_sbox_bit(plain, s_box, key):
     if s_box == 1:
         bit_index = 7
@@ -79,6 +87,15 @@ def matrix_product(A, B):
     return C
 
 
+def calculate_2levels_matrix():
+    m2 = [[] for k in range(4)]
+    m2[0] = matrix_product(m1[0], m1[2])  # key = 00
+    m2[1] = matrix_product(m1[0], m1[3])  # key = 01
+    m2[2] = matrix_product(m1[1], m1[2])  # key = 10
+    m2[3] = matrix_product(m1[1], m1[3])  # key = 11
+    return m2
+
+
 # [S5-0, S5-1, S1-0, S1-1, S1-0-no_swap, S1-1-no_swap]
 m1 = [[] for k in range(4)]
 m1[0] = fill_partial_m1(5, 0)
@@ -87,15 +104,6 @@ m1[2] = fill_partial_m1(1, 0)
 m1[3] = fill_partial_m1(1, 1)
 # m1[4] = fill_partial_m1(1, 0, True)
 # m1[5] = fill_partial_m1(1, 1, True)
-
-
-def calculate_2levels_matrix():
-    m2 = [[] for k in range(4)]
-    m2[0] = matrix_product(m1[0],m1[2]) #key = 00
-    m2[1] = matrix_product(m1[0],m1[3]) #key = 01
-    m2[2] = matrix_product(m1[1],m1[2]) #key = 10
-    m2[3] = matrix_product(m1[1],m1[3]) #key = 11
-    return m2
 
 
 # mat[levels][key][plaintext][ciphertext]
@@ -108,69 +116,77 @@ for level in range(num_of_rounds+1):
         subkey_left = math.floor(key / 4)
         subkey_right = key % 4
         if level == 2:
-            mat[2]= calculate_2levels_matrix()
+            mat[2] = calculate_2levels_matrix()
         else:
-            mat[level][key]= matrix_product(mat[level-2][subkey_left], mat[2][subkey_right])
-
-
-# out s5 after permutation - 3, 8, 14, 25
-# out s1 after permutation - 9, 17, 23, 31
-# mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
-
-# mask for both plaintext and ciphertext, assuming swap at the last round
-mask = [2, 7, 13, 24, 40, 48, 54, 62]
+            mat[level][key] = matrix_product(mat[level-2][subkey_left], mat[2][subkey_right])
 
 
 
 # returns a substring which contains bits from specific places in str
 def get_sub_input(str_input):
     sub_str = ''
-    for i in range(mask.len()):
+    for i in range(len(mask)):
         sub_str += str_input[mask[i]]
     return sub_str
+
+# return the distance between the matrix of key and the matrix we calculated
+def calculate_distance(key):
+    distance = 0
+    for i in range(matrix_size):
+        for j in range(matrix_size):
+            part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2,16)
+            part_2 = mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2,8) - num_of_inputs / pow(2,16)
+            distance += part_1 * part_2
+    return abs(distance)
+
+
+# reading file_name line by line - lazy
+def get_next_input_from_file(file_object):
+    data_line = file_object.readline()
+    while data_line:
+
+        yield data_line
+        data_line = file_object.readline()
 
 
 # reads the next pair of inputs and return the relevant bits from them as integers
 # the relevant bits are the outputs bits of S1, S5
-def get_next_sub_input(index):
-    (plain, cipher) = get_next_input_from_file(index)
+def get_next_sub_input(file_object):
+    (plain, cipher) = get_next_input_from_file(file_object)
     binary_plain = format(plain, '064b')
     binary_cipher = format(cipher, '064b')
     sub_plain = get_sub_input(binary_plain)
     sub_cipher = get_sub_input(binary_cipher)
-    return (int(sub_plain,2), int(sub_cipher,2))   # check binary to decimal conversion
+    return int(sub_plain, 2), int(sub_cipher, 2)  # check binary to decimal conversion
 
 
-num_of_inputs  #  from the file
-
+# mat_summing counts the sub_plaintest and sub_cipherrtext pairs
+# sum_for_plaintext counts the number of sub_plaintext inputs
 mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
-sum_for_plaintext =[0 for i in range(matrix_size)]
+sum_for_plaintext = [0 for i in range(matrix_size)]
 
+file_object = open(file_name, "r")
+lines_in_file = file_object.readlines()
+num_of_inputs = len(lines_in_file)
+
+# preparing the data for calculating mat_probabilities
 for i in range(num_of_inputs):
-    (plain, cipher) = get_next_sub_input(i)  # 8 bits of the i-th plaintext and ciphertext as decimal number
+    (plain, cipher) = get_next_sub_input(file_object)  # 8 bits of the i-th plaintext and ciphertext as decimal number
     mat_summing[plain][cipher] += 1
     sum_for_plaintext[plain] += 1
 
+file_object.close()
+
+# mat_probabilities - conditional probability
 mat_probabilities = [[0 for j in range(matrix_size)]for i in range(matrix_size)]
 for plain in range(matrix_size):
     for cipher in range(matrix_size):
-        mat_probabilities[plain][cipher] = mat_summing / sum_for_plaintext[plain]  # conditional probability
+        mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
 
-
-# return the distance between the matrix of key and the matrix we calculated
-def calculate_distance(key):
-    sum = 0
-    for i in range(matrix_size):
-        for j in range(matrix_size):
-            part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2,16)
-            part_2 = mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2,8) - num_of_inputs / pow(2,16) 
-            sum += part_1 * part_2
-    return abs(sum)
-
-
+# max_key - the candidate for the right sub_key
 max_distance = 0
 max_key = -1
-for key in range(pow(2,num_of_rounds-2)):
+for key in range(pow(2, num_of_rounds-2)):
     curr_dist = calculate_distance(key)
     if curr_dist > max_distance:
         max_distance = curr_dist
@@ -180,7 +196,7 @@ for key in range(pow(2,num_of_rounds-2)):
 #                        Tests
 #######################################################
 
-a = [[3,4,5],[6,7,8],[1,2,3]]
+a = [[3, 4, 5], [6, 7, 8], [1, 2, 3]]
 
 for line in range(6):
     for val in range(6):
@@ -191,8 +207,10 @@ for line in range(6):
 all_ones = [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
 all_zeroes = [1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1]
 
-def get_sub_input_Test_1():
+
+def get_sub_input_test_1():
     print(get_sub_input(all_ones))
     print(get_sub_input(all_zeroes))
 
-get_sub_input_Test_1()
+
+get_sub_input_test_1()

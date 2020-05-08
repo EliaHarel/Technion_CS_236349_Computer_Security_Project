@@ -26,8 +26,8 @@ def get_next_input_from_file(file_object):
     data_line = file_object.readline()
     while data_line:
         data = data_line.split()
-        binary_plain = format(data[0], '064b')
-        binary_cipher = format(data[1], '064b')
+        binary_plain = data[0]
+        binary_cipher = data[1]
         sub_plain = get_sub_input(binary_plain)
         sub_cipher = get_sub_input(binary_cipher)
         yield int(sub_plain, 2), int(sub_cipher, 2)
@@ -51,6 +51,9 @@ mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
 sum_for_plaintext = [0 for i in range(matrix_size)]
 
 file_object = open(file_name, "r")
+first_line = file_object.readline().split(",")
+real_rounds = first_line[0].split()[1]
+real_key = first_line[1].split()[1]
 num_of_inputs = 0
 
 # preparing the data for calculating mat_probabilities

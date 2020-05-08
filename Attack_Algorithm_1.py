@@ -1,8 +1,8 @@
 import math
 
-size = 256
+matrix_size = 256
+num_of_rounds = 16
 tests = True
-# number_of_rounds = 2
 
 S1_probability = [{0: 0.0625, 1: 0.03125, 2: 0.0625, 3: 0.0625, 4: 0.09375, 5: 0.09375, 6: 0.0625, 7: 0,
                    8: 0, 9: 0.09375, 10: 0.125, 11: 0.03125, 12: 0.0625, 13: 0.03125, 14: 0.0625, 15: 0.125},
@@ -60,9 +60,9 @@ def swap_cipher(cipher):
 
 
 def fill_partial_m1(sbox, key):
-    temp_matrix = [[0 for i in range(size)] for j in range(size)]
-    for i in range(size):
-        for j in range(size):
+    temp_matrix = [[0 for i in range(matrix_size)] for j in range(matrix_size)]
+    for i in range(matrix_size):
+        for j in range(matrix_size):
             cipher = swap_cipher(j)
             temp_matrix[i][j] = prob_calculation(i, cipher, key, sbox)
 
@@ -99,8 +99,8 @@ def calculate_2levels_matrix():
 
 
 # mat[levels][key][plaintext][ciphertext]
-mat = [[] for k in range(17)]
-for level in range(17):
+mat = [[] for k in range(num_of_rounds+1)]
+for level in range(num_of_rounds+1):
     if level == 0 or level % 2 == 1:
         continue
     mat[level]=[[] for k in range(pow(2,level))]
@@ -143,34 +143,34 @@ def get_next_sub_input(index):
 
 num_of_inputs  #  from the file
 
-mat_summing = [[0 for j in range(size)] for i in range(size)]
-sum_for_plaintext =[0 for i in range(size)]
+mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
+sum_for_plaintext =[0 for i in range(matrix_size)]
 
 for i in range(num_of_inputs):
     (plain, cipher) = get_next_sub_input(i)  # 8 bits of the i-th plaintext and ciphertext as decimal number
     mat_summing[plain][cipher] += 1
     sum_for_plaintext[plain] += 1
 
-mat_probabilities = [[0 for j in range(size)]for i in range(size)]
-for plain in range(size):
-    for cipher in range(size):
+mat_probabilities = [[0 for j in range(matrix_size)]for i in range(matrix_size)]
+for plain in range(matrix_size):
+    for cipher in range(matrix_size):
         mat_probabilities[plain][cipher] = mat_summing / sum_for_plaintext[plain]  # conditional probability
 
 
 # return the distance between the matrix of key and the matrix we calculated
 def calculate_distance(key):
     sum = 0
-    for i in range(size):
-        for j in range(size):
+    for i in range(matrix_size):
+        for j in range(matrix_size):
             part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2,16)
-            part_2 = mat[16][key][i][j] * num_of_inputs / pow(2,8) - num_of_inputs / pow(2,16) 
+            part_2 = mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2,8) - num_of_inputs / pow(2,16) 
             sum += part_1 * part_2
     return abs(sum)
 
 
 max_distance = 0
 max_key = -1
-for key in range(pow(2,14)):
+for key in range(pow(2,num_of_rounds-2)):
     curr_dist = calculate_distance(key)
     if curr_dist > max_distance:
         max_distance = curr_dist

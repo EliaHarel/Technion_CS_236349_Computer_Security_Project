@@ -128,15 +128,15 @@ static permTable pc2 = {
         44, 49, 39, 56, 34, 53,
         46, 42, 50, 36, 29, 32};
 
-static void permute(char* block, char* dest, unsigned char* permutation, int block_len);
+static void permute();
 
 static long f();
 
-void expand();
+static void expand();
 
-void process_key();
+static void process_key();
 
-void DES_encrypt(char plain[8], char key[8], char cipher[8]){
+void DES_encrypt(char plain[8], char key[8], char cipher[8], int rounds){
     long t[2];
     long t2[2];
     char processed_key[16][8];
@@ -144,7 +144,7 @@ void DES_encrypt(char plain[8], char key[8], char cipher[8]){
 
     process_key(key, processed_key);
     permute(plain, t, ip, 64);
-    for(i = 0; i < 16; i += 2){
+    for(i = 0; i < rounds; i += 2){
         t[0] ^= f(t[1], processed_key[i]);
         t[1] ^= f(t[0], processed_key[i + 1]);
     }
@@ -153,18 +153,25 @@ void DES_encrypt(char plain[8], char key[8], char cipher[8]){
     permute(t2, cipher, fp, 64);
 }
 
-void DES_decrypt(char cipher[8], char key[8], char plain[8]){
+void DES_decrypt(char cipher[8], char key[8], char plain[8], int rounds){
     long t[2];
     long t2[2];
     char processed_key[16][8];
     int i;
 
     process_key(key, processed_key);
+
     permute(cipher, t, ip, 64);
-    for(i = 0; i < 16; i += 2){
+
+
+
+    for(i = 0; i < rounds; i += 2){
         t[0] ^= f(t[1], processed_key[15 - i]);
         t[1] ^= f(t[0], processed_key[15 - i - 1]);
     }
+
+
+
     t2[0] = t[1];
     t2[1] = t[0];
     permute(t2, plain, fp, 64);
@@ -186,8 +193,7 @@ static long f(long r, char subkey[8]){
     return res;
 }
 
-
-void permute(char* block, char* dest, unsigned char* permutation, int block_len){
+static void permute(char* block, char* dest, unsigned char* permutation, int block_len){
     int i;
     int p;
 

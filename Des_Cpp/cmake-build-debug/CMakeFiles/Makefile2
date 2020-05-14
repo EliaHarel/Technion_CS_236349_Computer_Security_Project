@@ -52,7 +52,7 @@ CMAKE_BINARY_DIR = C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Sec
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Des_Cpp.dir/all
+all: CMakeFiles/Project_Try.dir/all
 
 .PHONY : all
 
@@ -62,36 +62,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Des_Cpp.dir/clean
+clean: CMakeFiles/Project_Try.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Des_Cpp.dir
+# Target rules for target CMakeFiles/Project_Try.dir
 
 # All Build rule for target.
-CMakeFiles/Des_Cpp.dir/all:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/depend
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Security_Project\Des_Cpp\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target Des_Cpp"
-.PHONY : CMakeFiles/Des_Cpp.dir/all
+CMakeFiles/Project_Try.dir/all:
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/depend
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Security_Project\Des_Cpp\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target Project_Try"
+.PHONY : CMakeFiles/Project_Try.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Des_Cpp.dir/rule: cmake_check_build_system
+CMakeFiles/Project_Try.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Security_Project\Des_Cpp\cmake-build-debug\CMakeFiles 3
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/Des_Cpp.dir/all
+	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/Project_Try.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Security_Project\Des_Cpp\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/Des_Cpp.dir/rule
+.PHONY : CMakeFiles/Project_Try.dir/rule
 
 # Convenience name for target.
-Des_Cpp: CMakeFiles/Des_Cpp.dir/rule
+Project_Try: CMakeFiles/Project_Try.dir/rule
 
-.PHONY : Des_Cpp
+.PHONY : Project_Try
 
 # clean rule for target.
-CMakeFiles/Des_Cpp.dir/clean:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/clean
-.PHONY : CMakeFiles/Des_Cpp.dir/clean
+CMakeFiles/Project_Try.dir/clean:
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/clean
+.PHONY : CMakeFiles/Project_Try.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

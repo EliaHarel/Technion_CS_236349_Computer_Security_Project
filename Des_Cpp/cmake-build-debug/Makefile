@@ -55,17 +55,6 @@ CMAKE_BINARY_DIR = C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Sec
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	"C:\Programs\JetBrains\CLion 2020.1\bin\cmake\win\bin\cmake.exe" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -76,6 +65,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	"C:\Programs\JetBrains\CLion 2020.1\bin\cmake\win\bin\cmake.exe" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -110,17 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Des_Cpp
+# Target rules for targets named Project_Try
 
 # Build rule for target.
-Des_Cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 Des_Cpp
-.PHONY : Des_Cpp
+Project_Try: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 Project_Try
+.PHONY : Project_Try
 
 # fast build rule for target.
-Des_Cpp/fast:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/build
-.PHONY : Des_Cpp/fast
+Project_Try/fast:
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/build
+.PHONY : Project_Try/fast
 
 des_noop.obj: des_noop.c.obj
 
@@ -128,7 +128,7 @@ des_noop.obj: des_noop.c.obj
 
 # target to build an object file
 des_noop.c.obj:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/des_noop.c.obj
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/des_noop.c.obj
 .PHONY : des_noop.c.obj
 
 des_noop.i: des_noop.c.i
@@ -137,7 +137,7 @@ des_noop.i: des_noop.c.i
 
 # target to preprocess a source file
 des_noop.c.i:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/des_noop.c.i
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/des_noop.c.i
 .PHONY : des_noop.c.i
 
 des_noop.s: des_noop.c.s
@@ -146,35 +146,35 @@ des_noop.s: des_noop.c.s
 
 # target to generate assembly for a file
 des_noop.c.s:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/des_noop.c.s
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/des_noop.c.s
 .PHONY : des_noop.c.s
 
-main.obj: main.cpp.obj
+main.obj: main.c.obj
 
 .PHONY : main.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+main.c.obj:
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/main.c.obj
+.PHONY : main.c.obj
 
-main.i: main.cpp.i
+main.i: main.c.i
 
 .PHONY : main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/main.cpp.i
-.PHONY : main.cpp.i
+main.c.i:
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/main.c.i
+.PHONY : main.c.i
 
-main.s: main.cpp.s
+main.s: main.c.s
 
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\Des_Cpp.dir\build.make CMakeFiles/Des_Cpp.dir/main.cpp.s
-.PHONY : main.cpp.s
+main.c.s:
+	$(MAKE) -f CMakeFiles\Project_Try.dir\build.make CMakeFiles/Project_Try.dir/main.c.s
+.PHONY : main.c.s
 
 # Help Target
 help:
@@ -182,9 +182,9 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... rebuild_cache
-	@echo ... Des_Cpp
+	@echo ... Project_Try
 	@echo ... edit_cache
+	@echo ... rebuild_cache
 	@echo ... des_noop.obj
 	@echo ... des_noop.i
 	@echo ... des_noop.s

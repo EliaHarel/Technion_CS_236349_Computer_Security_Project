@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-project(Cpp_Des_Project)
+project(Project_Try C)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_C_STANDARD 11)
+set(DCMAKE_SH CMAKE_SH-NOTFOUND)
 
-add_executable(Des_Cpp main.cpp des_noop.c)
+add_executable(Project_Try main.c des_noop.c)

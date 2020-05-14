@@ -162,7 +162,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Cpp_Des_Project
+CMAKE_PROJECT_NAME:STATIC=Project_Try
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/Compilers/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/ranlib.exe
@@ -252,6 +252,12 @@ Cpp_Des_Project_BINARY_DIR:STATIC=C:/E.R/Programming/Git/GitHub/Technion_CS_2363
 
 //Value Computed by CMake
 Cpp_Des_Project_SOURCE_DIR:STATIC=C:/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/Des_Cpp
+
+//Value Computed by CMake
+Project_Try_BINARY_DIR:STATIC=C:/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/Des_Cpp/cmake-build-debug
+
+//Value Computed by CMake
+Project_Try_SOURCE_DIR:STATIC=C:/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/Des_Cpp
 
 
 ########################

@@ -46,6 +46,7 @@ void decimal2bin(unsigned char val){
         }else
             printf("0");
     }
+
 }
 
 // Argument order  - key, rounds, encrypt(1)/decrypt(0), text
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < TEXT_LENGTH/8; ++i)
         decimal2bin(text_output[i]);
 
-    printf("\n\nSimba!!!!\n\n");
+//     printf("Simba!!!!");
 
 
 
@@ -94,5 +95,5 @@ int main(int argc, char* argv[]){
         decimal2bin(text_output2[i]);*/
 
 
-    return 1;
+    return 0;
 }

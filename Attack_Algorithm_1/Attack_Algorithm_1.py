@@ -1,20 +1,8 @@
-import math
-
+from Calculate_Key_Round_Matrices import mat
 matrix_size = 256
 num_of_rounds = 16
-tests = True
+
 file_name = ""
-
-
-S1_probability = [{0: 0.0625, 1: 0.03125, 2: 0.0625, 3: 0.0625, 4: 0.09375, 5: 0.09375, 6: 0.0625, 7: 0,
-                   8: 0, 9: 0.09375, 10: 0.125, 11: 0.03125, 12: 0.0625, 13: 0.03125, 14: 0.0625, 15: 0.125},
-                  {0: 0.0625, 1: 0.09375, 2: 0.0625, 3: 0.0625, 4: 0.03125, 5: 0.03125, 6: 0.0625, 7: 0.125,
-                   8: 0.125, 9: 0.03125, 10: 0, 11: 0.09375, 12: 0.0625, 13: 0.09375, 14: 0.0625, 15: 0}]
-
-S5_probability = [{0: 0, 1: 0.125, 2: 0.125, 3: 0, 4: 0.09375, 5: 0, 6: 0.03125, 7: 0.125,
-                   8: 0.0625, 9: 0, 10: 0.0625, 11: 0.125, 12: 0.09375, 13: 0.09375, 14: 0.0625, 15: 0},
-                  {0: 0.125, 1: 0, 2: 0, 3: 0.125, 4: 0.03125, 5: 0.125, 6: 0.09375, 7: 0,
-                   8: 0.0625, 9: 0.125, 10: 0.0625, 11: 0, 12: 0.03125, 13: 0.03125, 14: 0.0625, 15: 0.125}]
 
 # out s5 after permutation - 3, 8, 14, 25
 # out s1 after permutation - 9, 17, 23, 31
@@ -24,104 +12,6 @@ S5_probability = [{0: 0, 1: 0.125, 2: 0.125, 3: 0, 4: 0.09375, 5: 0, 6: 0.03125,
 mask = [2, 7, 13, 24, 40, 48, 54, 62]
 
 
-# comparing the 4 lsb of the 2 parameters
-def equality_right_sides(plain, cipher):
-    for i in range(4, 8):  # the RIGHT bits
-        if plain[i] != cipher[i]:
-            return False
-    return True
-
-
-# returning the correct dictionary according to the inserted s-box value and plaintext
-def prob_sbox_bit(plain, s_box, key):
-    if s_box == 1:
-        bit_index = 7
-        dictionary_index = S1_probability
-    else:
-        bit_index = 5
-        dictionary_index = S5_probability
-    return dictionary_index[int(plain[bit_index])^key]
-
-
-# returns the xor of the two left parts of the input
-def left_side_xor(plain, cipher):
-    left_p = plain >> 4
-    left_c = cipher >> 4
-    return left_c ^ left_p
-
-
-# this function 
-def prob_calculation(plain, cipher, key, s_box):
-    str_plain = format(plain, '08b')
-    str_cipher = format(cipher, '08b')
-
-    if not equality_right_sides(str_plain, str_cipher):
-        return 0
-    else:
-        return prob_sbox_bit(str_plain, s_box, key)[left_side_xor(plain, cipher)]
-
-
-def swap_cipher(cipher):
-    right = cipher >> 4 
-    left = (cipher << 4)%256
-    return left|right
-
-
-def fill_partial_m1(sbox, key):
-    temp_matrix = [[0 for i in range(matrix_size)] for j in range(matrix_size)]
-    for i in range(matrix_size):
-        for j in range(matrix_size):
-            cipher = swap_cipher(j)
-            temp_matrix[i][j] = prob_calculation(i, cipher, key, sbox)
-
-    return temp_matrix
-
-
-def matrix_product(A, B):
-    n = len(A)
-    C = [[0 for i in range(n)] for j in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                C[i][j] += A[i][k] * B[k][j]
-    return C
-
-
-def calculate_2levels_matrix():
-    m2 = [[] for k in range(4)]
-    m2[0] = matrix_product(m1[0], m1[2])  # key = 00
-    m2[1] = matrix_product(m1[0], m1[3])  # key = 01
-    m2[2] = matrix_product(m1[1], m1[2])  # key = 10
-    m2[3] = matrix_product(m1[1], m1[3])  # key = 11
-    return m2
-
-
-# [S5-0, S5-1, S1-0, S1-1, S1-0-no_swap, S1-1-no_swap]
-m1 = [[] for k in range(4)]
-m1[0] = fill_partial_m1(5, 0)
-m1[1] = fill_partial_m1(5, 1)
-m1[2] = fill_partial_m1(1, 0)
-m1[3] = fill_partial_m1(1, 1)
-# m1[4] = fill_partial_m1(1, 0, True)
-# m1[5] = fill_partial_m1(1, 1, True)
-
-
-# mat[levels][key][plaintext][ciphertext]
-mat = [[] for k in range(num_of_rounds+1)]
-for level in range(num_of_rounds+1):
-    if level == 0 or level % 2 == 1:
-        continue
-    mat[level]=[[] for k in range(pow(2,level))]
-    for key in range(pow(2,level)):
-        subkey_left = math.floor(key / 4)
-        subkey_right = key % 4
-        if level == 2:
-            mat[2] = calculate_2levels_matrix()
-        else:
-            mat[level][key] = matrix_product(mat[level-2][subkey_left], mat[2][subkey_right])
-
-
-
 # returns a substring which contains bits from specific places in str
 def get_sub_input(str_input):
     sub_str = ''
@@ -129,35 +19,30 @@ def get_sub_input(str_input):
         sub_str += str_input[mask[i]]
     return sub_str
 
+
+# reads the next pair of inputs and return the relevant bits from them as integers
+# the relevant bits are the outputs bits of S1, S5
+def get_next_input_from_file(file_object):
+    data_line = file_object.readline()
+    while data_line:
+        data = data_line.split()
+        binary_plain = data[0]
+        binary_cipher = data[1]
+        sub_plain = get_sub_input(binary_plain)
+        sub_cipher = get_sub_input(binary_cipher)
+        yield int(sub_plain, 2), int(sub_cipher, 2)
+        data_line = file_object.readline()
+
+
 # return the distance between the matrix of key and the matrix we calculated
 def calculate_distance(key):
     distance = 0
     for i in range(matrix_size):
         for j in range(matrix_size):
-            part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2,16)
-            part_2 = mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2,8) - num_of_inputs / pow(2,16)
+            part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2, 16)
+            part_2 = mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2, 8) - num_of_inputs / pow(2, 16)
             distance += part_1 * part_2
     return abs(distance)
-
-
-# reading file_name line by line - lazy
-def get_next_input_from_file(file_object):
-    data_line = file_object.readline()
-    while data_line:
-
-        yield data_line
-        data_line = file_object.readline()
-
-
-# reads the next pair of inputs and return the relevant bits from them as integers
-# the relevant bits are the outputs bits of S1, S5
-def get_next_sub_input(file_object):
-    (plain, cipher) = get_next_input_from_file(file_object)
-    binary_plain = format(plain, '064b')
-    binary_cipher = format(cipher, '064b')
-    sub_plain = get_sub_input(binary_plain)
-    sub_cipher = get_sub_input(binary_cipher)
-    return int(sub_plain, 2), int(sub_cipher, 2)  # check binary to decimal conversion
 
 
 # mat_summing counts the sub_plaintest and sub_cipherrtext pairs
@@ -166,19 +51,21 @@ mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
 sum_for_plaintext = [0 for i in range(matrix_size)]
 
 file_object = open(file_name, "r")
-lines_in_file = file_object.readlines()
-num_of_inputs = len(lines_in_file)
+first_line = file_object.readline().split(",")
+real_rounds = first_line[0].split()[1]
+real_key = first_line[1].split()[1]
+num_of_inputs = 0
 
 # preparing the data for calculating mat_probabilities
-for i in range(num_of_inputs):
-    (plain, cipher) = get_next_sub_input(file_object)  # 8 bits of the i-th plaintext and ciphertext as decimal number
+for plain, cipher in get_next_input_from_file(file_object):
+    num_of_inputs += 1
     mat_summing[plain][cipher] += 1
     sum_for_plaintext[plain] += 1
 
 file_object.close()
 
 # mat_probabilities - conditional probability
-mat_probabilities = [[0 for j in range(matrix_size)]for i in range(matrix_size)]
+mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
 for plain in range(matrix_size):
     for cipher in range(matrix_size):
         mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
@@ -186,11 +73,12 @@ for plain in range(matrix_size):
 # max_key - the candidate for the right sub_key
 max_distance = 0
 max_key = -1
-for key in range(pow(2, num_of_rounds-2)):
+for key in range(pow(2, num_of_rounds - 2)):
     curr_dist = calculate_distance(key)
     if curr_dist > max_distance:
         max_distance = curr_dist
-        max_key = key 
+        max_key = key
+
 
 #######################################################
 #                        Tests
@@ -200,12 +88,14 @@ a = [[3, 4, 5], [6, 7, 8], [1, 2, 3]]
 
 for line in range(6):
     for val in range(6):
-        print ("line : ", line, " val: ", val)
+        print("line : ", line, " val: ", val)
         print(mat[14][0][line][val])
     print('\n')
 
-all_ones = [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
-all_zeroes = [1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1]
+all_ones = [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+all_zeroes = [1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+              1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1]
 
 
 def get_sub_input_test_1():

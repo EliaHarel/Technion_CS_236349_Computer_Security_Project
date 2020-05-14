@@ -13,7 +13,6 @@ data_object = open(data_file, "w")
 data_object.write("rounds: " + str(rounds) + " key: " + key + "\n")
 # for plaintext in plain_object.readline():
 for plaintext in plain:
-    exec
     subprocess.call(["g++", c_code_file])
     # ciphertext = subprocess.call("./a.out", plaintext, key)
     ciphertext = subprocess.call("./a.out")

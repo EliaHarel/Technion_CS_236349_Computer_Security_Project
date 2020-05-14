@@ -76,6 +76,9 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < TEXT_LENGTH/8; ++i)
         decimal2bin(text_output[i]);
 
+    printf("\n\nSimba!!!!\n\n");
+
+
 
 /*    printf("\n\n");
     DES_encrypt(text, key, text_output, rounds);

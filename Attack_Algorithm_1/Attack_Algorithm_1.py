@@ -71,14 +71,23 @@ for plain in range(matrix_size):
         mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
 
 # max_key - the candidate for the right sub_key
-max_distance = 0
-max_key = -1
-for key in range(pow(2, num_of_rounds - 2)):
+min_distance = 0
+min_key = -1
+for key in range(pow(2, num_of_rounds)):
     curr_dist = calculate_distance(key)
-    if curr_dist > max_distance:
-        max_distance = curr_dist
-        max_key = key
+    if curr_dist < min_distance:
+        min_distance = curr_dist
+        min_key = key
 
+# lsb- the key bit of level 1
+min_key = format(min_key, '016b')
+# key[i] - the key bit we use in level i+1
+key_mask = [28, 52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13, 3]
+
+
+for level in range(num_of_rounds):
+    print("level: " + str(level+1) + ", bit in real key is: " + real_key[key_mask[level]-1] +
+          ", the output bit is: " + min_key[15 - level])
 
 #######################################################
 #                        Tests

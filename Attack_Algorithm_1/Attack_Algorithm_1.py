@@ -1,8 +1,10 @@
-from Calculate_Key_Round_Matrices import mat
+from Calculate_Key_Round_Matrices import result
+mat = result()
 matrix_size = 256
-num_of_rounds = 16
+num_of_rounds = 4
 
-file_name = ""
+
+file_name = "Data.txt"
 
 # out s5 after permutation - 3, 8, 14, 25
 # out s1 after permutation - 9, 17, 23, 31
@@ -10,7 +12,6 @@ file_name = ""
 
 # mask for both plaintext and ciphertext, assuming swap at the last round
 mask = [2, 7, 13, 24, 40, 48, 54, 62]
-
 
 # returns a substring which contains bits from specific places in str
 def get_sub_input(str_input):
@@ -51,9 +52,9 @@ mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
 sum_for_plaintext = [0 for i in range(matrix_size)]
 
 file_object = open(file_name, "r")
-first_line = file_object.readline().split(",")
-real_rounds = first_line[0].split()[1]
-real_key = first_line[1].split()[1]
+first_line = file_object.readline().split(" ")
+real_rounds = first_line[1]
+real_key = first_line[3]
 num_of_inputs = 0
 
 # preparing the data for calculating mat_probabilities
@@ -68,7 +69,10 @@ file_object.close()
 mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
 for plain in range(matrix_size):
     for cipher in range(matrix_size):
-        mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
+        if sum_for_plaintext[plain]==0:
+            mat_probabilities[plain][cipher] = 0
+        else:
+            mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
 
 # max_key - the candidate for the right sub_key
 min_distance = 0
@@ -93,23 +97,3 @@ for level in range(num_of_rounds):
 #                        Tests
 #######################################################
 
-a = [[3, 4, 5], [6, 7, 8], [1, 2, 3]]
-
-for line in range(6):
-    for val in range(6):
-        print("line : ", line, " val: ", val)
-        print(mat[14][0][line][val])
-    print('\n')
-
-all_ones = [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
-all_zeroes = [1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-              1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1]
-
-
-def get_sub_input_test_1():
-    print(get_sub_input(all_ones))
-    print(get_sub_input(all_zeroes))
-
-
-get_sub_input_test_1()

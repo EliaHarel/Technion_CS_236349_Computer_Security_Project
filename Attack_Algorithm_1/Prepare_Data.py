@@ -1,13 +1,13 @@
 import subprocess
 import os
 
-plain_file = './../Plain Texts/100_plains.txt'
-rounds = "16"
+plain_file = './../Plain Texts/5_plains.txt'
+rounds = "4"
 key = "0100100100100100100100001001001100001001001101001000101000100100"
 Mode = "1"  # 0 - Decrypt, 1 - Encrypt
 # the number of plain texts and cipher texts is determined by the input file
 
-output_file_name = "data.txt"
+output_file_name = "Data.txt"
 # c_code_file = "./../DES_C/cmake-build-debug/DES_C.exe"
 c_code_file = os.pardir + "\DES_C\cmake-build-debug\DES_C.exe"
 

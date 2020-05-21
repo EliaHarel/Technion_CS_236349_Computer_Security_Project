@@ -1,7 +1,7 @@
 import math
 
 matrix_size = 256
-num_of_rounds = 16
+num_of_rounds = 4
 
 S1_probability = [{0: 0.0625, 1: 0.03125, 2: 0.0625, 3: 0.0625, 4: 0.09375, 5: 0.09375, 6: 0.0625, 7: 0,
                    8: 0, 9: 0.09375, 10: 0.125, 11: 0.03125, 12: 0.0625, 13: 0.03125, 14: 0.0625, 15: 0.125},
@@ -91,21 +91,24 @@ m1[0] = fill_partial_m1(5, 0)
 m1[1] = fill_partial_m1(5, 1)
 m1[2] = fill_partial_m1(1, 0)
 m1[3] = fill_partial_m1(1, 1)
+
+
 # m1[4] = fill_partial_m1(1, 0, True)
 # m1[5] = fill_partial_m1(1, 1, True)
 
 
 # mat[levels][key][plaintext][ciphertext]
-mat = [[] for k in range(num_of_rounds + 1)]
-for level in range(num_of_rounds + 1):
-    if level == 0 or level % 2 == 1:
-        continue
-    mat[level] = [[] for k in range(pow(2, level))]
-    for key in range(pow(2, level)):
-        subkey_left = math.floor(key / 4)
-        subkey_right = key % 4
-        if level == 2:
-            mat[2] = calculate_2levels_matrix()
-        else:
-            mat[level][key] = matrix_product(mat[level - 2][subkey_left], mat[2][subkey_right])
-
+def result():
+    mat = [[] for k in range(num_of_rounds + 1)]
+    for level in range(num_of_rounds + 1):
+        if level == 0 or level % 2 == 1:
+            continue
+        mat[level] = [[] for k in range(pow(2, level))]
+        for key in range(pow(2, level)):
+            subkey_left = math.floor(key / 4)
+            subkey_right = key % 4
+            if level == 2:
+                mat[2] = calculate_2levels_matrix()
+            else:
+                mat[level][key] = matrix_product(mat[level - 2][subkey_left], mat[2][subkey_right])
+    return mat

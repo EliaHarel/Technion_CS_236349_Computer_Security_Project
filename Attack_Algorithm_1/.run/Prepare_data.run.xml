@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Prepare_data" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="Attack_Algorithm_1.py" type="PythonConfigurationType" factoryName="Python">
     <module name="Attack_Algorithm_1" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -12,7 +12,7 @@
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Prepare_Data.py" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Attack_Algorithm_1.py" />
     <option name="PARAMETERS" value="" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />

@@ -1,7 +1,7 @@
 import random
 from pathlib import Path
 
-num_of_plaintexts = 100
+num_of_plaintexts = 5
 
 
 new_file_name = str(num_of_plaintexts)+"_plains.txt"

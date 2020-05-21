@@ -4,6 +4,7 @@
 #include <string.h>
 #include "des_noop.h"
 
+
 #define pp(x) printf("%10s = %02X %02X %02X %02X %02X %02X %02X %02X\n", \
     #x, x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7]);
 
@@ -76,23 +77,6 @@ int main(int argc, char* argv[]){
     //printing the text output as a binary-based number
     for(int i = 0; i < TEXT_LENGTH/8; ++i)
         decimal2bin(text_output[i]);
-
-//     printf("Simba!!!!");
-
-
-
-/*    printf("\n\n");
-    DES_encrypt(text, key, text_output, rounds);
-
-    for(int i = 0; i < TEXT_LENGTH/8; ++i)
-        decimal2bin(text_output[i]);
-
-    printf("\n\nSimba!!!!\n\n");
-    unsigned char text_output2[TEXT_LENGTH/8];
-    DES_decrypt(text_output, key, text_output2, rounds);
-
-    for(int i = 0; i < TEXT_LENGTH/8; ++i)
-        decimal2bin(text_output2[i]);*/
 
 
     return 0;

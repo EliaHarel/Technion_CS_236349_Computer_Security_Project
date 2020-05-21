@@ -1,32 +1,44 @@
 import subprocess
-# from subprocess import call
-from subprocess import Popen, PIPE
+import os
 
-plain_file = './../Plain Texts/10_plains.txt'
-c_code_file = "./../DES_C/cmake-build-debug/DES_C.exe"
-data_file = "data.txt"
+plain_file = './../Plain Texts/100_plains.txt'
 rounds = "16"
 key = "0100100100100100100100001001001100001001001101001000101000100100"
 Mode = "1"  # 0 - Decrypt, 1 - Encrypt
+# the number of plain texts and cipher texts is determined by the input file
+
+output_file_name = "data.txt"
+# c_code_file = "./../DES_C/cmake-build-debug/DES_C.exe"
+c_code_file = os.pardir + "\DES_C\cmake-build-debug\DES_C.exe"
+
 
 plain_object = open(plain_file, "r")
-data_object = open(data_file, "w")
+data_object = open(output_file_name, "w")
 data_object.write("rounds: " + rounds + " key: " + key + "\n")
 
-# command = ['./serialize', binary, str(width), str(height)]
-# stdout, stderr = subprocess.check_output(command)
-# print stdout, stderr
 
 for plaintext in plain_object.readlines():
-
-    command = [c_code_file, str(key), str(rounds), str(Mode), str(plaintext[0])]
-    # ciphertext = Popen([c_code_file, key, rounds, Mode, plaintext], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    ciphertext = subprocess.check_output(command)
-    # print(ciphertext)
-    d = str(plaintext[:-1]) + " " + str(ciphertext)[2:-1]
-    data_object.write(d)
+	key = str(key)
+	# print(key)
+	rounds = str(rounds)
+	# print(rounds)
+	mode = str(Mode)
+	# print(mode)
+	plain =str(plaintext)
+	# print(plain)
+	command = [c_code_file, key, rounds, mode, plain]
+	ciphertext = subprocess.check_output(command ,shell=True)
+	plain_cipher_line = str(plaintext[:-1]) + " " + str(ciphertext)[2:-1] + '\n'
+	data_object.write(plain_cipher_line)
 
 plain_object.close()
 data_object.close()
 
-# print("ffdsfhbsf {} hvj".format(rounds))
+# 0100010010000111001100001110100101101100001010011011110101010111
+# 0000101001110011001110000111011110011001100010101011111011010110
+
+
+# >>> from subprocess import check_output
+# >>> foo = check_output('./th', shell=True)
+# >>> foo
+# '17.9 51.0'

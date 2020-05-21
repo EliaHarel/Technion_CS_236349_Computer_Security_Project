@@ -73,7 +73,7 @@ for plain in range(matrix_size):
 # max_key - the candidate for the right sub_key
 max_distance = 0
 max_key = -1
-for key in range(pow(2, num_of_rounds - 2)):
+for key in range(pow(2, num_of_rounds)): # pow(2, 64)
     curr_dist = calculate_distance(key)
     if curr_dist > max_distance:
         max_distance = curr_dist

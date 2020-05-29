@@ -9,11 +9,11 @@ file_name = ""
 # mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
 
 # mask for both plaintext and ciphertext, assuming swap at the last round
-mask = [2, 7, 13, 24, 40, 48, 54, 62]
+text_mask = [2, 7, 13, 24, 40, 48, 54, 62]
 
 
 # returns a substring which contains bits from specific places in str
-def get_sub_input(str_input):
+def get_sub_input(str_input, mask):
     sub_str = ''
     for i in range(len(mask)):
         sub_str += str_input[mask[i]]
@@ -28,8 +28,8 @@ def get_next_input_from_file(file_object):
         data = data_line.split()
         binary_plain = data[0]
         binary_cipher = data[1]
-        sub_plain = get_sub_input(binary_plain)
-        sub_cipher = get_sub_input(binary_cipher)
+        sub_plain = get_sub_input(binary_plain, text_mask)
+        sub_cipher = get_sub_input(binary_cipher, text_mask)
         yield int(sub_plain, 2), int(sub_cipher, 2)
         data_line = file_object.readline()
 
@@ -70,25 +70,23 @@ for plain in range(matrix_size):
     for cipher in range(matrix_size):
         mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
 
-# max_key - the candidate for the right sub_key
-min_distance = 0
-min_key = -1
-for key in range(pow(2, num_of_rounds)):
-    curr_dist = calculate_distance(key)
-    if curr_dist < min_distance:
-        min_distance = curr_dist
-        min_key = key
-
-# lsb- the key bit of level 1
-min_key = format(min_key, '016b')
 # key[i] - the key bit we use in level i+1
 key_mask = [28, 52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13, 3]
 
+sub_real_key = get_sub_input(real_key, key_mask)
+sub_real_key_by_rounds = sub_real_key[:num_of_rounds]
+real_distance = calculate_distance(sub_real_key_by_rounds)
 
-for level in range(num_of_rounds):
-    print("level: " + str(level+1) + ", bit in real key is: " + real_key[key_mask[level]-1] +
-          ", the output bit is: " + min_key[15 - level])
+real_location = 0
+# max_key - the candidate for the right sub_key
+for key in range(pow(2, num_of_rounds)):
+    if key == sub_real_key_by_rounds:
+        continue
+    curr_dist = calculate_distance(key)
+    if curr_dist < real_distance:
+        real_location += 1
 
+print(real_location)
 #######################################################
 #                        Tests
 #######################################################

@@ -16,7 +16,6 @@ for i in range(num_of_plaintexts):
 		x = random.randint(0,256)
 		x = format(x, '08b')
 		plain+=str(x)
-	# plain = plain[:-2]
 	file.write(plain)
 	file.write('\n')
 

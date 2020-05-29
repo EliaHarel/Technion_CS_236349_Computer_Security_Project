@@ -1,10 +1,8 @@
-from Calculate_Key_Round_Matrices import result
-mat = result()
+# from Calculate_Key_Round_Matrices import result
+import pickle
+
+
 matrix_size = 256
-num_of_rounds = 4
-
-
-file_name = "Data.txt"
 
 # out s5 after permutation - 3, 8, 14, 25
 # out s1 after permutation - 9, 17, 23, 31
@@ -36,62 +34,62 @@ def get_next_input_from_file(file_object):
 
 
 # return the distance between the matrix of key and the matrix we calculated
-def calculate_distance(key):
+def calculate_distance(key, mat_probabilities, num_of_inputs, mat, num_of_rounds):
     distance = 0
     for i in range(matrix_size):
         for j in range(matrix_size):
             part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2, 16)
-            part_2 = mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2, 8) - num_of_inputs / pow(2, 16)
+            part_2 = mat[int(num_of_rounds)][key][i][j] * num_of_inputs / pow(2, 8) - num_of_inputs / pow(2, 16)
             distance += part_1 * part_2
     return abs(distance)
 
 
-# mat_summing counts the sub_plaintest and sub_cipherrtext pairs
-# sum_for_plaintext counts the number of sub_plaintext inputs
-mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
-sum_for_plaintext = [0 for i in range(matrix_size)]
-
-file_object = open(file_name, "r")
-first_line = file_object.readline().split(" ")
-real_rounds = first_line[1]
-real_key = first_line[3]
-num_of_inputs = 0
-
-# preparing the data for calculating mat_probabilities
-for plain, cipher in get_next_input_from_file(file_object):
-    num_of_inputs += 1
-    mat_summing[plain][cipher] += 1
-    sum_for_plaintext[plain] += 1
-
-file_object.close()
-
-# mat_probabilities - conditional probability
-mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
-for plain in range(matrix_size):
-    for cipher in range(matrix_size):
-        if sum_for_plaintext[plain]==0:
-            mat_probabilities[plain][cipher] = 0
-        else:
-            mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
-
-# key[i] - the key bit we use in level i+1
-key_mask = [28, 52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13, 3]
-
-sub_real_key = get_sub_input(real_key, key_mask)
-sub_real_key_by_rounds = sub_real_key[:num_of_rounds]
-real_distance = calculate_distance(sub_real_key_by_rounds)
-
-real_location = 0
-# max_key - the candidate for the right sub_key
-for key in range(pow(2, num_of_rounds)):
-    if key == sub_real_key_by_rounds:
-        continue
-    curr_dist = calculate_distance(key)
-    if curr_dist < real_distance:
-        real_location += 1
-
-print(real_location)
-#######################################################
-#                        Tests
-#######################################################
+def attack_algorithm_1(file_name):
+    with open("6_Round_Expected_Probabilities_Matrix.txt", "rb") as results:   # Unpickling
+        mat = pickle.load(results)
+    # mat_summing counts the sub_plaintest and sub_cipherrtext pairs
+    # sum_for_plaintext counts the number of sub_plaintext inputs
+    mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
+    sum_for_plaintext = [0 for i in range(matrix_size)]
+    
+    file_object = open(file_name, "r")
+    first_line = file_object.readline().split(" ")
+    num_of_rounds = int(first_line[1])
+    actual_key = first_line[3]
+    num_of_inputs = 0
+    
+    # preparing the data for calculating mat_probabilities
+    for plain, cipher in get_next_input_from_file(file_object):
+        num_of_inputs += 1
+        mat_summing[plain][cipher] += 1
+        sum_for_plaintext[plain] += 1
+    
+    file_object.close()
+    
+    # mat_probabilities - conditional probability
+    mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
+    for plain in range(matrix_size):
+        for cipher in range(matrix_size):
+            if sum_for_plaintext[plain]==0:
+                mat_probabilities[plain][cipher] = 0
+            else:
+                mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
+    
+    # key[i] - the key bit we use in level i+1
+    key_mask = [28, 52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13, 3]
+    
+    sub_actual_key = get_sub_input(actual_key, key_mask)
+    sub_actual_key_by_rounds = sub_actual_key[:num_of_rounds]
+    real_distance = calculate_distance(int(sub_actual_key_by_rounds,2), mat_probabilities, num_of_inputs, mat, num_of_rounds)
+    
+    real_location = 1
+    # max_key - the candidate for the right sub_key
+    for key in range(pow(2, int(num_of_rounds))):
+        if key == sub_actual_key_by_rounds:
+            continue
+        curr_dist = calculate_distance(key, mat_probabilities, num_of_inputs, mat, int(num_of_rounds))
+        if curr_dist < real_distance:
+            real_location += 1
+    
+    return real_location
 

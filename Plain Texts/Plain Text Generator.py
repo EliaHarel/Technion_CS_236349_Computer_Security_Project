@@ -1,7 +1,7 @@
 import random
 from pathlib import Path
 
-num_of_plaintexts = 2500
+num_of_plaintexts = 2000
 num_of_files = 20
 for file_index in range(num_of_files):
 	new_file_name = str(num_of_plaintexts)+"_plains_"+str(file_index)+".txt"

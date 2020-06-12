@@ -1,22 +1,30 @@
+import random
 import subprocess
 import os
 
 
-file_prefix = "2000_plains_"
+file_prefix = "20000_plains_"
 num_of_files = 20
-
 rounds = "6"
-key = "0100100100100100100100001001001100001001001101001000101000100100"
 Mode = "1"  # 0 - Decrypt, 1 - Encrypt
 # the number of plain texts and cipher texts is determined by the input file
 
+def create_key():
+	key = ""
+	for j in range(8):
+		x = random.randint(0,256)
+		x = format(x, '08b')
+		key+=str(x)
+	return key
+
+key = create_key()
 
 file_path_prefix = "./../Plain Texts/" + file_prefix
 output_path_prefix = "Data_" + file_prefix
 
 c_code_file = os.pardir + "\DES_C\cmake-build-debug\DES_C.exe"
 
-for files_index in range(num_of_files):
+for files_index in range(20,100):
 	file_path = file_path_prefix + str(files_index) + ".txt"
 	output_path = output_path_prefix + str(files_index) + ".txt"
 	input_file = open(file_path, "r")

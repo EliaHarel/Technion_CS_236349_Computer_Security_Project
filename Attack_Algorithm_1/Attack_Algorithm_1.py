@@ -4,12 +4,11 @@ import pickle
 
 matrix_size = 256
 
-# out s5 after permutation - 3, 8, 14, 25
+# out s5 after permutation - 3, 8, 14, 25 (starting from 1)
 # out s1 after permutation - 9, 17, 23, 31
 # mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
-
 # mask for both plaintext and ciphertext, assuming swap at the last round
-text_mask = [2, 7, 13, 24, 40, 48, 54, 62]
+text_mask = [2, 7, 13, 24, 40, 48, 54, 62] # starts from 0
 
 # returns a substring which contains bits from specific places in str
 def get_sub_input(str_input, mask):
@@ -18,6 +17,10 @@ def get_sub_input(str_input, mask):
         sub_str += str_input[mask[i]]
     return sub_str
 
+def swap_int(num):
+    bin_num = format(num, '08b')
+    bin_num = bin_num[4:]+bin_num[:4] 
+    return int(bin_num, 2)
 
 # reads the next pair of inputs and return the relevant bits from them as integers
 # the relevant bits are the outputs bits of S1, S5
@@ -47,22 +50,27 @@ def calculate_distance(key, mat_probabilities, num_of_inputs, mat, num_of_rounds
 def attack_algorithm_1(file_name):
     with open("6_Round_Expected_Probabilities_Matrix.txt", "rb") as results:   # Unpickling
         mat = pickle.load(results)
-    # mat_summing counts the sub_plaintest and sub_cipherrtext pairs
-    # sum_for_plaintext counts the number of sub_plaintext inputs
-    mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
-    sum_for_plaintext = [0 for i in range(matrix_size)]
-    
+        # mat = mat[rounds][key_2^rounds][plaintext_256][ciphertext_256]
+        # mat[0 || i%2 == 1] = empty
+   
+   # receiving the `number of rounds` and the `key` from the first line of the file
     file_object = open(file_name, "r")
     first_line = file_object.readline().split(" ")
+    # first line format : "num of rounds: X key: X"
     num_of_rounds = int(first_line[1])
     actual_key = first_line[3]
     num_of_inputs = 0
+    
+    # mat_summing counts the sub_plaintexts and sub_ciphertexts pairs
+    # plaintext_counter counts the number of sub_plaintext inputs
+    mat_summing = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
+    plaintext_counter = [0 for i in range(matrix_size)]
     
     # preparing the data for calculating mat_probabilities
     for plain, cipher in get_next_input_from_file(file_object):
         num_of_inputs += 1
         mat_summing[plain][cipher] += 1
-        sum_for_plaintext[plain] += 1
+        plaintext_counter[plain] += 1
     
     file_object.close()
     
@@ -70,10 +78,10 @@ def attack_algorithm_1(file_name):
     mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
     for plain in range(matrix_size):
         for cipher in range(matrix_size):
-            if sum_for_plaintext[plain]==0:
+            if plaintext_counter[plain]==0:
                 mat_probabilities[plain][cipher] = 0
             else:
-                mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / sum_for_plaintext[plain]
+                mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / plaintext_counter[plain]
     
     # key[i] - the key bit we use in level i+1
     key_mask = [28, 52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13, 3]
@@ -92,4 +100,6 @@ def attack_algorithm_1(file_name):
             real_location += 1
     
     return real_location
+
+
 

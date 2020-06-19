@@ -13,16 +13,16 @@
 # sub cipher R - out s1 || in s5
 # c - sub plain R || sub plain L || sub cipher R || sub cipher L
 
-plain_L_mask = [ 8, 16, 22, 30]
-plain_R_mask = [  2, 7, 13, 24 , 31, 0, 1, 2, 3, 4]
-cipher_L_mask = [ 2, 7, 13, 24]
+plain_L_mask = [8, 16, 22, 30]
+plain_R_mask = [7, 13, 24, 2, 31, 0, 1, 2, 3, 4]
+cipher_L_mask = [7, 13, 24, 2]
 cipher_R_mask = [8, 16, 22, 30, 15, 16, 17, 18, 19, 20]
 
 k1_s1_mask = [10, 51, 34, 60, 49, 17]
 k16_s5_mask = [30, 5, 47, 62, 45, 12]
 first_last_mask = k1_s1_mask + k16_s5_mask
-key_mask_14_mid_rounds = [52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13]  # 49, 45, 17 - repeated keys
-
+key_mask_14_mid_rounds = [51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12] # starts at 0, repeated keys: 51, 49, 45, 12
+  
 
 s1 = [[14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7],
 	  [0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8],
@@ -59,11 +59,13 @@ def get_next_input_from_file(file_object):
         binary_cipher_R = binary_cipher[32:]
         binary_cipher_L = binary_cipher[:32]
 
+        ### creating sub-strings containing the relevent bits for each text input
         sub_plain_R = get_sub_input(binary_plain_R, plain_R_mask)
         sub_plain_L = get_sub_input(binary_plain_L, plain_L_mask)
         sub_cipher_R = get_sub_input(binary_cipher_R, cipher_R_mask)
         sub_cipher_L = get_sub_input(binary_cipher_L, cipher_L_mask)
 
+        ### todo: we can do this above
         sub_plain = sub_plain_L + sub_plain_R
         sub_cipher = sub_cipher_L + sub_cipher_R
         sub_input = sub_plain + sub_cipher
@@ -73,14 +75,17 @@ def get_next_input_from_file(file_object):
 
 # returns the output of the s_box for the given s_box_num and binary_input 
 def s_box_function(s_box_num, binary_input):
+	#todo: check this syntax of appending binary values
 	row = int(binary_input[0] + binary_input[5] ,2)
-	col = int(binary[1:5],2)
-	if s_box_num ==1:
+	col = int(binary_input[1:5], 2)
+	if s_box_num == 1:
 		s_box = s1
 	else:
 		s_box = s5
 	return format(s_box[row][col], '04b')
 
+
+#TODO: add explanations to the indexed values
 def calculate_P_C_from_key_combination (key, combination):
 	binary_key = format(key, '012b')
 	k1 = binary_key[:6]
@@ -107,6 +112,7 @@ def calculate_P_C_from_key_combination (key, combination):
 	plaintext = plain_L + plain_R
 	ciphertext = cipher_L + cipher_R
 
+#TODO: need to convert these values to ints
 	return plaintext, ciphertext
 
 def calculate_distance(first_last_key, middle_key, num_of_rounds, num_of_inputs):
@@ -128,6 +134,7 @@ def attack_algorithm_2 (input file, num_of_rounds):
 	real_key = first_line[3]
 	num_of_inputs = 0
 
+	### counter is the C array, BUT IN DIFFERENT OREDER!!!!
 	counter = [0 for i in range(pow(2, 28))]
 
 	# plain - 14 bits - out s1 || out s5 || in s1
@@ -137,17 +144,24 @@ def attack_algorithm_2 (input file, num_of_rounds):
 		counter[index] += 1
 		num_of_inputs +=1
 
-	#matrix [key][plain][cipher], key - guessed key for 12 key bits of the first and last rounds
-	matrix = [[[0 for in in range (pow(2,8))] for i in range (pow(2,8))] for i in range(pow(2,12))]
+	# matrix [key][plain][cipher], key - guessed key for 12 key bits of the first and last rounds
+	### the M matrix 12 key bits = 6 key bits of s1 | 6 key bits of s5
+	###				 8 plain bits = 4 input bits of s1 | 4 input bits of s5 (in round 2 of DES (round 1 in our characteristic) 
+	###				 8 cipher bits = 4 output bits of s1 | 4 output bits of s5
+	matrix = [[[0 for k in range (pow(2,8))] for j in range (pow(2,8))] for i in range(pow(2,12))]
 
+	### combination iterating over all of the possible values of the 14 bits from the plain text and the 14 bits from the cipher text
 	for key in pow(2,12):
 		for combination in pow(2,28):
-			plain, cipher = calculate_P_C_from_key_combination (key, combination)
+			plain, cipher = calculate_P_C_from_key_combination(key, combination)
+			#TODO: need to convert these values to ints before using them as indices t 
+			#counter[combination] holds the value of the "confirmed values"(C array) for the current combination
 			matrix[key][plain][cipher] += counter[combination]
 
 
-	real location = 1
-	curr_first_last_key = get_sub_input (real_key, first_last_mask)
+#
+	real_location = 1
+	curr_first_last_key = get_sub_input(real_key, first_last_mask)
 	curr_middle_key = get_sub_input(real_key, key_mask_14_mid_rounds)
 	curr_middle_key_by_rounds = curr_middle_key[num_of_rounds-2]
 	

@@ -52,7 +52,7 @@ void decimal2bin(unsigned char val){
 
 /*                WAS NOT Tested!!!!!                */
 //Printing the 8-numbered binary value of the inserted unsigned char
-void decimal2bin2file(unsigned char val, FILE fp){
+void decimal2bin2file(unsigned char val, FILE *fp){
     char result[8];
     for(int i = 1; i <= 8; ++i){
         unsigned char current_power = (unsigned char) power(2, 8 - i);
@@ -67,7 +67,7 @@ void decimal2bin2file(unsigned char val, FILE fp){
 
 // Argument order  - key, rounds, encrypt(1)/decrypt(0), text
 //input example "0100100100100100100100001001001100001001001101001000101000100100 16 0 0100100100100100100100100100100100100100100100100100100100100100"
-void Des(int argc, char* argv[]){
+void Des(int argc, char* argv[], FILE *dst){
     /* Argument assignment*/
     char* key_parameter = argv[1]; //Key
     int rounds = strtol(argv[2], NULL, 10); // Number of Rounds
@@ -90,19 +90,49 @@ void Des(int argc, char* argv[]){
         DES_encrypt(text, key, text_output, rounds);
 
     //printing the text output as a binary-based number
+    // for(int i = 0; i < TEXT_LENGTH/8; ++i)
+    //     decimal2bin(text_output[i]);
     for(int i = 0; i < TEXT_LENGTH/8; ++i)
-        decimal2bin(text_output[i]);
+        decimal2bin2file(text_output[i], dst);
 
 }
 
-// arguments order: rounds, source path, dest path
+// arguments order: 1-key, 2-rounds, 3-mode, 4-source path, 5-dest path
 int main(int argc, char* argv[]){
-    int rounds = argv[1];
-    const char* src_path = argv[2];
-    const char* dst_path = argv[3];
 
-    FILE plain_cipher_input =  *fopen(src_path, "r");
-    FILE plain_cipher_output =  *fopen(src_path, "w");
-    for()
+    char* key_parameter = argv[1]; //Key
+    int rounds = strtol(argv[2], NULL, 10); // Number of Rounds
+    enum action Dec_or_Enc = strcmp(argv[3], "0") == 0 ? Decrypt : Encrypt; //Encrypt or Decrypt
+    const char* src_path = argv[4];
+    const char* dst_path = argv[5];
+
+    for(int param_i = 0, unsigned_char_i = 0; param_i < TEXT_LENGTH/8; param_i++, unsigned_char_i += 8) 
+        key[param_i] = bin2decimal(key_parameter, unsigned_char_i);
+
+    FILE *plain_cipher_input =  fopen(src_path, "r");
+    if (plain_cipher_input == NULL) 
+        return 1;
+
+    FILE *plain_cipher_output =  fopen(src_path, "w");
+    if (plain_cipher_output == NULL){
+        fclose(plain_cipher_input);
+        return 1;
+    } 
+
+    char plain[64];
+    int eof;
+    while (fgets(plain,sizeof(plain), plain_cipher_input)) {
+        int param_i = 0, unsigned_char_i = 0;
+        for(; param_i < TEXT_LENGTH/8; param_i++, unsigned_char_i += 8){
+            text[param_i] = bin2decimal(text_parameter, unsigned_char_i);
+        }
+        Des(); //TODO: fill this with the arguments
+
+        if((eof = fgetc(plain_cipher_input) != EOF);
+    }
+    
+    fclose(plain_cipher_input);
+    fclose(plain_cipher_output);
+    return 0;
 
 }

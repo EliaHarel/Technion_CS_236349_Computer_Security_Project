@@ -1,0 +1,23 @@
+Input file name: Data_2000_plains_0 , Key Location is: 6
+Input file name: Data_2000_plains_1 , Key Location is: 8
+Input file name: Data_2000_plains_10, Key Location is: 3
+Input file name: Data_2000_plains_11, Key Location is: 52
+Input file name: Data_2000_plains_12, Key Location is: 38
+Input file name: Data_2000_plains_13, Key Location is: 40
+Input file name: Data_2000_plains_14, Key Location is: 21
+Input file name: Data_2000_plains_15, Key Location is: 14
+Input file name: Data_2000_plains_16, Key Location is: 1
+Input file name: Data_2000_plains_17, Key Location is: 43
+Input file name: Data_2000_plains_18, Key Location is: 19
+Input file name: Data_2000_plains_19, Key Location is: 18
+Input file name: Data_2000_plains_2 , Key Location is: 4
+Input file name: Data_2000_plains_3 , Key Location is: 47
+Input file name: Data_2000_plains_4 , Key Location is: 51
+Input file name: Data_2000_plains_5 , Key Location is: 46
+Input file name: Data_2000_plains_6 , Key Location is: 7
+Input file name: Data_2000_plains_7 , Key Location is: 20
+Input file name: Data_2000_plains_8 , Key Location is: 53
+Input file name: Data_2000_plains_9 , Key Location is: 10
+
+Average Location is 25.05, out of 20 samples
+--- Finished in 0.0seconds ---

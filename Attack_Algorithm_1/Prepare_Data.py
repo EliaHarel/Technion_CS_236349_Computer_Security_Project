@@ -4,7 +4,7 @@ import os
 
 
 file_prefix = "20000_plains_"
-num_of_files = 20
+num_of_files = 100
 rounds = "6"
 Mode = "1"  # 0 - Decrypt, 1 - Encrypt
 # the number of plain texts and cipher texts is determined by the input file
@@ -24,7 +24,7 @@ output_path_prefix = "Data_" + file_prefix
 
 c_code_file = os.pardir + "\DES_C\cmake-build-debug\DES_C.exe"
 
-for files_index in range(20,100):
+for files_index in range(85,86):
 	file_path = file_path_prefix + str(files_index) + ".txt"
 	output_path = output_path_prefix + str(files_index) + ".txt"
 	input_file = open(file_path, "r")

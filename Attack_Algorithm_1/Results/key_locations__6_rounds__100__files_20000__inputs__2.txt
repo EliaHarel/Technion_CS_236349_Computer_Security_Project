@@ -1,3 +1,5 @@
+without_stav_correction
+=================================================================================
 Input file name:Data_20000_plains_0.txt, Key Location is: 4
 Input file name:Data_20000_plains_1.txt, Key Location is: 30
 Input file name:Data_20000_plains_10.txt, Key Location is: 64
@@ -84,3 +86,6 @@ Input file name:Data_20000_plains_83.txt, Key Location is: 42
 Input file name:Data_20000_plains_84.txt, Key Location is: 60
 Input file name:Data_20000_plains_85.txt, Key Location is: 20
 Input file name:Data_20000_plains_9.txt, Key Location is: 43
+=================================================================================
+Average Location is 34.651162790697676, out of 86 samples
+--- Finished in 484.59050822257996seconds ---

@@ -23,6 +23,7 @@ ext = ".txt"
 f_name_count = 1
 temp_name = output_file_name + "__" + str(f_name_count) + ext
 path_to_file = ".\Results\\"
+
 while os.path.isfile(path_to_file + temp_name):
     f_name_count += 1
     temp_name = output_file_name + "__" + str(f_name_count) + ext

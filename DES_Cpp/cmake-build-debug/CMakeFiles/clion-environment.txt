@@ -1,0 +1,4 @@
+ToolSet: 3.1.5 (local)@C:\Compilers\Cygwin
+Options: 
+
+Options:-DCMAKE_MAKE_PROGRAM=C:/Compilers/Cygwin/bin/make.exe

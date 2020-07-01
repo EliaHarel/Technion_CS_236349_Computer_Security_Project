@@ -1,5 +1,6 @@
 # from Calculate_Key_Round_Matrices import result
 import pickle
+from pathlib import Path
 
 matrix_size = 256
 
@@ -7,7 +8,7 @@ matrix_size = 256
 # out s1 after permutation - 9, 17, 23, 31
 # mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
 # mask for both plaintext and ciphertext, assuming swap at the last round
-text_mask = [2, 7, 13, 24, 40, 48, 54, 62]  # starts from 0
+text_mask = [7, 13, 24, 2, 40, 48, 54, 62]  # starts from 0
 
 
 # returns a substring which contains bits from specific places in str
@@ -24,7 +25,7 @@ def swap_int(num):
     return int(bin_num, 2)
 
 
-# reads the next pair of inputs and return the relevant bits from them as integers
+# reads the next pair of inputs and return the relevant bits from threadm as integers
 # the relevant bits are the outputs bits of S1, S5
 def get_next_input_from_file(file_object):
     data_line = file_object.readline()
@@ -43,18 +44,31 @@ def calculate_distance(key, mat_probabilities, num_of_inputs, mat, num_of_rounds
     distance = 0
     for i in range(matrix_size):
         for j in range(matrix_size):
-            part_1 = mat_probabilities[i][j] - num_of_inputs / pow(2, 16)
-            part_2 = mat[int(num_of_rounds)][key][i][j] * num_of_inputs / pow(2, 8) - num_of_inputs / pow(2, 16)
-            distance += part_1 * part_2
+            #TODO: Ask Stav
+            part_1 = mat_probabilities[i][j] - (num_of_inputs / pow(2, 16))
+            # part_1 = mat_probabilities[i][j] - (num_of_inputs / matrix_size)
+            part_2 = (mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2, 8)) - (num_of_inputs / pow(2, 16))
+            # part_2 = (mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2, num_of_rounds)) - (num_of_inputs / matrix_size)
+            distance = (part_1 * part_2) + distance
     return abs(distance)
 
 
-def attack_algorithm_1(file_name):
-    with open("6_Round_Expected_Probabilities_Matrix.txt", "rb") as results:  # Unpickling
-        mat = pickle.load(results)
-        # mat = mat[rounds][key_2^rounds][plaintext_256][ciphertext_256]
-        # mat[0 || i%2 == 1] = empty
 
+def attack_algorithm_1(file_name, probabilities_matrix_file_number):
+    probabilities_matrix_file = str(probabilities_matrix_file_number) + "_Round_Expected_Probabilities_Matrix.txt"
+    
+    # TODO: finish the validity check
+    # probabilities_matrix_file_path = Path("/path/to/file")
+    # if (os.path.isfile(probabilities_matrix_file_path) == False):
+    #     print("Probabilities Matrix File Does Not Exists")
+        # exit()
+
+
+    # mat parameter is constructed as mat[rounds][key_(2^rounds)][plaintext_256][ciphertext_256]
+    #                                 mat[0 || i%2 == 1] = empty
+    with open(probabilities_matrix_file, "rb") as results:  # Unpickling
+        mat = pickle.load(results)
+        
     # receiving the `number of rounds` and the `key` from the first line of the file
     file_object = open(file_name, "r")
     first_line = file_object.readline().split(" ")
@@ -69,10 +83,11 @@ def attack_algorithm_1(file_name):
     plaintext_counter = [0 for i in range(matrix_size)]
 
     # preparing the data for calculating mat_probabilities
+    # sub_plaintext and sub_ciphertext are the 8bits in the plain/cipher which we are checking
     for plain, cipher in get_next_input_from_file(file_object):
+        mat_summing[plain][cipher] += 1 #counts the amount of pairs of sub_plain-sub_cipher
+        plaintext_counter[plain] += 1 #counts the amount of appearances of each sub_plaintext
         num_of_inputs += 1
-        mat_summing[plain][cipher] += 1
-        plaintext_counter[plain] += 1
 
     file_object.close()
 
@@ -91,16 +106,16 @@ def attack_algorithm_1(file_name):
 
     sub_actual_key = get_sub_input(actual_key, key_mask)
     sub_actual_key_by_rounds = sub_actual_key[:num_of_rounds]
-    real_distance = calculate_distance(int(sub_actual_key_by_rounds, 2), mat_probabilities, num_of_inputs, mat,
-                                       num_of_rounds)
+    real_distance = calculate_distance(int(sub_actual_key_by_rounds, 2), mat_probabilities, num_of_inputs, mat, num_of_rounds)
 
     real_location = 1
     # max_key - the candidate for the right sub_key
-    for key in range(pow(2, int(num_of_rounds))):
+    for key in range(pow(2, num_of_rounds)):
         if key == sub_actual_key_by_rounds:
             continue
-        curr_dist = calculate_distance(key, mat_probabilities, num_of_inputs, mat, int(num_of_rounds))
-        if curr_dist < real_distance:
+        curr_dist = calculate_distance(key, mat_probabilities, num_of_inputs, mat, num_of_rounds)
+        if curr_dist > real_distance:
             real_location += 1
 
     return real_location
+

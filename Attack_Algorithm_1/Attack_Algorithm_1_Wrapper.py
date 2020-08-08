@@ -20,6 +20,7 @@ def time_end(block_name, start_time, comment=""):
     print("block \"" + block_name + "\" runtime was " + str(time.time() - start_time) + "seconds." + comment)
 
 
+
 output_file_name = "KeyLocations_" + str(num_of_rounds) + "xRounds_" + str(number_of_files) + "xFiles"
 data_path = os.pardir + os.sep + "Data" + os.sep + str(num_of_rounds) + "_rounds" + \
             os.sep + str(number_of_files) + "_plaintexts"

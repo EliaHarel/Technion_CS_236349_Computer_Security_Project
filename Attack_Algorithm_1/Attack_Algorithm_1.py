@@ -4,11 +4,18 @@ from pathlib import Path
 
 matrix_size = 256
 
+#################
+#     Masks     #
+#################
+
 # out s5 after permutation - 3, 8, 14, 25 (starting from 1)
 # out s1 after permutation - 9, 17, 23, 31
 # mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
 # mask for both plaintext and ciphertext, assuming swap at the last round
 text_mask = [7, 13, 24, 2, 40, 48, 54, 62]  # starts from 0
+
+# key[i] - the key bit we use in level i+1
+key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
 
 
 # returns a substring which contains bits from specific places in str
@@ -40,18 +47,16 @@ def get_next_input_from_file(file_object):
 
 
 # return the distance between the matrix of key and the matrix we calculated
-def calculate_distance(key, mat_probabilities, num_of_inputs, mat, num_of_rounds):
+def calculate_distance(key, mat_summing, num_of_inputs, mat, num_of_rounds):
     distance = 0
     for i in range(matrix_size):
         for j in range(matrix_size):
-            #TODO: Ask Stav
-            part_1 = mat_probabilities[i][j] - (num_of_inputs / pow(2, 16))
-            # part_1 = mat_probabilities[i][j] - (num_of_inputs / matrix_size)
-            part_2 = (mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2, 8)) - (num_of_inputs / pow(2, 16))
+            part_1 = (mat[num_of_rounds][key][i][j]  - (1 / matrix_size))
+            part_2 = mat_summing[i][j] - (num_of_inputs / pow(matrix_size, 2))
+            # part_1 = mat_summing[i][j] - (num_of_inputs / matrix_size)
             # part_2 = (mat[num_of_rounds][key][i][j] * num_of_inputs / pow(2, num_of_rounds)) - (num_of_inputs / matrix_size)
-            distance = (part_1 * part_2) + distance
-    return abs(distance)
-
+            distance += (part_1 * part_2)
+    return distance
 
 
 def attack_algorithm_1(file_name, probabilities_matrix_file_number):
@@ -91,29 +96,27 @@ def attack_algorithm_1(file_name, probabilities_matrix_file_number):
 
     file_object.close()
 
-    # mat_probabilities - conditional probability
-    mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
-    for plain in range(matrix_size):
-        for cipher in range(matrix_size):
-            if plaintext_counter[plain] == 0:
-                mat_probabilities[plain][cipher] = 0
-            else:
-                mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / plaintext_counter[plain]
+    # # mat_probabilities - conditional probability
+    # mat_probabilities = [[0 for j in range(matrix_size)] for i in range(matrix_size)]
+    # for plain in range(matrix_size):
+    #     for cipher in range(matrix_size):
+    #         if plaintext_counter[plain] == 0:
+    #             mat_probabilities[plain][cipher] = 0
+    #         else:
+    #             mat_probabilities[plain][cipher] = mat_summing[plain][cipher] / plaintext_counter[plain]
 
-    # old -  key_mask = [28, 52, 4, 49, 39, 17, 7, 50, 46, 26, 14, 59, 45, 27, 13, 3] # starts at 1
     # key[i] - the key bit we use in level i+1
-    key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
-
+    # key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
     sub_actual_key = get_sub_input(actual_key, key_mask)
     sub_actual_key_by_rounds = sub_actual_key[:num_of_rounds]
-    real_distance = calculate_distance(int(sub_actual_key_by_rounds, 2), mat_probabilities, num_of_inputs, mat, num_of_rounds)
+    real_distance = calculate_distance(int(sub_actual_key_by_rounds, 2), mat_summing, num_of_inputs, mat, num_of_rounds)
 
     real_location = 1
     # max_key - the candidate for the right sub_key
-    for key in range(pow(2, num_of_rounds)):
-        if key == sub_actual_key_by_rounds:
+    for temp_key in range(pow(2, num_of_rounds)): #iterating over all of the possible keys
+        if temp_key == sub_actual_key_by_rounds:
             continue
-        curr_dist = calculate_distance(key, mat_probabilities, num_of_inputs, mat, num_of_rounds)
+        curr_dist = calculate_distance(temp_key, mat_summing, num_of_inputs, mat, num_of_rounds)
         if curr_dist > real_distance:
             real_location += 1
 

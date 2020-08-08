@@ -18,22 +18,28 @@ text_mask = [7, 13, 24, 2, 40, 48, 54, 62]  # starts from 0
 key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
 
 
-# returns a substring which contains bits from specific places in str
+
+# T
+# input: string, mask - which mask to truncates by
+# output: returns a substring which contains bits from specific places in str
 def get_sub_input(str_input, mask):
     sub_str = ''
     for i in range(len(mask)):
         sub_str += str_input[mask[i]]
     return sub_str
 
+# # T
+# # input: 
+# # output: 
+# def swap_int(num):
+#     bin_num = format(num, '08b')
+#     bin_num = bin_num[4:] + bin_num[:4]
+#     return int(bin_num, 2)
 
-def swap_int(num):
-    bin_num = format(num, '08b')
-    bin_num = bin_num[4:] + bin_num[:4]
-    return int(bin_num, 2)
-
-
-# reads the next pair of inputs and return the relevant bits from threadm as integers
-# the relevant bits are the outputs bits of S1, S5
+# Tested
+# input: file_object - the file object from which we read our input (File type) 
+# output: reads the next pair of inputs and return the relevant bits from threadm as integers
+#         the relevant bits are the outputs bits of S1, S5
 def get_next_input_from_file(file_object):
     data_line = file_object.readline()
     while data_line:
@@ -45,9 +51,10 @@ def get_next_input_from_file(file_object):
         yield int(sub_plain, 2), int(sub_cipher, 2)
         data_line = file_object.readline()
 
-
-# return the distance between the matrix of key and the matrix we calculated
-def calculate_distance(key, mat_summing, num_of_inputs, mat, num_of_rounds):
+# Checked
+# output: the "matrix_distance" between the probability-matrix matching the current key 
+#         to the probability matrix matching the wanted-key 
+def calculate_key_distance(key, mat_summing, num_of_inputs, mat, num_of_rounds):
     distance = 0
     for i in range(matrix_size):
         for j in range(matrix_size):
@@ -109,14 +116,14 @@ def attack_algorithm_1(file_name, probabilities_matrix_file_number):
     # key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
     sub_actual_key = get_sub_input(actual_key, key_mask)
     sub_actual_key_by_rounds = sub_actual_key[:num_of_rounds]
-    real_distance = calculate_distance(int(sub_actual_key_by_rounds, 2), mat_summing, num_of_inputs, mat, num_of_rounds)
+    real_distance = calculate_key_distance(int(sub_actual_key_by_rounds, 2), mat_summing, num_of_inputs, mat, num_of_rounds)
 
     real_location = 1
     # max_key - the candidate for the right sub_key
     for temp_key in range(pow(2, num_of_rounds)): #iterating over all of the possible keys
         if temp_key == sub_actual_key_by_rounds:
             continue
-        curr_dist = calculate_distance(temp_key, mat_summing, num_of_inputs, mat, num_of_rounds)
+        curr_dist = calculate_key_distance(temp_key, mat_summing, num_of_inputs, mat, num_of_rounds)
         if curr_dist > real_distance:
             real_location += 1
 

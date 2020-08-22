@@ -3,9 +3,9 @@ import subprocess
 import os
 
 
-file_prefix = "20000_plains_"
-num_of_files = 100
-rounds = "6"
+file_prefix = "100000_plains_"
+num_of_files = 5
+rounds = "14"
 Mode = "1"  # 0 - Decrypt, 1 - Encrypt
 # the number of plain texts and cipher texts is determined by the input file
 

@@ -12,7 +12,7 @@ matrix_size = 256
 # out s1 after permutation - 9, 17, 23, 31
 # mask for plaintext - out s5 || out s1 - 3, 8, 14, 25, 41, 49, 55, 63
 # mask for both plaintext and ciphertext, assuming swap at the last round
-text_mask = [7, 13, 24, 2, 40, 48, 54, 62]  # starts from 0
+text_mask = [2, 7, 13, 24, 40, 48, 54, 62]  # starts from 0
 
 # key[i] - the key bit we use in level i+1
 key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
@@ -98,7 +98,7 @@ def attack_algorithm_1(file_name, probabilities_matrix_file_number):
     # sub_plaintext and sub_ciphertext are the 8bits in the plain/cipher which we are checking
     for plain, cipher in get_next_input_from_file(file_object):
         mat_summing[plain][cipher] += 1 #counts the amount of pairs of sub_plain-sub_cipher
-        plaintext_counter[plain] += 1 #counts the amount of appearances of each sub_plaintext
+        # plaintext_counter[plain] += 1 #counts the amount of appearances of each sub_plaintext
         num_of_inputs += 1
 
     file_object.close()

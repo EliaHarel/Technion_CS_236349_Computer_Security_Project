@@ -2,8 +2,8 @@
 ~Archive/*
 **/~Archive/*
 **/venv/*
-.idea/**/workspace.xml
-.idea/**/tasks.xml
+*/.idea/**/workspace.xml
+*/.idea/**/tasks.xml
 Attack_Algorithm_1/.idea/workspace.xml
 
 

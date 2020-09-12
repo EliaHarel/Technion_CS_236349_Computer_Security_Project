@@ -1,4 +1,0 @@
-C:\Users\eliar\AppData\Local\JetBrains\CLion2020.1\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Compilers/Cygwin/bin/make.exe -G "CodeBlocks - Unix Makefiles" /cygdrive/c/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/DES_Cpp
--- Configuring done
--- Generating done
--- Build files have been written to: /cygdrive/c/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/DES_Cpp/cmake-build-debug

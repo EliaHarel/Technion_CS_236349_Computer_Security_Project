@@ -2,10 +2,19 @@
 # use algorithm 1 with 14 rounds
 # calculate the matrices
 
-# out s5 after permutation - 3, 8, 14, 25
-# out s1 after permutation - 9, 17, 23, 31
-# in s5 - 16, 17, 18, 19, 20, 21
-# in s1 - 32, 1, 2, 3, 4, 5
+# out s5 after permutation - 7, 13, 24, 2 (starting from 0)
+# out s1 after permutation - 8, 16, 22, 30 (starting from 0)
+s5_mask = [7, 13, 24, 2]  # starting from 0
+s1_mask = [8, 16, 22, 30]  # starting from 0
+s5_mask_right = [x + 32 for x in s5_mask]
+s1_mask_right = [x + 32 for x in s1_mask]
+
+plain_mask = s5_mask + s1_mask_right  # [7, 13, 24, 2, 40, 48, 54, 62]
+cipher_mask = s5_mask_right + s1_mask  # [39, 45, 56, 34, 8, 16, 22, 30], swapped!
+
+# key[i] - the key bit we use in level i+1
+key_mask = [27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2]  # starts at 0
+
 
 # sub plain L - out s1
 # sub plain R - out s5 || in s1

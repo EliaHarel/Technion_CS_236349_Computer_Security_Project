@@ -8,7 +8,8 @@ from Attack_Algorithm_1 import attack_algorithm_1
 #         user inputs         #
 ###############################
 num_of_rounds = 6
-number_of_files = 50000
+num_of_pairs = 5000
+v_num = 0
 comments_to_file = ""
 
 ##############################
@@ -21,9 +22,9 @@ def time_end(block_name, start_time, comment=""):
 
 
 
-output_file_name = "KeyLocations_" + str(num_of_rounds) + "xRounds_" + str(number_of_files) + "xFiles"
-data_path = os.pardir + os.sep + "Data" + os.sep + str(num_of_rounds) + "_rounds" + \
-            os.sep + str(number_of_files) + "_plaintexts"
+output_file_name = "KeyLocations_" + str(num_of_rounds) + "xRounds_" + str(num_of_pairs) + "xFiles__v" + str(v_num)
+data_path = os.pardir + os.sep + "Data" + os.sep + "Plain_Cipher_Pairs" + os.sep + str(num_of_rounds) + "_rounds" + \
+            os.sep + str(num_of_pairs) + "_pairs__v"+ str(v_num)
 
 # numbering the output files
 f_name_count = 1
@@ -53,7 +54,7 @@ for input_file in os.scandir(data_path):
     # print("Input file name:" + input_file.name + ", Key Location is: .\n")
     # alignment for the printed rows
     align = ""
-    # for i in range(number_of_files-) == "_":
+    # for i in range(num_of_pairs-) == "_":
     #     align = " "
     # else:
     #     align = ""

@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -Wl,--enable-auto-import CMakeFiles/Stav_s_Algorithm_1.dir/main.c.o CMakeFiles/Stav_s_Algorithm_1.dir/des_noop.c.o  -o Stav_s_Algorithm_1.exe -Wl,--out-implib,libStav_s_Algorithm_1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

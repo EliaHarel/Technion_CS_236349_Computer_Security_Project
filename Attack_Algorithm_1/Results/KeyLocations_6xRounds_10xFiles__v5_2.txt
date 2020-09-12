@@ -1,5 +1,0 @@
-
-Input file name: 0, Key Location is: 14
-
-Average Location is 14.0, out of 1 samples
---- Finished in 0.0seconds ---

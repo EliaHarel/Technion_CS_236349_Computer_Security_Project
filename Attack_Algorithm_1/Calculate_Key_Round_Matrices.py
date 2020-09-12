@@ -1,4 +1,3 @@
-
 # Tested (matching the Stav's algorithm from the word file "some code")
 
 import math
@@ -16,6 +15,7 @@ S5_probability = [{0: 0, 1: 0.125, 2: 0.125, 3: 0, 4: 0.09375, 5: 0, 6: 0.03125,
                   {0: 0.125, 1: 0, 2: 0, 3: 0.125, 4: 0.03125, 5: 0.125, 6: 0.09375, 7: 0,
                    8: 0.0625, 9: 0.125, 10: 0.0625, 11: 0, 12: 0.03125, 13: 0.03125, 14: 0.0625, 15: 0.125}]
 
+
 # Tested
 # input: 2 strings
 # output: true/flase if bits 4-7 are identical
@@ -24,6 +24,7 @@ def equality_right_sides(plain, cipher):
         if plain[i] != cipher[i]:
             return False
     return True
+
 
 # Tested by inheritance of m1
 # input: plain = ????, s_box = ????, key = a single bit value of the inserted key bit
@@ -36,6 +37,7 @@ def aux_probability_from_Sx_help(plain, s_box, key):
         bit_index = 5
         dictionary_index = S5_probability
     return dictionary_index[int(plain[bit_index]) ^ key]
+
 
 # Tested by inheritance of m1
 # input: plain = string, cipher = string, s_box = 1 || 5 (int), key = a single bit value of the inserted key bit
@@ -55,6 +57,7 @@ def left_side_xor(plain, cipher):
     left_c = cipher >> 4
     return left_c ^ left_p
 
+
 # Tested by inheritance of m1
 # input: plain = integer, cipher = integer, key = a single bit value of the inserted key bit, s_box = ????
 # output:
@@ -67,6 +70,7 @@ def prob_calculation(plain, cipher, key, s_box):
     else:
         return probability_from_Sx_help(plain, cipher, s_box, key)
 
+
 # Tested
 # input: 8 bits integer
 # output: swaps the 4 lsb with the 4 msb
@@ -74,6 +78,7 @@ def swap_cipher(cipher):
     right = cipher >> 4
     left = (cipher << 4) % 256
     return left | right
+
 
 # Tested
 # input: sbox = 1||5 (int) , key = a single bit value of the inserted key bit (int)
@@ -85,6 +90,7 @@ def fill_partial_m1(sbox, key):
             cipher = swap_cipher(j)
             temp_matrix[i][j] = prob_calculation(i, cipher, key, sbox)
     return temp_matrix
+
 
 # Tested
 # input: 2 lists of lists of integers
@@ -109,7 +115,6 @@ def matrix_product(A, B):
 # mat[levels][key][plaintext][ciphertext]
 mat = [[] for k in range(num_of_rounds + 1)]
 
-
 ########################################################
 #  manually creating the probabilities of 1 2 rounds.  #
 ########################################################
@@ -128,22 +133,20 @@ m2[3] = matrix_product(m1[1], m1[3])  # key = 11
 
 mat[2] = m2
 
-
-
 # Tested
 ##############################################################
 #  creating levels 4-2^rounds based on mat[2] probabilities  #
 ##############################################################
 
-#reminder: mat[levels][key][plaintext][ciphertext]
-for level in range(4, num_of_rounds + 1): # {mat[0], mat[1], mat[3]} do not exist, mat[2] is initialized manually
+# reminder: mat[levels][key][plaintext][ciphertext]
+for level in range(4, num_of_rounds + 1):  # {mat[0], mat[1], mat[3]} do not exist, mat[2] is initialized manually
     if level % 2 == 1:
         continue
     mat[level] = [[] for k in range(pow(2, level))]
     for key in range(pow(2, level)):
         subkey_left = math.floor(key / 4)
         subkey_right = key % 4
-        else:
-            mat[level][key] = matrix_product(mat[level - 2][subkey_left], mat[2][subkey_right])
+    else:
+        mat[level][key] = matrix_product(mat[level - 2][subkey_left], mat[2][subkey_right])
 
 print(mat)

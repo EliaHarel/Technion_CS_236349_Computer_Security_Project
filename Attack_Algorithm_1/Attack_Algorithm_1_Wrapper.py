@@ -8,8 +8,8 @@ from Attack_Algorithm_1 import attack_algorithm_1
 #         user inputs         #
 ###############################
 num_of_rounds = 6
-num_of_pairs = 5000
-v_num = 0
+num_of_pairs = 100000
+v_num = 3
 comments_to_file = ""
 
 ##############################

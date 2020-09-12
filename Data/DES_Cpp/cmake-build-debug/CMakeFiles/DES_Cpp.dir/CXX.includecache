@@ -6,6 +6,34 @@
 
 #IncludeRegexTransform: 
 
+C:/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/Data/DES_Cpp/DES_Encrypt.cpp
+iostream
+-
+string
+-
+vector
+-
+queue
+-
+stack
+-
+map
+-
+set
+-
+cmath
+-
+algorithm
+-
+cstring
+-
+bitset
+-
+fstream
+-
+unordered_map
+-
+
 C:/E.R/Programming/Git/GitHub/Technion_CS_236349_Computer_Security_Project/Data/DES_Cpp/DES_Encrypt.h
 string
 -

@@ -2,6 +2,7 @@
 ~Archive/*
 **/~Archive/*
 **/venv/*
+**/.idea/*
 
 Attack_Algorithm_1/.idea/workspace.xml
 

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="052123ff-1c66-448c-b58e-9b85c9b32f1e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Attack_Algorithm_1/Attack_Algorithm_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Attack_Algorithm_1/Attack_Algorithm_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Attack_Algorithm_1/Attack_Algorithm_1_Wrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Attack_Algorithm_1/Attack_Algorithm_1_Wrapper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Attack_Algorithm_1/Calculate_Key_Round_Matrices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Attack_Algorithm_1/Calculate_Key_Round_Matrices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Attack_Algorithm_2/Attack_Algorithm_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Attack_Algorithm_2/Attack_Algorithm_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DES_Cpp.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DES_Cpp.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DES_Cpp.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DES_Cpp.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/DES_Cpp.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/DES_Cpp.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prepare_Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Prepare_Data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Texts(1).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/$CACHE_FILE$" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/Stav's Algorithm_1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/3.16.5/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/3.16.5/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/C.includecache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/des_noop.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/main.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/Stav_s_Algorithm_1.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/Stav_s_Algorithm_1.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/Stav_s_Algorithm_1.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/des_noop.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/des_noop.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav's Algorithm_1/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/Stav_algorithm_prints_plain_n_cipher.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/Stav_algorithm_prints_plain_n_cipher.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/Stav_algorithm_prints_plain_n_cipher.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/cmake-build-debug/Stav_algorithm_prints_plain_n_cipher.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Stav_algorithm_prints_plain_n_cipher/toCompare.c" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1gmIN0Fo7k7L9wGqOrS0LKV6FFZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
+  </component>
+  <component name="RunManager">
+    <configuration name="DES_Cpp" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="6 100000 1011001001111110011110101010100000000010100110011011111110000001 0.txt" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DES_Cpp" TARGET_NAME="DES_Cpp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DES_Cpp" RUN_TARGET_NAME="DES_Cpp">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="052123ff-1c66-448c-b58e-9b85c9b32f1e" name="Default Changelist" comment="" />
+      <created>1598713297078</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598713297078</updated>
+      <workItem from="1598713301599" duration="5094000" />
+      <workItem from="1598718971257" duration="2082000" />
+      <workItem from="1599919636449" duration="72000" />
+      <workItem from="1599919927949" duration="2476000" />
+      <workItem from="1599932438808" duration="1577000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="351" y="77" key="#DES_Cpp" timestamp="1599934003617">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="351" y="77" key="#DES_Cpp/0.0.1280.680@0.0.1280.680" timestamp="1599934003617" />
+    <state x="74" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599933954784">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="74" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599933954784" />
+    <state x="396" y="44" key="#xdebugger.evaluate" timestamp="1599933744098">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="396" y="44" key="#xdebugger.evaluate/0.0.1280.680@0.0.1280.680" timestamp="1599933744098" />
+    <state width="428" height="450" key="DebuggerActiveHint" timestamp="1599933905781">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="428" height="450" key="DebuggerActiveHint/0.0.1280.680@0.0.1280.680" timestamp="1599933905781" />
+    <state width="1237" height="249" key="GridCell.Tab.0.bottom" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state width="1237" height="249" key="GridCell.Tab.0.center" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state width="1237" height="249" key="GridCell.Tab.0.left" timestamp="1599934019315">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599934019315" />
+    <state width="1237" height="249" key="GridCell.Tab.0.right" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state width="1237" height="249" key="GridCell.Tab.1.bottom" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state width="1237" height="249" key="GridCell.Tab.1.center" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state width="1237" height="249" key="GridCell.Tab.1.left" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state width="1237" height="249" key="GridCell.Tab.1.right" timestamp="1599934019316">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="249" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599934019316" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1599933940825">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1599933940825" />
+    <state x="196" y="77" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1599921916298">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="196" y="77" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680@0.0.1280.680" timestamp="1599921916298" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>67</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>60</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>53</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>48</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -1,6 +1,7 @@
 Data/Archive/*
 Data/Plain_Cipher_Pairs/*
-~Archive/*
+Attack_Algorithm_1/venv/*
+*/~Archive/*
 ~Auxiliary/*
 Trying/*
 Attack_Algorithm_1/Archive/*

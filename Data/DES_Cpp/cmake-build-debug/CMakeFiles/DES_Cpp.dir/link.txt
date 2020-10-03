@@ -1,3 +1,0 @@
-"C:\Programs\JetBrains\CLion 2020.1\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\DES_Cpp.dir/objects.a
-C:\Compilers\MinGW\bin\ar.exe cr CMakeFiles\DES_Cpp.dir/objects.a @CMakeFiles\DES_Cpp.dir\objects1.rsp
-C:\Compilers\MinGW\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\DES_Cpp.dir/objects.a -Wl,--no-whole-archive  -o DES_Cpp.exe -Wl,--out-implib,libDES_Cpp.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\DES_Cpp.dir\linklibs.rsp

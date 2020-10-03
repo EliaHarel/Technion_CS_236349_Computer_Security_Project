@@ -1,0 +1,19 @@
+
+Input file name: 0, Key Location is: 105
+Input file name: 1, Key Location is: 5
+Input file name: 10, Key Location is: 65
+Input file name: 11, Key Location is: 37
+Input file name: 12, Key Location is: 77
+Input file name: 13, Key Location is: 1
+Input file name: 14, Key Location is: 137
+Input file name: 2, Key Location is: 125
+Input file name: 3, Key Location is: 125
+Input file name: 4, Key Location is: 245
+Input file name: 5, Key Location is: 117
+Input file name: 6, Key Location is: 217
+Input file name: 7, Key Location is: 69
+Input file name: 8, Key Location is: 57
+Input file name: 9, Key Location is: 97
+
+Average Location is 98.6, out of 15 samples
+--- Finished in 0.0seconds ---

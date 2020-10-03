@@ -1,0 +1,5 @@
+Input file name: 1, Key Location is: 26
+Input file name: 2, Key Location is: 64
+
+Average Location is 45.0, out of 2 samples
+--- Finished in 0.0seconds ---

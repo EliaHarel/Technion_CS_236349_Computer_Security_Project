@@ -1,0 +1,7 @@
+
+Input file name: 0, Key Location is: 105
+Input file name: 1, Key Location is: 173
+Input file name: 2, Key Location is: 253
+
+Average Location is 177.0, out of 3 samples
+--- Finished in 0.0seconds ---

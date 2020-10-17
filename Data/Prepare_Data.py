@@ -6,7 +6,7 @@ import pathlib
 from pathlib import Path
 import platform
 
-rounds = "6"
+rounds = "8"
 num_of_files = 100
 num_of_plain_cipher_pairs = 50000
 
@@ -21,9 +21,9 @@ if arguments_count == 3:
 
 # the number of plain texts and cipher texts is determined by the input file
 plain_cipher_pairs_dir_name = "Plain_Cipher_Pairs"
-c_file_path = pathlib.Path().absolute().__str__() + os.sep + "DES_Cpp" + os.sep
-windows_c_file_path = c_file_path +  "cmake-build-debug" + os.sep + "DES_Cpp.exe"
-linux_c_file_path = c_file_path +  "DES_CPP"
+c_file_path = pathlib.Path().absolute().__str__() + os.sep
+windows_c_file_path = c_file_path + "DES_Cpp" + os.sep + "cmake-build-debug" + os.sep + "DES_Cpp.exe"
+linux_c_file_path = c_file_path + "DES_Cpp/DES_CPP"
 
 
 # cur_dir_path = cur_dir_path.resolve()
@@ -72,8 +72,11 @@ for i in range(num_of_files):
     str_pairs_num = str(num_of_plain_cipher_pairs)
 
     cur_OS = platform.system()
-    if cur_OS == "Windows":
+    if (cur_OS == "Windows"):
         command = [windows_c_file_path, str_rounds, str_pairs_num, str_key, output_file_path]
-    elif cur_OS == "Linux":
+    elif (cur_OS == "Linux"):
         command = linux_c_file_path + ' ' + str_rounds + ' ' + str_pairs_num + ' ' + str_key + ' ' + output_file_path
     ciphertext = subprocess.check_output(command, shell=True)
+
+
+

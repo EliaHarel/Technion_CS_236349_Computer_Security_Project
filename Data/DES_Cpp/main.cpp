@@ -11,23 +11,6 @@
 #include "DES_Encrypt.h"
 #include <ctime>
 #include <random>
-//#include <filesystem>
-#include <sys/stat.h>
-#include <conio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-/*
-#include <random>
-#include <filesystem>
-#include <algorithm>
-#include <cstdlib>
-#include <cstring>
-#include <deque>
-#include <functional>
-#include <cstdio>
-*/
 
 #define TEXT_LENGTH 64
 #define DEBUG false

@@ -26,7 +26,7 @@ std::string decimal2bin(int decimal_num);
 
 
 // input: rounds, pairs_num, key, path_to_output_file
-//input example "6 5 0000000000000000000000000000000000000000000000000000000000000000 C:\E.R\Programming\Git\GitHub\Technion_CS_236349_Computer_Security_Project\Data\Plain_Cipher_Pairs\6_rounds\5_pairs\1.txt"
+//input example "6 5 0000000000000000000000000000000000000000000000000000000000000000 \Technion_CS_236349_Computer_Security_Project\Data\Plain_Cipher_Pairs\6_rounds\5_pairs\1.txt"
 int main(int argc, char* argv[]){
 
     int rounds = strtol(argv[1], nullptr, 10); // number of rounds

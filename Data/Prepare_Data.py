@@ -6,9 +6,9 @@ import pathlib
 from pathlib import Path
 import platform
 
-rounds = "8"
+rounds = "6"
 num_of_files = 100
-num_of_plain_cipher_pairs = 50000
+num_of_plain_cipher_pairs = 500
 
 arguments_count = len(sys.argv)
 if arguments_count != 1 and arguments_count != 3:

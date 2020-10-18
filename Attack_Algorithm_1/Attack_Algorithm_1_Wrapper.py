@@ -7,9 +7,9 @@ from Attack_Algorithm_1 import attack_algorithm_1
 ###############################
 #         user inputs         #
 ###############################
-num_of_rounds = 6
+num_of_rounds = 8
 num_of_pairs = 100000
-v_num = 3
+v_num = 9
 comments_to_file = ""
 
 ##############################
@@ -67,8 +67,8 @@ start_time = time.time()
 average = locations_sum / input_count
 output_file.write('\n')
 output_file.write("Average Location is " + str(average) + ", out of " + str(input_count) + " samples\n")
-runnning_time = "--- Finished in " + str(time.time() - start_time) + "seconds ---"
-output_file.write(runnning_time)
+# runnning_time = "--- Finished in " + str(time.time() - start_time) + "seconds ---"
+# output_file.write(runnning_time)
 output_file.close()
 time_end("writing to file", start_time)
 

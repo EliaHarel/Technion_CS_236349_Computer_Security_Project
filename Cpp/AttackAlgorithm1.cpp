@@ -23,10 +23,10 @@ namespace masks {
 using namespace masks;
 
 
-static std::string getSubInput(std::string input, const std::vector<int>& mask){
+static std::string getSubInput(std::string& input, const std::vector<int>& mask){
     std::string sub_str;
     for(int i : mask){
-        sub_str += input[i];
+        sub_str += input.at(i);
     }
     return sub_str;
 }
@@ -37,8 +37,8 @@ calculateKeyDistance(int key, std::vector<std::vector<double>>& mat_summing, int
     double distance = 0;
     for(int i = 0; i < matrix_size; i++){
         for(int j = 0; j < matrix_size; j++){
-            double part1 = pre_calculated_mat[num_of_rounds][key][i][j] - 1.0/((double) matrix_size);
-            double part2 = mat_summing[i][j] - ((double) num_of_inputs/(matrix_size*matrix_size));
+            double part1 = pre_calculated_mat.at(num_of_rounds).at(key).at(i).at(j) - 1.0/((double) matrix_size);
+            double part2 = mat_summing.at(i).at(j) - ((double) num_of_inputs/(matrix_size*matrix_size));
             distance += part1*part2;
         }
     }
@@ -56,10 +56,10 @@ static std::pair<int, int> createPair(int num_of_rounds, std::string& binary_use
 int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of_inputs,
                      vvvvd& pre_calculated_mat){
 
-    std::vector<std::vector<double>> mat_summing(matrix_size, std::vector<double>(matrix_size, 0));
+    std::vector<std::vector<double>> mat_summing(matrix_size, vd(matrix_size, 0));
     for(int i = 0; i < num_of_inputs; i++){
         std::pair<int, int> plain_cipher_pair = createPair(num_of_rounds, binary_used_key);
-        mat_summing[plain_cipher_pair.first, plain_cipher_pair.second];
+        mat_summing.at(plain_cipher_pair.first).at(plain_cipher_pair.second)++;
     }
 
     std::string str_sub_used_key = getSubInput(binary_used_key, key_mask);
@@ -88,13 +88,13 @@ void attack1(int rounds, int plain_cipher_pairs, int iterations,
     double location_sum = 0;
     for(int i = 0; i < iterations; ++i){
         int location = attackAlgorithm1(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
-        output_file << std::endl << "Iteration number: " << i << ". Location is: " << location << std::endl;
+        output_file << "Iteration number: " << i << ". Location is: " << location << std::endl;
         location_sum += location;
     }
 
     double avg_location = location_sum/iterations;
-    output_file << std::endl << "Average Location is: " << avg_location << "out of " << iterations
-                << " samples." << std::endl;
+    output_file << std::endl << "Average Location: " << avg_location << std::endl
+                << "Samples :" << iterations << std::endl;
 
     output_file.close();
 }

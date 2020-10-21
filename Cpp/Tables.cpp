@@ -137,7 +137,7 @@ static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
 
 }
 
-vvvd CalcTables(int rounds, vvvvd& pre_calculated_mat){
+void CalcTables(int rounds, vvvvd& pre_calculated_mat){
     calcTableOneAndTwo(pre_calculated_mat);
 
     for(int i = 4; i <= rounds; i += 2){
@@ -148,7 +148,5 @@ vvvd CalcTables(int rounds, vvvvd& pre_calculated_mat){
                       pre_calculated_mat.at(i).at(j));
         }
     }
-
-    printf("hello\n");
 }
 

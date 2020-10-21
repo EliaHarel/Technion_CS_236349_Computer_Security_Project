@@ -16,7 +16,7 @@ namespace types {
 using namespace types;
 
 
-std::vector<std::vector<std::vector<double>>> CalcTables(int rounds, vvvvd& pre_calculated_mat);
+void CalcTables(int rounds, vvvvd& pre_calculated_mat);
 
 
 #endif //TECHNION_CS_236349_COMPUTER_SECURITY_PROJECT_CPP_TABLES_H

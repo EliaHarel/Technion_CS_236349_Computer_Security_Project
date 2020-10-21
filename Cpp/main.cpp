@@ -5,7 +5,7 @@
 #include <fstream>
 #include <cmath>
 #include "Tables.h"
-#include "RuningAttackUtil.h"
+#include "RunningAttackUtil.h"
 #include "AttackAlgorithm1.h"
 
 #define DEBUG false

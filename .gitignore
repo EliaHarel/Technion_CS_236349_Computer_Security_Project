@@ -2,5 +2,6 @@
 **/~Archive/*
 **/venv/*
 **/.idea/*
+**/Release/*
 **/cmake-build-debug/*
 **/__pycache__/*

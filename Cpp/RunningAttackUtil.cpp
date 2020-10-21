@@ -4,7 +4,7 @@
 
 #include <cstdlib>
 #include <string>
-#include "RuningAttackUtil.h"
+#include "RunningAttackUtil.h"
 #include "Data.h"
 #include <sys/stat.h> //do not remove
 

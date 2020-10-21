@@ -1,16 +1,18 @@
+
 //
-// Created by EliaHarel on 18/10/2020.
+// Created by Stav Perla.
+// Modified by EliaHarel on 20/10/2020.
 //
 
 
 
-#include <vector>
-#include <string>
 #include <cmath>
+#include <iostream>
+#include "AttackAlgorithm1.h"
+#include "Tables.h"
 #include "Data.h"
+#include <fstream>
 
-std::vector<std::vector<std::vector<std::vector<double>>>> pre_calculated_mat;
-const int matrix_size = 256;
 
 namespace masks {
     const std::vector<int> plain_mask{7, 13, 24, 2, 40, 48, 54, 62};
@@ -18,10 +20,10 @@ namespace masks {
     // key_mask[i] - the key bit we use in level i+1
     const std::vector<int> key_mask{27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2};
 }
-
 using namespace masks;
 
-std::string getSubInput(std::string input, const std::vector<int>& mask){
+
+static std::string getSubInput(std::string input, const std::vector<int>& mask){
     std::string sub_str;
     for(int i : mask){
         sub_str += input[i];
@@ -29,9 +31,9 @@ std::string getSubInput(std::string input, const std::vector<int>& mask){
     return sub_str;
 }
 
-double
+static double
 calculateKeyDistance(int key, std::vector<std::vector<double>>& mat_summing, int num_of_inputs,
-                     int num_of_rounds){
+                     int num_of_rounds, vvvvd& pre_calculated_mat){
     double distance = 0;
     for(int i = 0; i < matrix_size; i++){
         for(int j = 0; j < matrix_size; j++){
@@ -43,7 +45,7 @@ calculateKeyDistance(int key, std::vector<std::vector<double>>& mat_summing, int
     return distance;
 }
 
-std::pair<int, int> createPair(int num_of_rounds, std::string& binary_used_key){
+static std::pair<int, int> createPair(int num_of_rounds, std::string& binary_used_key){
     std::pair<std::string, std::string> data;
     data = getPlainCipherPair(num_of_rounds, binary_used_key);
     auto str_sub_plain = getSubInput(data.first, plain_mask);
@@ -51,7 +53,8 @@ std::pair<int, int> createPair(int num_of_rounds, std::string& binary_used_key){
     return {binaryStrToInt(str_sub_plain), binaryStrToInt(str_sub_cipher)};
 }
 
-int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of_inputs){
+int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of_inputs,
+                     vvvvd& pre_calculated_mat){
 
     std::vector<std::vector<double>> mat_summing(matrix_size, std::vector<double>(matrix_size, 0));
     for(int i = 0; i < num_of_inputs; i++){
@@ -63,12 +66,13 @@ int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of
     std::string str_sub_used_key_by_rounds = str_sub_used_key.substr(0, num_of_rounds);
     int sub_used_key_by_rounds = binaryStrToInt(str_sub_used_key_by_rounds);
     double used_key_distance = calculateKeyDistance(sub_used_key_by_rounds, mat_summing, num_of_inputs,
-                                                    num_of_rounds);
+                                                    num_of_rounds, pre_calculated_mat);
 
     int location = 1;
     for(int temp_key = 0; temp_key < pow(2, num_of_rounds); temp_key++){
         if(temp_key == sub_used_key_by_rounds) continue;
-        double curr_distance = calculateKeyDistance(temp_key, mat_summing, num_of_inputs, num_of_rounds);
+        double curr_distance = calculateKeyDistance(temp_key, mat_summing, num_of_inputs, num_of_rounds,
+                                                    pre_calculated_mat);
         if(curr_distance > used_key_distance){
             location++;
         }
@@ -79,3 +83,18 @@ int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of
 }
 
 
+void attack1(int rounds, int plain_cipher_pairs, int iterations,
+             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
+    double location_sum = 0;
+    for(int i = 0; i < iterations; ++i){
+        int location = attackAlgorithm1(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
+        output_file << std::endl << "Iteration number: " << i << ". Location is: " << location << std::endl;
+        location_sum += location;
+    }
+
+    double avg_location = location_sum/iterations;
+    output_file << std::endl << "Average Location is: " << avg_location << "out of " << iterations
+                << " samples." << std::endl;
+
+    output_file.close();
+}

@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <fstream>
 #include "RunningAttackUtil.h"
 #include "Data.h"
 #include <sys/stat.h> //do not remove
@@ -63,5 +64,6 @@ void initializeOpenOutputFile(std::fstream& output_file, int rounds, int plain_c
     std::string output_file_path = findOpenResultPath(rounds, plain_cipher_pairs, file_path);
     //creates a file if does not exist
     output_file.open(output_file_path.c_str(), std::fstream::in|std::fstream::out|std::fstream::app);
+
     output_file << "Rounds: " << std::to_string(rounds) << ". Key: " << binary_key << std::endl;
 }

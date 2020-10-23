@@ -5,9 +5,6 @@
 #include <vector>
 #include "Tables.h"
 
-namespace types{}
-using namespace types;
-
 // int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of_inputs);
 void attack1(int rounds, int plain_cipher_pairs, int iterations,
              std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat);

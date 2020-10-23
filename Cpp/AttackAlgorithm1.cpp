@@ -1,16 +1,14 @@
-
 //
 // Created by Stav Perla.
 // Modified by EliaHarel on 20/10/2020.
 //
 
 
-
 #include <cmath>
 #include <iostream>
 #include "AttackAlgorithm1.h"
 #include "Tables.h"
-#include "Data.h"
+#include "DataUtils.h"
 #include <fstream>
 
 

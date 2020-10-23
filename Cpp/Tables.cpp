@@ -1,10 +1,7 @@
 
 #include <cmath>
-#include <cstdio>
 #include "Tables.h"
 
-namespace types {}
-using namespace types;
 
 namespace preCalcTables {
     double S1Help[32] = {0.0625, 0.03125, 0.0625, 0.0625, 0.09375, 0.09375, 0.0625, 0, 0, 0.09375, 0.125,
@@ -48,9 +45,9 @@ using namespace preCalcTables;
 
 //void matrixMul(int r1, int c1, int c2, vvd A[r1][c1], double B[c1][c2], double C[r1][c2]){
 static void matrixMul(vvd& A, vvd& B, vvd& C){
-    for(int i = 0; i < A.size(); i++){
-        for(int j = 0; j < B.at(0).size(); j++){
-            for(int k = 0; k < A.at(0).size(); k++){
+    for(int i = 0; i < A.size(); i ++){
+        for(int j = 0; j < B.at(0).size(); j ++){
+            for(int k = 0; k < A.at(0).size(); k ++){
                 C.at(i).at(j) = C.at(i).at(j) + A.at(i).at(k)*B.at(k).at(j);
             }
         }
@@ -66,13 +63,13 @@ static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
     int Fin;
     int Fout;
 
-    for(int i = 0; i < 256; i++){
-        for(int j = 0; j < 256; j++){
+    for(int i = 0; i < 256; i ++){
+        for(int j = 0; j < 256; j ++){
             Pin = (i&15);
             Pout = ((i&240) >> 4);
             Cin = ((j&240) >> 4);
             Cout = (j&15);
-            if(Cin != Pin)
+            if( Cin != Pin )
                 pre_calculated_mat.at(1).at(0).at(i).at(j) = 0;
             else{
                 Fin = ((i&4) << 2);
@@ -81,13 +78,13 @@ static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
             }
         }
     }
-    for(int i = 0; i < 256; i++){
-        for(int j = 0; j < 256; j++){
+    for(int i = 0; i < 256; i ++){
+        for(int j = 0; j < 256; j ++){
             Pin = (i&15);
             Pout = ((i&240) >> 4);
             Cin = ((j&240) >> 4);
             Cout = (j&15);
-            if(Cin != Pin)
+            if( Cin != Pin )
                 pre_calculated_mat.at(1).at(1).at(i).at(j) = 0;
             else{
                 Fin = ((i&4) << 2)^16;
@@ -96,13 +93,13 @@ static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
             }
         }
     }
-    for(int i = 0; i < 256; i++){
-        for(int j = 0; j < 256; j++){
+    for(int i = 0; i < 256; i ++){
+        for(int j = 0; j < 256; j ++){
             Pin = (i&15);
             Pout = ((i&240) >> 4);
             Cin = ((j&240) >> 4);
             Cout = (j&15);
-            if(Cin != Pin)
+            if( Cin != Pin )
                 pre_calculated_mat.at(1).at(2).at(i).at(j) = 0;
             else{
                 Fin = ((i&1) << 4);
@@ -111,13 +108,13 @@ static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
             }
         }
     }
-    for(int i = 0; i < 256; i++){
-        for(int j = 0; j < 256; j++){
+    for(int i = 0; i < 256; i ++){
+        for(int j = 0; j < 256; j ++){
             Pin = (i&15);
             Pout = ((i&240) >> 4);
             Cin = ((j&240) >> 4);
             Cout = (j&15);
-            if(Cin != Pin)
+            if( Cin != Pin )
                 pre_calculated_mat.at(1).at(3).at(i).at(j) = 0;
             else{
                 Fin = ((i&1) << 4)^16;
@@ -137,11 +134,14 @@ static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
 
 }
 
-void CalcTables(int rounds, vvvvd& pre_calculated_mat){
-    calcTableOneAndTwo(pre_calculated_mat);
+void CalcTables(int rounds, vvvvd& pre_calculated_mat, int ready_rounds){
+    if( ready_rounds == 0 ){
+        calcTableOneAndTwo(pre_calculated_mat);
+        ready_rounds = 2;
+    }
 
-    for(int i = 4; i <= rounds; i += 2){
-        for(int j = 0; j < pow(2, i); j++){
+    for(int i = ready_rounds + 2; i <= rounds; i += 2){
+        for(int j = 0; j < pow(2, i); j ++){
             int first = ((j&(int) (pow(2, i) - 4)) >> 2);
             int last = (j&3);
             matrixMul(pre_calculated_mat.at(i - 2).at(first), pre_calculated_mat.at(2).at(last),

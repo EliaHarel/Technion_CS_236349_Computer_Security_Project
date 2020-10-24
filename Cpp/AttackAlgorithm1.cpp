@@ -33,9 +33,10 @@ static double
 calculateKeyDistance(int key, std::vector<std::vector<double>>& mat_summing, int num_of_inputs,
                      int num_of_rounds, vvvvd& pre_calculated_mat){
     double distance = 0;
-    for(int i = 0; i < matrix_size; i++){
-        for(int j = 0; j < matrix_size; j++){
-            double part1 = pre_calculated_mat.at(num_of_rounds).at(key).at(i).at(j) - 1.0/((double) matrix_size);
+    for(int i = 0; i < matrix_size; i ++){
+        for(int j = 0; j < matrix_size; j ++){
+            double part1 =
+                    pre_calculated_mat.at(num_of_rounds).at(key).at(i).at(j) - 1.0/((double) matrix_size);
             double part2 = mat_summing.at(i).at(j) - ((double) num_of_inputs/(matrix_size*matrix_size));
             distance += part1*part2;
         }
@@ -51,13 +52,13 @@ static std::pair<int, int> createPair(int num_of_rounds, std::string& binary_use
     return {binaryStrToInt(str_sub_plain), binaryStrToInt(str_sub_cipher)};
 }
 
-int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of_inputs,
+int attackAlgorithm1(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
                      vvvvd& pre_calculated_mat){
 
     std::vector<std::vector<double>> mat_summing(matrix_size, vd(matrix_size, 0));
-    for(int i = 0; i < num_of_inputs; i++){
+    for(int i = 0; i < num_of_inputs; i ++){
         std::pair<int, int> plain_cipher_pair = createPair(num_of_rounds, binary_used_key);
-        mat_summing.at(plain_cipher_pair.first).at(plain_cipher_pair.second)++;
+        mat_summing.at(plain_cipher_pair.first).at(plain_cipher_pair.second) ++;
     }
 
     std::string str_sub_used_key = getSubInput(binary_used_key, key_mask);
@@ -67,12 +68,12 @@ int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of
                                                     num_of_rounds, pre_calculated_mat);
 
     int location = 1;
-    for(int temp_key = 0; temp_key < pow(2, num_of_rounds); temp_key++){
-        if(temp_key == sub_used_key_by_rounds) continue;
+    for(int temp_key = 0; temp_key < pow(2, num_of_rounds); temp_key ++){
+        if( temp_key == sub_used_key_by_rounds ) continue;
         double curr_distance = calculateKeyDistance(temp_key, mat_summing, num_of_inputs, num_of_rounds,
                                                     pre_calculated_mat);
-        if(curr_distance > used_key_distance){
-            location++;
+        if( curr_distance > used_key_distance ){
+            location ++;
         }
     }
 
@@ -81,18 +82,3 @@ int attackAlgorithm1(int num_of_rounds, std::string& binary_used_key, int num_of
 }
 
 
-void attack1(int rounds, int plain_cipher_pairs, int iterations,
-             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
-    double location_sum = 0;
-    for(int i = 0; i < iterations; ++i){
-        int location = attackAlgorithm1(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
-        output_file << "Iteration number: " << i << ". Location is: " << location << std::endl;
-        location_sum += location;
-    }
-
-    double avg_location = location_sum/iterations;
-    output_file << std::endl << "Average Location: " << avg_location << std::endl
-                << "Samples :" << iterations << std::endl;
-
-    output_file.close();
-}

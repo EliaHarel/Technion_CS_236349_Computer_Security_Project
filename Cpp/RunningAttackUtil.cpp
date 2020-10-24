@@ -7,8 +7,14 @@
 #include <fstream>
 #include "RunningAttackUtil.h"
 #include "DataUtils.h"
+#include "Tables.h"
+#include "AttackAlgorithm1.h"
+#include "AttackAlgorithm2.h"
 #include <sys/stat.h> //do not remove
 
+#include "AttackAlgorithm2FewLevels.h"
+
+using namespace types;
 
 #ifdef __linux__
 std::string separator = "/";
@@ -32,7 +38,7 @@ void extractingParams(int argc, char* argv[], int* rounds, int* plain_cipher_pai
     *iterations = strtol(argv[3], nullptr, 10);
     file_path = argv[4];
 
-    if(argc == 6)
+    if( argc == 6 )
         binary_key = argv[5];
     else
         createBinText(binary_key);
@@ -50,9 +56,9 @@ static std::string findOpenResultPath(int rounds, int plain_cipher_pairs, std::s
             "xPairs__v";
 
     int counter = 0;
-    std::string temp_path = path + std::to_string(counter++) + ".txt";
+    std::string temp_path = path + std::to_string(counter ++) + ".txt";
     while(fileExists(temp_path)){
-        temp_path = path + std::to_string(counter++) + ".txt";
+        temp_path = path + std::to_string(counter ++) + ".txt";
     }
     return temp_path;
 }
@@ -66,4 +72,33 @@ void initializeOpenOutputFile(std::fstream& output_file, int rounds, int plain_c
     output_file.open(output_file_path.c_str(), std::fstream::in|std::fstream::out|std::fstream::app);
 
     output_file << "Rounds: " << std::to_string(rounds) << ". Key: " << binary_key << std::endl;
+}
+
+void attack(double attackNumber, int rounds, int plain_cipher_pairs, int iterations,
+            std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
+    double location_sum = 0;
+    for(int i = 0; i < iterations; ++ i){
+        int location;
+        if (attackNumber == 1)
+            location = attackAlgorithm1(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
+        else if(attackNumber == 2)
+            location = attackAlgorithm2(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
+        else if(attackNumber == 2.5)
+        output_file << "Iteration number: " << i << ". Location is: " << location << std::endl;
+        location_sum += location;
+    }
+
+    double avg_location = location_sum/iterations;
+    output_file << std::endl << "Average Location: " << avg_location << std::endl
+                << "Samples :" << iterations << std::endl;
+
+    output_file.close();
+
+}
+
+// void attack2
+void attack1(int rounds, int plain_cipher_pairs, int iterations,
+             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
+
+
 }

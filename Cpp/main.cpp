@@ -20,7 +20,7 @@ std::string data_source_prefix = "cereal_data_", data_source_suffix = "_rounds.b
 
 void tableCreation(char* argv[]);
 
-// input: rounds, pairs, iterations, path_to_output_file, key
+// input: number of rounds, number of pairs, number of iterations, absolote path to output file directory, key = optional
 //input examples
 // For Attack - "6 100 5  \Technion_CS_236349_Computer_Security_Project\Attack_Algorithm_1\Results"
 // For Table Creation - "tables 6" when 6 is the number of wanted rounds rounds
@@ -33,8 +33,7 @@ int main(int argc, char* argv[]){
 
     int rounds, plain_cipher_pairs, iterations;
     std::string file_path, binary_key;
-    extractingParams(argc, argv, &rounds, &plain_cipher_pairs, &iterations,
-                     file_path, binary_key);
+    extractingParams(argc, argv, &rounds, &plain_cipher_pairs, &iterations, file_path, binary_key);
 
     vvvvd pre_calculated_mat;
     std::ifstream data_source;

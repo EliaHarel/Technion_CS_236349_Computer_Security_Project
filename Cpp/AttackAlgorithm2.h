@@ -7,13 +7,11 @@
 
 #include <string>
 #include "Tables.h"
-// namespace types{}
-// using namespace types;
 
 namespace types {
     typedef std::vector<int> vi;
     typedef std::vector<vi> vvi;
-} // defined in Tables.husing namespace types;
+} // defined in Tables.h
 
 
 

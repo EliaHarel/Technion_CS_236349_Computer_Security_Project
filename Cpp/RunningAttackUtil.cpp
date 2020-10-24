@@ -76,14 +76,17 @@ void initializeOpenOutputFile(std::fstream& output_file, int rounds, int plain_c
 
 void attack(double attackNumber, int rounds, int plain_cipher_pairs, int iterations,
             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
-    double location_sum = 0;
-    for(int i = 0; i < iterations; ++ i){
+    double location_sum = 0; //using double for later division
+    for(int i = 1; i <= iterations; ++ i){
         int location;
-        if (attackNumber == 1)
-            location = attackAlgorithm1(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
-        else if(attackNumber == 2)
-            location = attackAlgorithm2(rounds, binary_key, plain_cipher_pairs, pre_calculated_mat);
-        else if(attackNumber == 2.5)
+        if( attackNumber == 1 )
+            location = attackAlgorithm1(rounds, plain_cipher_pairs, binary_key, pre_calculated_mat);
+        else if( attackNumber == 2 )
+            location = attackAlgorithm2(rounds, plain_cipher_pairs, binary_key, pre_calculated_mat);
+        else if( attackNumber == 2.5 )
+            location = AttackAlgorithm2FewLevels(rounds, plain_cipher_pairs, binary_key, pre_calculated_mat);
+        else
+            return;
         output_file << "Iteration number: " << i << ". Location is: " << location << std::endl;
         location_sum += location;
     }
@@ -96,9 +99,26 @@ void attack(double attackNumber, int rounds, int plain_cipher_pairs, int iterati
 
 }
 
-// void attack2
 void attack1(int rounds, int plain_cipher_pairs, int iterations,
              std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
+    output_file << "Attack Algorithm 1" << std::endl;
+    attack(1, rounds, plain_cipher_pairs, iterations, binary_key,
+           output_file, pre_calculated_mat);
+    output_file << "Attack Algorithm 1" << std::endl;
+}
 
+void attack2(int rounds, int plain_cipher_pairs, int iterations,
+             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
+    output_file << "Attack Algorithm 2" << std::endl;
+    attack(2, rounds, plain_cipher_pairs, iterations, binary_key,
+           output_file, pre_calculated_mat);
+    output_file << "Attack Algorithm 2" << std::endl;
+}
 
+void attackFewLevels(int rounds, int plain_cipher_pairs, int iterations,
+             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
+    output_file << "Attack Algorithm 2 Few Levels" << std::endl;
+    attack(2.5, rounds, plain_cipher_pairs, iterations, binary_key,
+           output_file, pre_calculated_mat);
+    output_file << "Attack Algorithm 2 Few Levels" << std::endl;
 }

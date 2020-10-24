@@ -29,9 +29,8 @@ static std::string getSubInput(std::string& input, const std::vector<int>& mask)
     return sub_str;
 }
 
-static double
-calculateKeyDistance(int key, std::vector<std::vector<double>>& mat_summing, int num_of_inputs,
-                     int num_of_rounds, vvvvd& pre_calculated_mat){
+static double calculateKeyDistance(int key, std::vector<std::vector<double>>& mat_summing,
+                                   int num_of_inputs, int num_of_rounds, vvvvd& pre_calculated_mat){
     double distance = 0;
     for(int i = 0; i < matrix_size; i ++){
         for(int j = 0; j < matrix_size; j ++){

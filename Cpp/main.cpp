@@ -4,16 +4,12 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-#include "Tables.h"
-#include "RunningAttackUtil.h"
-#include "AttackAlgorithm1.h"
 #include "cereal/types/vector.hpp"
 #include "cereal/archives/binary.hpp"
 #include "cereal/types/memory.hpp"
 #include "cereal/archives/xml.hpp"
-#include "AttackAlgorithm2.h"
-#include "AttackAlgorithm2FewLevels.h"
-
+#include "Tables.h"
+#include "RunningAttackUtil.h"
 
 #define DEBUG false
 
@@ -51,8 +47,8 @@ int main(int argc, char* argv[]){
     std::fstream output_file;
     initializeOpenOutputFile(output_file, rounds, plain_cipher_pairs, file_path, binary_key);
     // attack1(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
-
-    std::cout << AttackAlgorithm2FewLevels(rounds, plain_cipher_pairs, binary_key, pre_calculated_mat);
+    // attack2(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
+    // attack2FewLevels(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
     std::cout << std::endl;
 
     return 0;

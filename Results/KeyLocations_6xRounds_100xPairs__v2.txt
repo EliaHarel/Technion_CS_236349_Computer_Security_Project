@@ -1,0 +1,10 @@
+Rounds: 6. Key: 0010100100100011101111101000010011100001011011001101011010101110
+Attack Algorithm 1
+Iteration number: 1. Location is: 36
+Iteration number: 2. Location is: 16
+Iteration number: 3. Location is: 18
+Iteration number: 4. Location is: 4
+Iteration number: 5. Location is: 21
+
+Average Location: 19
+Samples :5

@@ -12,6 +12,11 @@
 #include <cmath>
 
 
+namespace types {
+    typedef std::vector<int> vi;
+    typedef std::vector<vi> vvi;
+} // defined in Tables.h
+using namespace types;
 
 
 vi plain_L_mask{8, 16, 22, 30};
@@ -37,71 +42,7 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
        {14, 11, 2,  12, 4,  7,  13, 1,  5,  0,  15, 10, 3,  9, 8,  6},
        {4,  2,  1,  11, 10, 13, 7,  8,  15, 9,  12, 5,  6,  3, 0,  14},
        {11, 8,  12, 7,  1,  14, 2,  13, 6,  15, 0,  9,  10, 4, 5,  3}};
-//
-// string getSubInput(string input, const vi& mask){
-//     string sub_str;
-//     for(int i : mask){
-//         sub_str += input[i];
-//     }
-//     return sub_str;
-// }
-//
-// // num_of_rounds is the number of the rounds characteristics
-// double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-//                          vector<vector<double>> input_matrix, vvvvd& pre_calculated_mat){
-//     double distance = 0;
-//     for(int i = 0; i < matrix_size; i ++){
-//         for(int j = 0; j < matrix_size; j ++){
-//             double part_1 = input_matrix[i][j] - (double) num_of_inputs/(matrix_size*matrix_size);
-//             double part_2 = pre_calculated_mat[num_of_rounds][middle_key][i][j] - 1.0/((double) matrix_size);
-//             distance += part_1*part_2;
-//         }
-//     }
-//     return distance;
-// }
-//
-// int binaryStrToInt(string binary){
-//     int len = binary.size();
-//     int res = 0;
-//     for(int i = len - 1; i >= 0; i --){
-//         int exp = len - 1 - i;
-//         if( binary[i] == '1' )
-//             res += pow(2, exp);
-//     }
-//     return res;
-// }
-//
-// // returns the output of the s_box for the given s_box_num and binary_input
-// int sboxFunction(int s_box_num, string& binary_input){
-//     int row = binaryStrToInt(binary_input.substr(0, 1) + binary_input.substr(5, 1));
-//     int col = binaryStrToInt(binary_input.substr(1, 4));
-//     vector<vector<int>> s_box = s_box_num == 1 ? s1 : s5;
-//     return s_box[row][col];
-// }
-//
-// std::string reverse(std::string str){
-//     std::string rev_str;
-//     for(int i = str.size() - 1; i >= 0; i --){
-//         rev_str += str[i];
-//     }
-//     return rev_str;
-// }
-//
-// std::string intToBinStr(int num, int len){
-//     std::string bin_str;
-//     int new_num = num;
-//     while(new_num > 0){
-//         int res = new_num%2;
-//         res == 0 ? bin_str += '0' : bin_str += '1';
-//         new_num /= 2;
-//     }
-//
-//     while(bin_str.size() < len){
-//         bin_str += '0';
-//     }
-//
-//     return reverse(bin_str);
-// }
+
 
 std::pair<int, int> calcPair(int first_last_key, std::string& plain, std::string& cipher){
     std::string str_first_last_key = intToBinStr(first_last_key, 12);
@@ -138,15 +79,18 @@ std::pair<int, int> calcPair(int first_last_key, std::string& plain, std::string
     return {binaryStrToInt(plaintext), binaryStrToInt(ciphertext)};
 }
 
-int AttackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
-                                 vvvvd& pre_calculated_mat){
-
-    vvvi input_matrix(pow(2, 12), vvi (matrix_size,vi(matrix_size, 0)));
+// int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
+//                                  vvvvd& pre_calculated_mat){
+int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
+    std::string binary_used_key;
+    createBinText(binary_used_key);
+    vvvd input_matrix(pow(2, 12), vvd(matrix_size, vd(matrix_size, 0)));
     for(int i = 0; i < num_of_inputs; i ++){
-        std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds, binary_used_key);
+        std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds,
+                                                                                   binary_used_key);
         for(int first_last_key = 0; first_last_key < pow(2, 12); first_last_key ++){
             std::pair<int, int> char_plain_cipher_pair = calcPair(first_last_key, plain_cipher_pair.first,
-                                                             plain_cipher_pair.second);
+                                                                  plain_cipher_pair.second);
             input_matrix[first_last_key][char_plain_cipher_pair.first][char_plain_cipher_pair.second] ++;
         }
     }
@@ -179,3 +123,6 @@ int AttackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string&
     return location;
 
 }
+
+
+// def get_next_input_from_file(file_object):

@@ -11,6 +11,7 @@
 #include <string>
 
 
+
 std::string decimalToBin(int decimal_num){
     auto binary_num = std::bitset<8>(decimal_num).to_string();
     return binary_num;

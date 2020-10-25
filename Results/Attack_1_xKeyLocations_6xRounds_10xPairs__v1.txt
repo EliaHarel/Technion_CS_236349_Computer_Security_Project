@@ -1,0 +1,10 @@
+Rounds: 6.
+Attack Algorithm 1
+Iteration number: 1. Location is: 34
+Iteration number: 2. Location is: 27
+Iteration number: 3. Location is: 3
+Iteration number: 4. Location is: 6
+Iteration number: 5. Location is: 26
+
+Average Location: 19.2
+Samples :5

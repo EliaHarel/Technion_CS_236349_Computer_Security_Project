@@ -15,13 +15,17 @@ namespace types {
 
 
 
-int attackAlgorithm2(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
-                     vvvvd& pre_calculated_mat);
+// int attackAlgorithm2(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
+//                      vvvvd& pre_calculated_mat);
+int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat);
 
 
 std::string getSubInput(std::string input, const vi& mask);
+
 std::string intToBinStr(int num, int len);
+
 int sboxFunction(int s_box_num, std::string& binary_input);
+
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
                          vvd& input_matrix, vvvvd& pre_calculated_mat);
 

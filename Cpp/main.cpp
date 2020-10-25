@@ -4,12 +4,14 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <time.h>
 #include "cereal/types/vector.hpp"
 #include "cereal/archives/binary.hpp"
 #include "cereal/types/memory.hpp"
 #include "cereal/archives/xml.hpp"
 #include "Tables.h"
 #include "RunningAttackUtil.h"
+#include "AttackAlgorithm2FewLevels.h"
 
 #define DEBUG false
 
@@ -31,9 +33,13 @@ int main(int argc, char* argv[]){
         return 0;
     }
 
-    int rounds, plain_cipher_pairs, iterations;
-    std::string file_path, binary_key;
-    extractingParams(argc, argv, &rounds, &plain_cipher_pairs, &iterations, file_path, binary_key);
+    srand(time(nullptr));
+    int rounds, plain_cipher_pairs, iterations, attack_num;
+    std::string file_path;
+    // std::string file_path, binary_key;
+    extractingParams(argv, &attack_num, &rounds, &plain_cipher_pairs, &iterations, file_path);
+    // extractingParams(argc, argv, &attack_num, &rounds, &plain_cipher_pairs, &iterations,
+    //                  file_path, binary_key);
 
     vvvvd pre_calculated_mat;
     std::ifstream data_source;
@@ -44,10 +50,37 @@ int main(int argc, char* argv[]){
     }
 
     std::fstream output_file;
-    initializeOpenOutputFile(output_file, rounds, plain_cipher_pairs, file_path, binary_key);
-    // attack1(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
-    // attack2(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
-    // attack2FewLevels(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
+    // initializeOpenOutputFile(output_file, attack_num, rounds, plain_cipher_pairs, file_path, binary_key);
+    initializeOpenOutputFile(output_file, attack_num, rounds, plain_cipher_pairs, file_path);
+/*    switch (attack_num){
+        case 1:
+            attack1(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
+            break;
+        case 2:
+            attack2(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
+            break;
+        case 3:
+            attack2FewLevels(rounds, plain_cipher_pairs, iterations, binary_key, output_file,
+                             pre_calculated_mat);
+            break;
+        default:
+            return - 1;
+    }*/
+
+    switch (attack_num){
+        case 1:
+            attack1(rounds, plain_cipher_pairs, iterations, output_file, pre_calculated_mat);
+            break;
+        case 2:
+            attack2(rounds, plain_cipher_pairs, iterations, output_file, pre_calculated_mat);
+            break;
+        case 3:
+            attack2FewLevels(rounds, plain_cipher_pairs, iterations, output_file,
+                             pre_calculated_mat);
+            break;
+        default:
+            return - 1;
+    }
     std::cout << std::endl;
 
     return 0;
@@ -116,5 +149,4 @@ void tableCreation(char* argv[]){
         cereal::BinaryInputArchive iarchive(new_data_source); // Create an input archive
         iarchive(pre_calculated_mat_check); // Read the data from the archive
     }
-
 }

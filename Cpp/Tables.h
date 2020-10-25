@@ -12,6 +12,10 @@ namespace types {
     typedef std::vector<vd> vvd;
     typedef std::vector<vvd> vvvd;
     typedef std::vector<vvvd> vvvvd;
+
+    typedef std::vector<int> vi;
+    typedef std::vector<vi> vvi;
+    typedef std::vector<vvi> vvvi;
 }
 using namespace types;
 

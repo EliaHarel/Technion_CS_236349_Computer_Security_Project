@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.15)
 project(Technion_CS_236349_Computer_Security_Project_Cpp)
 
 set(CMAKE_CXX_STANDARD 11)

@@ -27,6 +27,6 @@ std::string intToBinStr(int num, int len);
 int sboxFunction(int s_box_num, std::string& binary_input);
 
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-                         vvd& input_matrix, vvvvd& pre_calculated_mat);
+                         vvi& input_matrix, vvvvd& pre_calculated_mat);
 
 #endif //TECHNION_CS_236349_COMPUTER_SECURITY_PROJECT_CPP_ATTACKALGORITHM2_H

@@ -84,7 +84,7 @@ std::pair<int, int> calcPair(int first_last_key, std::string& plain, std::string
 int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
     std::string binary_used_key;
     createBinText(binary_used_key);
-    vvvd input_matrix(pow(2, 12), vvd(matrix_size, vd(matrix_size, 0)));
+    vvvi input_matrix(pow(2, 12), vvi(matrix_size, vi(matrix_size, 0)));
     for(int i = 0; i < num_of_inputs; i ++){
         std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds,
                                                                                    binary_used_key);

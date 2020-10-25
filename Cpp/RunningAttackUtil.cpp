@@ -115,7 +115,7 @@ void attack2(int rounds, int plain_cipher_pairs, int iterations,
     output_file << "Attack Algorithm 2" << std::endl;
 }
 
-void attackFewLevels(int rounds, int plain_cipher_pairs, int iterations,
+void attack2FewLevels(int rounds, int plain_cipher_pairs, int iterations,
              std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
     output_file << "Attack Algorithm 2 Few Levels" << std::endl;
     attack(2.5, rounds, plain_cipher_pairs, iterations, binary_key,

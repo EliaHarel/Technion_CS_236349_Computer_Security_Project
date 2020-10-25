@@ -12,11 +12,6 @@
 #include <cmath>
 
 
-namespace types {
-    typedef std::vector<int> vi;
-    typedef std::vector<vi> vvi;
-} // defined in Tables.h
-using namespace types;
 
 
 vi plain_L_mask{8, 16, 22, 30};
@@ -42,7 +37,7 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
        {14, 11, 2,  12, 4,  7,  13, 1,  5,  0,  15, 10, 3,  9, 8,  6},
        {4,  2,  1,  11, 10, 13, 7,  8,  15, 9,  12, 5,  6,  3, 0,  14},
        {11, 8,  12, 7,  1,  14, 2,  13, 6,  15, 0,  9,  10, 4, 5,  3}};
-
+//
 // string getSubInput(string input, const vi& mask){
 //     string sub_str;
 //     for(int i : mask){
@@ -50,7 +45,7 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
 //     }
 //     return sub_str;
 // }
-
+//
 // // num_of_rounds is the number of the rounds characteristics
 // double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
 //                          vector<vector<double>> input_matrix, vvvvd& pre_calculated_mat){
@@ -64,7 +59,7 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
 //     }
 //     return distance;
 // }
-
+//
 // int binaryStrToInt(string binary){
 //     int len = binary.size();
 //     int res = 0;
@@ -75,7 +70,7 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
 //     }
 //     return res;
 // }
-
+//
 // // returns the output of the s_box for the given s_box_num and binary_input
 // int sboxFunction(int s_box_num, string& binary_input){
 //     int row = binaryStrToInt(binary_input.substr(0, 1) + binary_input.substr(5, 1));
@@ -83,7 +78,7 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
 //     vector<vector<int>> s_box = s_box_num == 1 ? s1 : s5;
 //     return s_box[row][col];
 // }
-
+//
 // std::string reverse(std::string str){
 //     std::string rev_str;
 //     for(int i = str.size() - 1; i >= 0; i --){
@@ -146,7 +141,7 @@ std::pair<int, int> calcPair(int first_last_key, std::string& plain, std::string
 int AttackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
                                  vvvvd& pre_calculated_mat){
 
-    vvvd input_matrix(pow(2, 12), vvd (matrix_size,vd(matrix_size, 0)));
+    vvvi input_matrix(pow(2, 12), vvi (matrix_size,vi(matrix_size, 0)));
     for(int i = 0; i < num_of_inputs; i ++){
         std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds, binary_used_key);
         for(int first_last_key = 0; first_last_key < pow(2, 12); first_last_key ++){
@@ -184,6 +179,3 @@ int AttackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string&
     return location;
 
 }
-
-
-// def get_next_input_from_file(file_object):

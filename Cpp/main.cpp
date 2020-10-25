@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
     initializeOpenOutputFile(output_file, rounds, plain_cipher_pairs, file_path, binary_key);
     // attack1(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
     // attack2(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
-    // attack2FewLevels(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
+     attack2FewLevels(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
     std::cout << std::endl;
 
     return 0;

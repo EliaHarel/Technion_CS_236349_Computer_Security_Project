@@ -8,12 +8,6 @@
 #include <cmath>
 #include "DataUtils.h"
 
-namespace types {
-    typedef std::vector<int> vi;
-    typedef std::vector<vi> vvi;
-} // defined in Tables.h
-using namespace types;
-
 namespace masks {
     vi plain_L_mask{8, 16, 22, 30};
     vi plain_R_mask{7, 13, 24, 2, 31, 0, 1, 2, 3, 4};
@@ -130,7 +124,7 @@ std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination)
 
 // num_of_rounds is the number of the rounds characteristics
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-                         vvd& input_matrix, vvvvd& pre_calculated_mat){
+                         vvi& input_matrix, vvvvd& pre_calculated_mat){
     double distance = 0;
     for(int i = 0; i < matrix_size; i ++){
         for(int j = 0; j < matrix_size; j ++){
@@ -164,7 +158,7 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, std::string& binary_u
      * 8 plain bits = 4 output bits of s5 | 4 output bits of s1 (in round 2 of DES (round 1 in our characteristic)
      * 8 cipher bits = 4 output bits of s1 | 4 output bits of s5
      */
-    vvvd input_matrix{static_cast<size_t>(pow(2, 12)), vvd{matrix_size, vd(matrix_size, 0)}};
+    vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
 
     for(int key = 0; key < pow(2, 12); key ++){
         for(int combination = 0; combination < pow(2, 28); combination ++){

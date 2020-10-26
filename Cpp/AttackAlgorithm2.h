@@ -26,6 +26,8 @@ std::string intToBinStr(int num, int len);
 
 int sboxFunction(int s_box_num, std::string& binary_input);
 
+int sboxFunction(int s_box_num, int input);
+
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
                          vvi& input_matrix, vvvvd& pre_calculated_mat);
 

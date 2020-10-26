@@ -18,6 +18,6 @@ void eliaPrintBinaryAsUnsignedChars(std::string A, std::string sep = ",");
 
 std::pair<std::string, std::string> getPlainCipherPair(int rounds, std::string& key);
 
-int binaryStrToInt(std::string binary);
+long long binaryStrToInt(std::string binary);
 
 #endif //TECHNION_CS_236349_COMPUTER_SECURITY_PROJECT_CPP_DATAUTILS_H

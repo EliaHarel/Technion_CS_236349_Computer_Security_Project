@@ -49,9 +49,9 @@ std::pair<std::string, std::string> getPlainCipherPair(int rounds, std::string& 
     return {plain, cipher};
 }
 
-int binaryStrToInt(std::string binary){
+long long binaryStrToInt(std::string binary){
     int len = binary.size();
-    int res = 0;
+    long long res = 0;
     for(int i = len - 1; i >= 0; i--){
         int exp = len - 1 - i;
         if(binary[i] == '1')

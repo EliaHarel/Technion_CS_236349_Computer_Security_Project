@@ -43,6 +43,13 @@ std::string getSubInput(std::string input, const vi& mask){
     return sub_str;
 }
 
+int sboxFunction(int s_box_num, int input){
+    int row = ((input & 32) >> 4) + (input &1) ; // 100001
+    int col = (input & 30)>>1; // 011110
+    std::vector<std::vector<int>> s_box = s_box_num == 1 ? s1 : s5;
+    return s_box[row][col];
+}
+
 int calcIndex(int num_of_rounds, std::string binary_used_key){
     std::pair<std::string, std::string> data = getPlainCipherPair(num_of_rounds, binary_used_key);
     std::string bin_plain_r = data.first.substr(0, 32);

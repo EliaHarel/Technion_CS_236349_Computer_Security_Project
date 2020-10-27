@@ -115,6 +115,8 @@ void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations
             default:
                 return;
         }
+        output_file << "Run Of " + std::to_string(rounds) + " rounds, " + std::to_string(plain_cipher_pairs) +
+                       " pairs." << std::endl;
         output_file << "Iteration number: " << i << ". Location is: " << location << std::endl;
         location_sum += location;
     }

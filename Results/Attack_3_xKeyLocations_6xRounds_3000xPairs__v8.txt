@@ -1,0 +1,15 @@
+Rounds: 6.
+Attack Algorithm 2 Few Levels
+Iteration number: 1. Location is: 2735
+Iteration number: 2. Location is: 16774
+Iteration number: 3. Location is: 15
+Iteration number: 4. Location is: 2652
+Iteration number: 5. Location is: 37
+Iteration number: 6. Location is: 2216
+Iteration number: 7. Location is: 19
+Iteration number: 8. Location is: 6
+Iteration number: 9. Location is: 56
+Iteration number: 10. Location is: 2125
+
+Average Location: 2663.5
+Samples :10

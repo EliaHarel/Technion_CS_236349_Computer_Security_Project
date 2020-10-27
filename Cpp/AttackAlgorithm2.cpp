@@ -131,12 +131,13 @@ std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination)
 
 // num_of_rounds is the number of the rounds characteristics
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-                         vvi& input_matrix, vvvvd& pre_calculated_mat){
+                         int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
     double distance = 0;
+    const auto num_of_cells = matrix_size * matrix_size;
     for(int i = 0; i < matrix_size; i ++){
         for(int j = 0; j < matrix_size; j ++){
-            double part_1 = input_matrix[i][j] - (double) num_of_inputs/(matrix_size*matrix_size);
-            double part_2 = pre_calculated_mat[num_of_rounds][middle_key][i][j] - 1.0/((double) matrix_size);
+            double part_1 = input_matrix[i][j] - ((double) num_of_inputs)/num_of_cells;
+            double part_2 = pre_calculated_mat[num_of_rounds][middle_key][i][j] - 1.0/matrix_size;
             distance += part_1*part_2;
         }
     }
@@ -147,27 +148,35 @@ double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
 // int attackAlgorithm2(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
 //                      vvvvd& pre_calculated_mat){
 int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
+    return 0;
+}
+/*
+
     std::string binary_used_key;
     createBinText(binary_used_key);
     int char_rounds = num_of_rounds - 2;
 
-    /*
+    */
+/*
      * plain - 14 bits - out s1 || out s5 || in s1
      * cipher - 14 bits -  out s5 || out s1 || in s5
      * index (int)- plain || cipher
-     */
+     *//*
+
     vi counter(pow(2, 28), 0);
     for(int i = 0; i < num_of_inputs; i ++){
         int index = calcIndex(num_of_rounds, binary_used_key);
         counter[index] ++;
     }
 
-    /*
+    */
+/*
      * matrix [key][plain][cipher], key - guessed key for 12 key bits of the first and last rounds
      * the M matrix 12 key bits = 6 key bits of s1 | 6 key bits of s5
      * 8 plain bits = 4 output bits of s5 | 4 output bits of s1 (in round 2 of DES (round 1 in our characteristic)
      * 8 cipher bits = 4 output bits of s1 | 4 output bits of s5
-     */
+     *//*
+
     vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
 
     for(int key = 0; key < pow(2, 12); key ++){
@@ -205,4 +214,5 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated
     return location;
 }
 
+*/
 

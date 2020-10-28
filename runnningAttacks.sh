@@ -2,12 +2,12 @@
 
 # ./AttackAll attack_num rounds pairs iterations ~/resutls
 
-./AttackAll 1 10 8000000 20 ./results/Attack1
-./AttackAll 1 10 16000000 20 ./results/Attack1
-./AttackAll 1 12 8000000 20 ./results/Attack1
-./AttackAll 1 12 16000000 20 ./results/Attack1
-./AttackAll 1 14 8000000 20 ./results/Attack1
-./AttackAll 1 14 16000000 20 ./results/Attack1
+./AttackAll 1 10 8000000 20 ~/results/Attack1
+./AttackAll 1 10 16000000 20 ~/results/Attack1
+./AttackAll 1 12 8000000 20 ~/results/Attack1
+./AttackAll 1 12 16000000 20 ~/results/Attack1
+./AttackAll 1 14 8000000 20 ~/results/Attack1
+./AttackAll 1 14 16000000 20 ~/results/Attack1
 
 attack_num=3
 iterations=20

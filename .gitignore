@@ -1,5 +1,5 @@
-**/~Auxiliary/*
-**/~Archive/*
+**/~*/*
+# **/~Archive/*
 **/venv/*
 **/.idea/*
 **/Release/*

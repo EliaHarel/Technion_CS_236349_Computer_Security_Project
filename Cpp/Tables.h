@@ -19,8 +19,6 @@ namespace types {
 }
 using namespace types;
 
-
 void CalcTables(int rounds, vvvvd& pre_calculated_mat, int ready_rounds);
-
 
 #endif //TECHNION_CS_236349_COMPUTER_SECURITY_PROJECT_CPP_TABLES_H

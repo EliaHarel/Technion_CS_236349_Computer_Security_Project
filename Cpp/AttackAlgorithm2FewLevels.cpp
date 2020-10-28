@@ -58,8 +58,6 @@ int calcOutSbox(long long text, const int* mask){
     return c1 + c2 + c3 + c4;
 }
 
-// int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
-//                                  vvvvd& pre_calculated_mat){
 int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
     std::string binary_used_key;
     createBinText(binary_used_key);

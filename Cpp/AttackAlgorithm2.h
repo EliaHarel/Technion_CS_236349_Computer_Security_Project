@@ -14,11 +14,7 @@ namespace types {
 } // defined in Tables.h
 
 
-
-// int attackAlgorithm2(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
-//                      vvvvd& pre_calculated_mat);
 int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat);
-
 
 std::string getSubInput(std::string input, const vi& mask);
 

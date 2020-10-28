@@ -23,7 +23,7 @@ std::string separator = "/";
 #elif _WIN32
 std::string separator = "\\";
 
-  #include <direct.h>
+#include <direct.h>
 #include <fstream>
 
   #define GetCurrentDir _wgetcwd
@@ -31,8 +31,6 @@ std::string separator = "\\";
 #endif
 
 
-// void extractingParams(int argc, char* argv[], int* attack_num, int* rounds, int* plain_cipher_pairs,
-//                       int* iterations, std::string& file_path, std::string& binary_key){
 void extractingParams(char* argv[], int* attack_num, int* rounds, int* plain_cipher_pairs,
                       int* iterations, std::string& file_path){
     *attack_num = strtol(argv[1], nullptr, 10);
@@ -69,8 +67,6 @@ static std::string findOpenResultPath(int attack_num, int rounds, int plain_ciph
 
 
 // This function returns an open file, caller's responsibility to close it
-// void initializeOpenOutputFile(std::fstream& output_file, int attack_num, int rounds, int plain_cipher_pairs,
-//                               std::string& file_path, std::string& binary_key){
 void initializeOpenOutputFile(std::fstream& output_file, int attack_num, int rounds, int plain_cipher_pairs,
                               std::string& file_path){
     std::string output_file_path = findOpenResultPath(attack_num, rounds, plain_cipher_pairs, file_path);
@@ -81,8 +77,6 @@ void initializeOpenOutputFile(std::fstream& output_file, int attack_num, int rou
     output_file << "Rounds: " << std::to_string(rounds) << "." << std::endl;
 }
 
-// void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations,
-//             std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
 void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations,
             std::fstream& output_file, vvvvd& pre_calculated_mat){
     double location_sum = 0; //using double for later division
@@ -128,8 +122,6 @@ void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations
 
 }
 
-// void attack1(int rounds, int plain_cipher_pairs, int iterations,
-//              std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
 void attack1(int rounds, int plain_cipher_pairs, int iterations,
              std::fstream& output_file, vvvvd& pre_calculated_mat){
     output_file << "Attack Algorithm 1" <<
@@ -139,8 +131,6 @@ void attack1(int rounds, int plain_cipher_pairs, int iterations,
                 std::endl;
 }
 
-// void attack2(int rounds, int plain_cipher_pairs, int iterations, std::string& binary_key,
-//              std::fstream& output_file, vvvvd& pre_calculated_mat){
 void attack2(int rounds, int plain_cipher_pairs, int iterations,
              std::fstream& output_file, vvvvd& pre_calculated_mat){
     output_file << "Attack Algorithm 2" << std::endl;
@@ -148,8 +138,6 @@ void attack2(int rounds, int plain_cipher_pairs, int iterations,
     output_file << "Attack Algorithm 2" << std::endl;
 }
 
-// void attack2FewLevels(int rounds, int plain_cipher_pairs, int iterations,
-//                       std::string& binary_key, std::fstream& output_file, vvvvd& pre_calculated_mat){
 void attack2FewLevels(int rounds, int plain_cipher_pairs, int iterations,
                       std::fstream& output_file, vvvvd& pre_calculated_mat){
     output_file << "Attack Algorithm 2 Few Levels" << std::endl;

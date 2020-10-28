@@ -1,0 +1,25 @@
+Rounds: 6.
+Attack Algorithm 2 Few Levels
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 1. Location is: 64219
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 2. Location is: 31191
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 3. Location is: 56276
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 4. Location is: 57743
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 5. Location is: 1798
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 6. Location is: 38963
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 7. Location is: 65464
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 8. Location is: 38242
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 9. Location is: 10123
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 10. Location is: 21375
+
+Average Location: 38539.4
+Samples :10

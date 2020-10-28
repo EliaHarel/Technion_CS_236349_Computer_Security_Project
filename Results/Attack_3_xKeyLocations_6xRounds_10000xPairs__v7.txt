@@ -1,0 +1,7 @@
+Rounds: 6.
+Attack Algorithm 2 Few Levels
+Run Of 6 rounds, 10000 pairs.
+Iteration number: 1. Location is: 2
+
+Average Location: 2
+Samples :1

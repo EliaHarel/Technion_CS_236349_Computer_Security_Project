@@ -1,5 +1,5 @@
 //
-// Created by EliaHarel on 23/10/2020.
+// Created by DanielYacoby on 23/10/2020.
 //
 
 #include "AttackAlgorithm2FewLevels.h"
@@ -11,11 +11,9 @@
 #include <string>
 #include <cmath>
 
-
 const int s1_out_shift_mask[] = {23, 15, 9, 1}; //{8, 16, 22, 30};
 const int s5_out_shift_mask[] = {24, 18, 7, 29}; //{7, 13, 24, 2};
 const int NUM_OF_FIRST_LAST_KEYS = 4096;
-
 /*
 vi plain_L_mask{8, 16, 22, 30};
 vi plain_R_mask{7, 13, 24, 2, 31, 0, 1, 2, 3, 4};
@@ -28,10 +26,26 @@ vi key_mask{27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2};  // st
 vi k1_s1_mask{10, 51, 34, 60, 49, 17};
 vi k16_s5_mask{30, 5, 47, 62, 45, 12};*/
 
-vi first_last_mask = {9, 50, 33, 59, 48, 16, 29, 4, 46, 61, 44, 11}; //starts at 0
-vi key_mask_14_mid_rounds{19, 35, 54, 32, 22, 0, 55, 41, 29, 9, 60, 42, 28, 10}; //starts at 0, repeated keys: 9,
-// vi first_last_mask = {10, 51, 34, 60, 49, 17, 30, 5, 47, 62, 45, 12};
-// vi key_mask_14_mid_rounds{51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12}; //starts at 0, repeated keys: 51, 49, 45, 12
+
+vi first_mask = {9, 50, 33, 59, 48, 16}; //starts at 0
+vvi last_mask = {{},
+                 {},
+                 {},
+                 {},
+                 {},
+                 {12, 22, 29, 44, 62, 61}, // 6 rounds
+                 {},
+                 {11, 53, 60, 12, 30, 29}, // 8 rounds
+                 {},
+                 {54, 29, 36, 19, 6,  5}, // 10 rounds
+                 {},
+                 {22, 60, 4,  54, 37, 36}, // 12 rounds
+                 {},
+                 {53, 28, 3,  22, 5,  4}, // 14 rounds
+                 {},
+                 {29, 4,  46, 61, 44, 11}}; // 16 rounds
+vi key_mask_14_mid_rounds{19, 35, 54, 32, 22, 0, 55, 41, 29, 9, 60, 42, 28,
+                          10}; //starts at 0, repeated keys: 9,
 
 vvi s1{{14, 4,  13, 1, 2,  15, 11, 8,  3,  10, 6,  12, 5,  9,  0, 7},
        {0,  15, 7,  4, 14, 2,  13, 1,  10, 6,  12, 11, 9,  5,  3, 8},
@@ -58,6 +72,53 @@ int calcOutSbox(long long text, const int* mask){
     return c1 + c2 + c3 + c4;
 }
 
+/*
+
+std::pair<int, int> calcFirstRoundParams( std::string& plain) {
+
+    std::string bin_plain_r = plain.substr(0, HALF_PLAIN_CIPHER_LENGTH);
+    std::string bin_plain_l = plain.substr(32, HALF_PLAIN_CIPHER_LENGTH);
+
+    std::string sub_plain_r = getSubInput(bin_plain_r, plain_R_mask); // s5_out + s1_in
+    std::string plain_out_s5 = sub_plain_r.substr(0, OUT_SBOX_LENGTH);
+    int plain_in_s1 = binaryStrToInt(sub_plain_r.substr(4, IN_SBOX_LENGTH));
+    int plain_s1_out = binaryStrToInt(getSubInput(bin_plain_l, plain_L_mask));
+
+    return {plain_in_s1, plain_s1_out};
+}
+
+std::pair<int, int> calcLastRoundParams( std::string& cipher) {
+
+    std::string bin_cipher_r = cipher.substr(0, HALF_PLAIN_CIPHER_LENGTH);
+    std::string bin_cipher_l = cipher.substr(32, HALF_PLAIN_CIPHER_LENGTH);
+
+    std::string sub_cipher_r = getSubInput(bin_cipher_r, cipher_R_mask); //  s1_out + s5_in
+    std::string cipher_out_s1 = sub_cipher_r.substr(0, 4);
+    int cipher_in_s5 = binaryStrToInt(sub_cipher_r.substr(4, IN_SBOX_LENGTH));
+    int cipher_s5_out = binaryStrToInt(getSubInput(bin_cipher_l, cipher_L_mask));
+
+    return {cipher_in_s5, cipher_s5_out};
+}
+
+std::pair<int, int> calcCharPlainCipher( std::pair<int, int> first_round, std::pair<int, int> last_round, int first_last_key ) {
+    int first_key = first_last_key& 63; // Bin- 000000111111
+    int last_key = first_last_key& 4032; // Bin - 111111000000
+
+    std::string input_to_s1 = intToBinStr(first_round.first^first_key, IN_SBOX_LENGTH);
+    int out_s1 = sboxFunction(1, input_to_s1);
+    std::string out_s1_new = intToBinStr(out_s1 ^ first_round.second, OUT_SBOX_LENGTH);
+    std::string plaintext = plain_out_s5 + out_s1_new;
+
+    std::string input_to_s5 = intToBinStr(cipher_in_s5^last_key, IN_SBOX_LENGTH);
+    int out_s5 = sboxFunction(5, input_to_s5);
+    std::string out_s5_new = intToBinStr(out_s5^cipher_s5_out, OUT_SBOX_LENGTH);
+    std::string ciphertext = cipher_out_s1 + out_s5_new;
+
+    return {binaryStrToInt(plaintext), binaryStrToInt(ciphertext)};
+}*/
+
+// int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
+//                                  vvvvd& pre_calculated_mat){
 int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
     std::string binary_used_key;
     createBinText(binary_used_key);
@@ -104,12 +165,14 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
     }
 
     int char_rounds = num_of_rounds - 2;
-    std::string str_curr_first_last_key = getSubInput(binary_used_key, first_last_mask);
+    std::string str_curr_first_key = getSubInput(binary_used_key, first_mask);
+    std::string str_curr_last_key = getSubInput(binary_used_key, last_mask[num_of_rounds - 1]);
+    std::string str_curr_first_last_key = str_curr_first_key + str_curr_last_key;
     std::string str_curr_middle_key = getSubInput(binary_used_key, key_mask_14_mid_rounds);
     std::string str_curr_middle_key_by_rounds = str_curr_middle_key.substr(0, char_rounds);
 
-    int curr_first_last_key = binaryStrToInt(str_curr_first_last_key);
-    int curr_middle_key_by_rounds = binaryStrToInt(str_curr_middle_key_by_rounds);
+    int curr_first_last_key = stoi(str_curr_first_last_key, nullptr, 2);
+    int curr_middle_key_by_rounds = stoi(str_curr_middle_key_by_rounds, nullptr, 2);
 
 
     int location = 1;

@@ -44,8 +44,8 @@ std::string getSubInput(std::string input, const vi& mask){
 }
 
 int sboxFunction(int s_box_num, int input){
-    int row = ((input & 32) >> 4) + (input &1) ; // 100001
-    int col = (input & 30)>>1; // 011110
+    int row = ((input&32) >> 4) + (input&1); // 100001
+    int col = (input&30) >> 1; // 011110
     std::vector<std::vector<int>> s_box = s_box_num == 1 ? s1 : s5;
     return s_box[row][col];
 }
@@ -133,7 +133,7 @@ std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination)
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
                          int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
     double distance = 0;
-    const auto num_of_cells = matrix_size * matrix_size;
+    const auto num_of_cells = matrix_size*matrix_size;
     for(int i = 0; i < matrix_size; i ++){
         for(int j = 0; j < matrix_size; j ++){
             double part_1 = input_matrix[i][j] - ((double) num_of_inputs)/num_of_cells;

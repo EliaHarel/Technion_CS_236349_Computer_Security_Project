@@ -1,0 +1,55 @@
+Rounds: 6.
+Attack Algorithm 1
+Iteration number: 1. Location is: 12
+Iteration number: 2. Location is: 16
+Iteration number: 3. Location is: 7
+Iteration number: 4. Location is: 16
+Iteration number: 5. Location is: 12
+Iteration number: 6. Location is: 2
+Iteration number: 7. Location is: 16
+Iteration number: 8. Location is: 4
+Iteration number: 9. Location is: 28
+Iteration number: 10. Location is: 14
+Iteration number: 11. Location is: 2
+Iteration number: 12. Location is: 3
+Iteration number: 13. Location is: 1
+Iteration number: 14. Location is: 29
+Iteration number: 15. Location is: 19
+Iteration number: 16. Location is: 7
+Iteration number: 17. Location is: 5
+Iteration number: 18. Location is: 15
+Iteration number: 19. Location is: 1
+Iteration number: 20. Location is: 4
+Iteration number: 21. Location is: 28
+Iteration number: 22. Location is: 8
+Iteration number: 23. Location is: 18
+Iteration number: 24. Location is: 8
+Iteration number: 25. Location is: 2
+Iteration number: 26. Location is: 25
+Iteration number: 27. Location is: 25
+Iteration number: 28. Location is: 14
+Iteration number: 29. Location is: 12
+Iteration number: 30. Location is: 13
+Iteration number: 31. Location is: 12
+Iteration number: 32. Location is: 3
+Iteration number: 33. Location is: 8
+Iteration number: 34. Location is: 27
+Iteration number: 35. Location is: 15
+Iteration number: 36. Location is: 31
+Iteration number: 37. Location is: 12
+Iteration number: 38. Location is: 9
+Iteration number: 39. Location is: 7
+Iteration number: 40. Location is: 27
+Iteration number: 41. Location is: 21
+Iteration number: 42. Location is: 7
+Iteration number: 43. Location is: 12
+Iteration number: 44. Location is: 4
+Iteration number: 45. Location is: 12
+Iteration number: 46. Location is: 7
+Iteration number: 47. Location is: 6
+Iteration number: 48. Location is: 9
+Iteration number: 49. Location is: 6
+Iteration number: 50. Location is: 10
+
+Average Location: 12.22
+Samples :50

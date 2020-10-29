@@ -27,4 +27,6 @@ int sboxFunction(int s_box_num, int input);
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
                          int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat);
 
+int calcOutSbox(long long text, const int* mask);
+
 #endif //TECHNION_CS_236349_COMPUTER_SECURITY_PROJECT_CPP_ATTACKALGORITHM2_H

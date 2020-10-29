@@ -1,5 +1,5 @@
 //
-// Created by EliaHarel on 23/10/2020.
+// Created by DanielYacoby on 23/10/2020.
 //
 
 #include "AttackAlgorithm2.h"
@@ -9,6 +9,12 @@
 #include "DataUtils.h"
 
 namespace masks {
+
+    const int NUM_OF_FIRST_LAST_KEYS = 4096;
+    const int NUM_OF_COMBINATIONS = 1 << 28;
+
+    const int s1_out_shift_mask[] = {23, 15, 9, 1}; //{8, 16, 22, 30};
+    const int s5_out_shift_mask[] = {24, 18, 7, 29}; //{7, 13, 24, 2};
     vi plain_L_mask{8, 16, 22, 30};
     vi plain_R_mask{7, 13, 24, 2, 31, 0, 1, 2, 3, 4};
     vi cipher_L_mask{7, 13, 24, 2};
@@ -17,9 +23,26 @@ namespace masks {
 // key_mask[i] - the key bit we use in level i+1
     vi key_mask{27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2};  // starts at 0
 
-    vi k1_s1_mask{10, 51, 34, 60, 49, 17};
-    vi k16_s5_mask{30, 5, 47, 62, 45, 12};
-    vi first_last_mask = {10, 51, 34, 60, 49, 17, 30, 5, 47, 62, 45, 12};
+    // vi k1_s1_mask{10, 51, 34, 60, 49, 17};
+    // vi k16_s5_mask{30, 5, 47, 62, 45, 12};
+    // vi first_last_mask = {10, 51, 34, 60, 49, 17, 30, 5, 47, 62, 45, 12};
+    vi first_mask = {9, 50, 33, 59, 48, 16}; //starts at 0
+    vvi last_mask = {{},
+                     {},
+                     {},
+                     {},
+                     {},
+                     {12, 22, 29, 44, 62, 61}, // 6 rounds
+                     {},
+                     {11, 53, 60, 12, 30, 29}, // 8 rounds
+                     {},
+                     {54, 29, 36, 19, 6,  5}, // 10 rounds
+                     {},
+                     {22, 60, 4,  54, 37, 36}, // 12 rounds
+                     {},
+                     {53, 28, 3,  22, 5,  4}, // 14 rounds
+                     {},
+                     {29, 4,  46, 61, 44, 11}}; // 16 rounds
     vi key_mask_14_mid_rounds{51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26,
                               12}; //starts at 0, repeated keys: 51, 49, 45, 12
 
@@ -50,23 +73,42 @@ int sboxFunction(int s_box_num, int input){
     return s_box[row][col];
 }
 
+int calcOutSbox(long long text, const int* mask){
+    int c1 = ((text >> mask[0])&1) << 3;
+    int c2 = ((text >> mask[1])&1) << 2;
+    int c3 = ((text >> mask[2])&1) << 1;
+    int c4 = (text >> mask[3])&1;
+
+    return c1 + c2 + c3 + c4;
+}
+
+
 int calcIndex(int num_of_rounds, std::string binary_used_key){
-    std::pair<std::string, std::string> data = getPlainCipherPair(num_of_rounds, binary_used_key);
-    std::string bin_plain_r = data.first.substr(0, 32);
-    std::string bin_plain_l = data.first.substr(32, 32);
-    std::string bin_cipher_r = data.second.substr(0, 32);
-    std::string bin_cipher_l = data.second.substr(32, 32);
+    std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds,
+                                                                               binary_used_key);
+    std::string plain_left = plain_cipher_pair.first.substr(0, 32);
+    std::string plain_right = plain_cipher_pair.first.substr(32, 32);
+    std::string cipher_left = plain_cipher_pair.second.substr(0, 32);
+    std::string cipher_right = plain_cipher_pair.second.substr(32, 32);
 
-    std::string sub_plain_r = getSubInput(bin_plain_r, plain_R_mask);
-    std::string sub_plain_l = getSubInput(bin_plain_l, plain_L_mask);
-    std::string sub_cipher_r = getSubInput(bin_cipher_r, cipher_R_mask);
-    std::string sub_cipher_l = getSubInput(bin_cipher_l, cipher_L_mask);
+    long long p_left = stoll(plain_left, nullptr, 2);
+    long long p_right = stoll(plain_right, nullptr, 2);
+    long long c_left = stoll(cipher_left, nullptr, 2);
+    long long c_right = stoll(cipher_right, nullptr, 2);
 
-    std::string sub_plain = sub_plain_l + sub_plain_r;
-    std::string sub_cipher = sub_cipher_l + sub_cipher_r;
-    std::string sub_input = sub_plain + sub_cipher;
+    int s1_in = ((p_right&1) << 5) + (p_right >> 27); // bits 32,1,2,3,4,5 of p_right;
+    int s5_in = (c_right >> 11)&63; // bits 16,17,18,19,20, 21 of c_right;
 
-    return binaryStrToInt(sub_input);
+    int s1_out_first = calcOutSbox(p_left, s1_out_shift_mask);
+    int s5_out_first = calcOutSbox(p_right, s5_out_shift_mask); // char_plain_left
+    int s1_out_last = calcOutSbox(c_right, s1_out_shift_mask); // char_cipher_right (swap!!!)
+    int s5_out_last = calcOutSbox(c_left, s5_out_shift_mask);
+
+    // combination - p out s1 (4)|| p out s5 (4) || p in s1 (6)|| c out s5 (4)|| c out s1 (4)|| c in s5 (6)
+
+    return (s1_out_first << 24) + (s5_out_first << 20) + (s1_in << 14) + (s5_out_last << 10) +
+           (s1_out_last << 6) +
+           s5_in;
 }
 
 std::string reverse(std::string str){
@@ -102,29 +144,29 @@ int sboxFunction(int s_box_num, std::string& binary_input){
 }
 
 std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination){
-    std::string binary_key = intToBinStr(key, 12);
-    std::string k1 = binary_key.substr(0, 6);
-    std::string k16 = binary_key.substr(6, 6);
+    int k1 = (key&4032) >> 6; // Bin - 111111000000
+    int k16 = key&63; // Bin- 000000111111
 
     // combination - p out s1 (4)|| p out s5 (4) || p in s1 (6)|| c out s5 (4)|| c out s1 (4)|| c in s5 (6)
     // combination -     0-3     ||     4-7      ||    8-13    ||    14-17    ||    18-21    ||   22-27
-    std::string binary_combination = intToBinStr(combination, 28);
 
     // plaintext - (out S5)_2 || (out S1)_2 = (out S5)_1 || ((out S1)_1 xor S1(in S1, K1))
-    std::string plain_left = binary_combination.substr(4, 4);  // (out S5)_1
-    std::string binary_input1 = binary_combination.substr(8, 6);  // in S1
-    std::string input_to_s1 = intToBinStr(binaryStrToInt(binary_input1)^binaryStrToInt(k1), 6);
-    std::string out_s1_1 = binary_combination.substr(0, 4);
-    std::string plain_right = intToBinStr(binaryStrToInt(out_s1_1)^sboxFunction(1, input_to_s1), 4);
-    int plaintext = binaryStrToInt(plain_left + plain_right);
+    int comb_plain = combination >> 14;
+    int plain_left = (comb_plain >> 6)&15;  // (out S5)_1
+    int plain_input = comb_plain&63;  // in S1
+    int input_to_s1 = plain_input^k1;
+    int out_s1_1 = comb_plain >> 10;
+    int plain_right = out_s1_1^sboxFunction(1, input_to_s1);
+    int plaintext = (plain_left << 4) + plain_right;
 
     // ciphertext - (out S1)_2 || (out S5)_2 = (out S1)_1 || ((out S1)_1 xor S5(in S5, K16))
-    std::string cipher_left = binary_combination.substr(18, 4);
-    std::string binary_input16 = binary_combination.substr(22, 6);
-    std::string input_to_s5 = intToBinStr(binaryStrToInt(binary_input16)^binaryStrToInt(k16), 6);
-    std::string out_s5_1 = binary_combination.substr(14, 4);
-    std::string cipher_right = intToBinStr(binaryStrToInt(out_s5_1)^sboxFunction(5, input_to_s5), 4);
-    int ciphertext = binaryStrToInt(cipher_left + cipher_right);
+    int comb_cipher = combination&16383; // 2^14-1
+    int cipher_right = (comb_cipher >> 6)&15;
+    int cipher_input = comb_cipher&63;
+    int input_to_s5 = cipher_input^k16;
+    int out_s5_1 = comb_cipher >> 10;
+    int cipher_left = out_s5_1^sboxFunction(5, input_to_s5);
+    int ciphertext = (cipher_left << 4) + cipher_right;
 
     return {plaintext, ciphertext};
 }
@@ -146,61 +188,60 @@ double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
 
 // num_of_rounds includes the first and last round
 int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
-    return 0;
-}
-/*
 
     std::string binary_used_key;
     createBinText(binary_used_key);
-    int char_rounds = num_of_rounds - 2;
-
-    */
-/*
+    /*
      * plain - 14 bits - out s1 || out s5 || in s1
      * cipher - 14 bits -  out s5 || out s1 || in s5
      * index (int)- plain || cipher
-     *//*
+     */
 
-    vi counter(pow(2, 28), 0);
+    // vi counter(pow(2, 28), 0);
+    static int counter[NUM_OF_COMBINATIONS] = {0};
     for(int i = 0; i < num_of_inputs; i ++){
         int index = calcIndex(num_of_rounds, binary_used_key);
         counter[index] ++;
     }
 
-    */
 /*
      * matrix [key][plain][cipher], key - guessed key for 12 key bits of the first and last rounds
      * the M matrix 12 key bits = 6 key bits of s1 | 6 key bits of s5
      * 8 plain bits = 4 output bits of s5 | 4 output bits of s1 (in round 2 of DES (round 1 in our characteristic)
      * 8 cipher bits = 4 output bits of s1 | 4 output bits of s5
-     *//*
+     */
 
-    vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
+    // vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
+    static int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
 
     for(int key = 0; key < pow(2, 12); key ++){
         for(int combination = 0; combination < pow(2, 28); combination ++){
+//TODO:  // for(int key = 0; key < NUM_OF_FIRST_LAST_KEYS; key ++){
+            //     for(int combination = 0; combination < NUM_OF_COMBINATIONS; combination ++){
             std::pair<int, int> plain_cipher_pair = calculate_P_C_from_key_combination(key, combination);
             // counter[combination] holds the value of the "confirmed values"(C array) for the current combination
             input_matrix[key][plain_cipher_pair.first][plain_cipher_pair.second] += counter[combination];
         }
     }
 
-    std::string str_curr_first_last_key = getSubInput(binary_used_key, first_last_mask);
+    int char_rounds = num_of_rounds - 2;
+    std::string str_curr_first_key = getSubInput(binary_used_key, first_mask);
+    std::string str_curr_last_key = getSubInput(binary_used_key, last_mask[num_of_rounds - 1]);
+    std::string str_curr_first_last_key = str_curr_first_key + str_curr_last_key;
     std::string str_curr_middle_key = getSubInput(binary_used_key, key_mask_14_mid_rounds);
-    std::string str_curr_middle_key_by_rounds = str_curr_middle_key.substr(0, num_of_rounds);
+    std::string str_curr_middle_key_by_rounds = str_curr_middle_key.substr(0, char_rounds);
 
-    int curr_first_last_key = binaryStrToInt(str_curr_first_last_key);
-    int curr_middle_key_by_rounds = binaryStrToInt(str_curr_middle_key_by_rounds);
-
+    int curr_first_last_key = stoi(str_curr_first_last_key, nullptr, 2);
+    int curr_middle_key_by_rounds = stoi(str_curr_middle_key_by_rounds, nullptr, 2);
 
     int location = 1;
-    double used_key_distance = calculateDistance(curr_middle_key_by_rounds, char_rounds,
-                                                 num_of_inputs, input_matrix[curr_first_last_key],
-                                                 pre_calculated_mat);
+    double used_key_distance = calculateDistance(curr_middle_key_by_rounds, char_rounds, num_of_inputs,
+                                                 input_matrix[curr_first_last_key], pre_calculated_mat);
 
-    for(int first_last_key = 0; first_last_key < pow(2, 12); first_last_key ++){
+    // for(int first_last_key = 0; first_last_key < pow(2, 12); first_last_key ++){
+    for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; first_last_key ++){
         for(int middle_key = 0; middle_key < pow(2, char_rounds); middle_key ++){
-            if( first_last_key == curr_first_last_key and middle_key == curr_middle_key_by_rounds ) continue;
+            if( first_last_key == curr_first_last_key && middle_key == curr_middle_key_by_rounds ) continue;
             double curr_dist = calculateDistance(middle_key, char_rounds, num_of_inputs,
                                                  input_matrix[first_last_key], pre_calculated_mat);
             if( curr_dist > used_key_distance ){
@@ -212,5 +253,5 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated
     return location;
 }
 
-*/
+
 

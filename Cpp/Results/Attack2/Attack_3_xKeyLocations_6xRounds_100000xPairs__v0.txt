@@ -12,3 +12,5 @@ Iteration number: 9. Location is: 98
 Iteration number: 10. Location is: 6
 Iteration number: 11. Location is: 6
 Iteration number: 12. Location is: 12
+
+Average - 6 rounds, 12 iterations, 100000 pairs - 17.9

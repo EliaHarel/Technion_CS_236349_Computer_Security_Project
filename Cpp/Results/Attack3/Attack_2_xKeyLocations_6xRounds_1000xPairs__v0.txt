@@ -1,2 +1,0 @@
-Rounds: 6.
-Attack Algorithm 2

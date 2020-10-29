@@ -1,2 +1,0 @@
-Rounds: 8.
-Attack Algorithm 2 Few Levels

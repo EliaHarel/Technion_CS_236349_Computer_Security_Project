@@ -11,3 +11,6 @@ Iteration number: 8. Location is: 730021
 Iteration number: 9. Location is: 937969
 Iteration number: 10. Location is: 570765
 Iteration number: 11. Location is: 126113
+
+Average - 10 rounds, 11 iterations, 20000 pairs - 486342
+

@@ -4,3 +4,5 @@ Iteration number: 1. Location is: 641
 Iteration number: 2. Location is: 1601
 Iteration number: 3. Location is: 1089
 Iteration number: 4. Location is: 4033
+
+Average - 12 rounds, 4 iterations, 60000000 pairs - 1841

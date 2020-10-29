@@ -6,3 +6,5 @@ Iteration number: 3. Location is: 959529
 Iteration number: 4. Location is: 826453
 Iteration number: 5. Location is: 844577
 Iteration number: 6. Location is: 923605
+
+Average - 10 rounds, 6 iterations, 200000 pairs - 747971

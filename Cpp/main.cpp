@@ -7,6 +7,21 @@
 #include "cereal/archives/binary.hpp"
 #include "cereal/types/memory.hpp"
 #include "cereal/archives/xml.hpp"
+
+#ifdef __linux__
+extern std::string separator = "/";
+  #include <unistd.h>
+  #define GetCurrentDir getcwd
+#elif _WIN32
+extern std::string separator = "\\";
+
+#include <direct.h>
+#include <fstream>
+
+  #define GetCurrentDir _wgetcwd
+#else
+#endif
+
 #include "Tables.h"
 #include "RunningAttackUtil.h"
 
@@ -33,34 +48,17 @@ int main(int argc, char* argv[]){
     std::string file_path;
     // std::string file_path, binary_key;
     extractingParams(argv, &attack_num, &rounds, &plain_cipher_pairs, &iterations, file_path);
-    // extractingParams(argc, argv, &attack_num, &rounds, &plain_cipher_pairs, &iterations,
-    //                  file_path, binary_key);
 
     vvvvd pre_calculated_mat;
     std::ifstream data_source;
-    data_source.open(data_source_prefix + std::to_string(rounds) + data_source_suffix, std::ios::binary);
+    data_source.open(".." + separator + data_source_prefix + std::to_string(rounds) + data_source_suffix, std::ios::binary);
     {
         cereal::BinaryInputArchive iarchive(data_source); // Create an input archive
         iarchive(pre_calculated_mat); // Read the data from the archive
     }
 
     std::fstream output_file;
-    // initializeOpenOutputFile(output_file, attack_num, rounds, plain_cipher_pairs, file_path, binary_key);
     initializeOpenOutputFile(output_file, attack_num, rounds, plain_cipher_pairs, file_path);
-/*    switch (attack_num){
-        case 1:
-            attack1(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
-            break;
-        case 2:
-            attack2(rounds, plain_cipher_pairs, iterations, binary_key, output_file, pre_calculated_mat);
-            break;
-        case 3:
-            attack2FewLevels(rounds, plain_cipher_pairs, iterations, binary_key, output_file,
-                             pre_calculated_mat);
-            break;
-        default:
-            return - 1;
-    }*/
 
     switch (attack_num){
         case 1:

@@ -17,11 +17,11 @@
 using namespace types;
 
 #ifdef __linux__
-std::string separator = "/";
+extern std::string separator;
   #include <unistd.h>
   #define GetCurrentDir getcwd
 #elif _WIN32
-std::string separator = "\\";
+extern std::string separator;
 
 #include <direct.h>
 #include <fstream>
@@ -38,11 +38,6 @@ void extractingParams(char* argv[], int* attack_num, int* rounds, int* plain_cip
     *plain_cipher_pairs = strtol(argv[3], nullptr, 10); // number of plaintexts
     *iterations = strtol(argv[4], nullptr, 10);
     file_path = argv[5];
-
-    // if( argc == 7 )
-    //     binary_key = argv[6];
-    // else
-    //     createBinText(binary_key);
 }
 
 
@@ -82,20 +77,6 @@ void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations
     double location_sum = 0; //using double for later division
     for(int i = 1; i <= iterations; ++ i){
         int location;
-/*        switch (attackNumber){
-            case 1:
-                location = attackAlgorithm1(rounds, plain_cipher_pairs, binary_key, pre_calculated_mat);
-                break;
-            case 2:
-                location = attackAlgorithm2(rounds, plain_cipher_pairs, binary_key, pre_calculated_mat);
-                break;
-            case 3:
-                location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, binary_key,
-                                                     pre_calculated_mat);
-                break;
-            default:
-                return;
-        }*/
         switch (attackNumber){
             case 1:
                 location = attackAlgorithm1(rounds, plain_cipher_pairs, pre_calculated_mat);
@@ -104,7 +85,7 @@ void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations
                 location = attackAlgorithm2(rounds, plain_cipher_pairs, pre_calculated_mat);
                 break;
             case 3:
-                location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, pre_calculated_mat);
+                // location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, pre_calculated_mat);
                 break;
             default:
                 return;

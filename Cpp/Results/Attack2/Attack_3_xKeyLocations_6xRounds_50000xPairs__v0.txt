@@ -1,0 +1,24 @@
+Rounds: 6.
+Attack Algorithm 2 Few Levels
+Iteration number: 1. Location is: 1
+Iteration number: 2. Location is: 1
+Iteration number: 3. Location is: 1
+Iteration number: 4. Location is: 17
+Iteration number: 5. Location is: 2
+Iteration number: 6. Location is: 5
+Iteration number: 7. Location is: 3
+Iteration number: 8. Location is: 187
+Iteration number: 9. Location is: 50
+Iteration number: 10. Location is: 203
+Iteration number: 11. Location is: 72
+Iteration number: 12. Location is: 148
+Iteration number: 13. Location is: 524
+Iteration number: 14. Location is: 5
+Iteration number: 15. Location is: 880
+Iteration number: 16. Location is: 1871
+Iteration number: 17. Location is: 7272
+Iteration number: 18. Location is: 298
+Iteration number: 19. Location is: 9
+Iteration number: 20. Location is: 189
+
+Average - 6 rounds, 20 iterations, 50000 pairs - 586.900000

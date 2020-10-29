@@ -13,8 +13,8 @@ extern std::string separator = "/";
   #include <unistd.h>
   #define GetCurrentDir getcwd
 #elif _WIN32
-extern std::string separator = "\\";
-
+extern std::string separator;
+std::string separator = "\\";
 #include <direct.h>
 #include <fstream>
 
@@ -46,12 +46,12 @@ int main(int argc, char* argv[]){
     srand(time(nullptr));
     int rounds, plain_cipher_pairs, iterations, attack_num;
     std::string file_path;
-    // std::string file_path, binary_key;
     extractingParams(argv, &attack_num, &rounds, &plain_cipher_pairs, &iterations, file_path);
 
     vvvvd pre_calculated_mat;
     std::ifstream data_source;
-    data_source.open(".." + separator + data_source_prefix + std::to_string(rounds) + data_source_suffix, std::ios::binary);
+    data_source.open(".." + separator + data_source_prefix + std::to_string(rounds) + data_source_suffix,
+                     std::ios::binary);
     {
         cereal::BinaryInputArchive iarchive(data_source); // Create an input archive
         iarchive(pre_calculated_mat); // Read the data from the archive

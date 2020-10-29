@@ -1,0 +1,16 @@
+Rounds: 12.
+Attack Algorithm 1
+Iteration number: 1. Location is: 1281
+Iteration number: 2. Location is: 3457
+Iteration number: 3. Location is: 1089
+Iteration number: 4. Location is: 3009
+Iteration number: 5. Location is: 1153
+Iteration number: 6. Location is: 2497
+Iteration number: 7. Location is: 2113
+Iteration number: 8. Location is: 2817
+Iteration number: 9. Location is: 3009
+Iteration number: 10. Location is: 2113
+
+
+Average - 12 rounds, 10 iterations, 8000000 pairs - 2253.8
+

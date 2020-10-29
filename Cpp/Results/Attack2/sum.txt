@@ -1,0 +1,11 @@
+Average - 10 rounds, 6 iterations, 200000 pairs - 747971
+Average - 10 rounds, 11 iterations, 20000 pairs - 486342
+Average - 6 rounds, 12 iterations, 100000 pairs - 17.9
+Average - 6 rounds, 20 iterations, 10000 pairs - 12239.000000
+Average - 6 rounds, 20 iterations, 20000 pairs - 10382.550000
+Average - 6 rounds, 20 iterations, 50000 pairs - 586.900000
+Average - 6 rounds, 20 iterations, 5000 pairs - 13690.750000
+Average - 8 rounds, 3 iterations, 100000 pairs - 10947
+Average - 8 rounds, 20 iterations, 10000 pairs - 120415.100000
+Average - 8 rounds, 20 iterations, 50000 pairs - 75516.800000
+Average - 8 rounds, 20 iterations, 5000 pairs - 109688.050000

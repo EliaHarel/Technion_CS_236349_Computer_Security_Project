@@ -45,7 +45,6 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
        {14, 11, 2,  12, 4,  7,  13, 1,  5,  0,  15, 10, 3,  9, 8,  6},
        {4,  2,  1,  11, 10, 13, 7,  8,  15, 9,  12, 5,  6,  3, 0,  14},
        {11, 8,  12, 7,  1,  14, 2,  13, 6,  15, 0,  9,  10, 4, 5,  3}};
-/*
 
 int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
     std::string binary_used_key;
@@ -119,4 +118,3 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
     }
     return location;
 }
-*/

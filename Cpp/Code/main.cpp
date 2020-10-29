@@ -10,15 +10,16 @@
 
 #ifdef __linux__
 extern std::string separator = "/";
-  #include <unistd.h>
-  #define GetCurrentDir getcwd
+#include <unistd.h>
+#define GetCurrentDir getcwd
 #elif _WIN32
 extern std::string separator;
 std::string separator = "\\";
+
 #include <direct.h>
 #include <fstream>
 
-  #define GetCurrentDir _wgetcwd
+#define GetCurrentDir _wgetcwd
 #else
 #endif
 
@@ -38,7 +39,7 @@ void tableCreation(char* argv[]);
 // For Table Creation - "tables 6" when 6 is the number of wanted rounds rounds
 int main(int argc, char* argv[]){
 
-    if( argc == 3 && (std::string) argv[1] == "tables" ){
+    if(argc == 3 && (std::string) argv[1] == "tables"){
         tableCreation(argv);
         return 0;
     }
@@ -68,14 +69,12 @@ int main(int argc, char* argv[]){
             attack2(rounds, plain_cipher_pairs, iterations, output_file, pre_calculated_mat);
             break;
         case 3:
-            attack2FewLevels(rounds, plain_cipher_pairs, iterations, output_file,
-                             pre_calculated_mat);
+            attack2FewLevels(rounds, plain_cipher_pairs, iterations, output_file, pre_calculated_mat);
             break;
         default:
-            return - 1;
+            return -1;
     }
     std::cout << std::endl;
-
     return 0;
 }
 
@@ -86,7 +85,7 @@ void tableCreation(char* argv[]){
     // checking if the wanted data source already exists
     std::ifstream wanted_data_source(data_source_prefix + std::to_string(rounds) + data_source_suffix,
                                      std::ios::binary);
-    if( wanted_data_source.is_open()){
+    if(wanted_data_source.is_open()){
         return;
     }
 
@@ -94,7 +93,7 @@ void tableCreation(char* argv[]){
     std::ifstream data_source(data_source_prefix + std::to_string(ready_rounds) + data_source_suffix,
                               std::ios::binary);
     vvvvd pre_calculated_mat;
-    if( ! data_source.is_open()){
+    if(!data_source.is_open()){
         ready_rounds = 0;
         pre_calculated_mat.emplace_back(vvvd());
         pre_calculated_mat.emplace_back(vvvd(4, vvd(matrix_size, vd(matrix_size, 0))));

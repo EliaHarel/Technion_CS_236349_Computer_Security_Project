@@ -85,7 +85,7 @@ void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations
                 location = attackAlgorithm2(rounds, plain_cipher_pairs, pre_calculated_mat);
                 break;
             case 3:
-                // location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, pre_calculated_mat);
+                 location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, pre_calculated_mat);
                 break;
             default:
                 return;

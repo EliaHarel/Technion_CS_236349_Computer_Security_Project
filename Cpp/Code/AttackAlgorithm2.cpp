@@ -113,7 +113,7 @@ int calcIndex(int num_of_rounds, std::string binary_used_key){
 
 std::string reverse(std::string str){
     std::string rev_str;
-    for(int i = str.size() - 1; i >= 0; i --){
+    for(int i = str.size() - 1; i >= 0; i--){
         rev_str += str[i];
     }
     return rev_str;
@@ -173,12 +173,12 @@ std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination)
 
 // num_of_rounds is the number of the rounds characteristics
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-                         vvi& input_matrix, vvvvd& pre_calculated_mat){
-                         // int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
+                         int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
+    // int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
     double distance = 0;
     const auto num_of_cells = matrix_size*matrix_size;
-    for(int i = 0; i < matrix_size; i ++){
-        for(int j = 0; j < matrix_size; j ++){
+    for(int i = 0; i < matrix_size; i++){
+        for(int j = 0; j < matrix_size; j++){
             double part_1 = input_matrix[i][j] - ((double) num_of_inputs)/num_of_cells;
             double part_2 = pre_calculated_mat[num_of_rounds][middle_key][i][j] - 1.0/matrix_size;
             distance += part_1*part_2;
@@ -200,9 +200,9 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated
 
     // vi counter(pow(2, 28), 0);
     static int counter[NUM_OF_COMBINATIONS] = {0};
-    for(int i = 0; i < num_of_inputs; i ++){
+    for(int i = 0; i < num_of_inputs; i++){
         int index = calcIndex(num_of_rounds, binary_used_key);
-        counter[index] ++;
+        counter[index]++;
     }
 
 /*
@@ -212,13 +212,13 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated
      * 8 cipher bits = 4 output bits of s1 | 4 output bits of s5
      */
 
-    vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
-    // static int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
+//    vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
+    static int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
 
-    for(int key = 0; key < pow(2, 12); key ++){
-        for(int combination = 0; combination < pow(2, 28); combination ++){
-//TODO:  // for(int key = 0; key < NUM_OF_FIRST_LAST_KEYS; key ++){
-            //     for(int combination = 0; combination < NUM_OF_COMBINATIONS; combination ++){
+//    for(int key = 0; key < pow(2, 12); key ++){
+//        for(int combination = 0; combination < pow(2, 28); combination ++){
+    for(int key = 0; key < NUM_OF_FIRST_LAST_KEYS; key++){
+        for(int combination = 0; combination < NUM_OF_COMBINATIONS; combination++){
             std::pair<int, int> plain_cipher_pair = calculate_P_C_from_key_combination(key, combination);
             // counter[combination] holds the value of the "confirmed values"(C array) for the current combination
             input_matrix[key][plain_cipher_pair.first][plain_cipher_pair.second] += counter[combination];
@@ -240,13 +240,13 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated
                                                  input_matrix[curr_first_last_key], pre_calculated_mat);
 
     // for(int first_last_key = 0; first_last_key < pow(2, 12); first_last_key ++){
-    for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; first_last_key ++){
-        for(int middle_key = 0; middle_key < pow(2, char_rounds); middle_key ++){
-            if( first_last_key == curr_first_last_key && middle_key == curr_middle_key_by_rounds ) continue;
+    for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; first_last_key++){
+        for(int middle_key = 0; middle_key < pow(2, char_rounds); middle_key++){
+            if(first_last_key == curr_first_last_key && middle_key == curr_middle_key_by_rounds) continue;
             double curr_dist = calculateDistance(middle_key, char_rounds, num_of_inputs,
                                                  input_matrix[first_last_key], pre_calculated_mat);
-            if( curr_dist > used_key_distance ){
-                location ++;
+            if(curr_dist > used_key_distance){
+                location++;
             }
         }
     }

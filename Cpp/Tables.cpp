@@ -1,8 +1,8 @@
-
 #include <cmath>
 #include "Tables.h"
 
-
+// technically it is --> Mi[2^i][256][256]
+//      Note: pre_calculated_mat[1][4][matrix_size][matrix_size] === S5-0, S5-1, S1-0, S1-1
 namespace preCalcTables {
     double S1Help[32] = {0.0625, 0.03125, 0.0625, 0.0625, 0.09375, 0.09375, 0.0625, 0, 0, 0.09375, 0.125,
                          0.03125,
@@ -37,13 +37,6 @@ namespace preCalcTables {
 }
 using namespace preCalcTables;
 
-
-// pre_calculated_mat[16][4][matrix_size][matrix_size];
-// technically it is --> Mi[2^i][256][256]
-//      Note: pre_calculated_mat[1][4][matrix_size][matrix_size] === S5-0, S5-1, S1-0, S1-1
-// vvvvd pre_calculated_mat;
-
-//void matrixMul(int r1, int c1, int c2, vvd A[r1][c1], double B[c1][c2], double C[r1][c2]){
 static void matrixMul(vvd& A, vvd& B, vvd& C){
     for(int i = 0; i < A.size(); i ++){
         for(int j = 0; j < B.at(0).size(); j ++){
@@ -53,7 +46,6 @@ static void matrixMul(vvd& A, vvd& B, vvd& C){
         }
     }
 }
-
 
 static void calcTableOneAndTwo(vvvvd& pre_calculated_mat){
     int Pin;

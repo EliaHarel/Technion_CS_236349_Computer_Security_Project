@@ -9,12 +9,9 @@
 
 #define TEXT_LENGTH 64
 
-//Tested
 void createBinText(std::string& text);
 
 std::string decimalToBin(int decimal_num);
-
-void eliaPrintBinaryAsUnsignedChars(std::string A, std::string sep = ",");
 
 std::pair<std::string, std::string> getPlainCipherPair(int rounds, std::string& key);
 

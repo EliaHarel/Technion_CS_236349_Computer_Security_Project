@@ -1,7 +1,9 @@
-**/~Auxiliary/*
-**/~Archive/*
+**/~*/*
+# **/~Archive/*
 **/venv/*
 **/.idea/*
 **/Release/*
 **/cmake-build-debug/*
 **/__pycache__/*
+**/cereal_data_*
+**/8_Round_Expected_Probabilities_Matrix.txt

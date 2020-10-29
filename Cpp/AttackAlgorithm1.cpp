@@ -51,8 +51,6 @@ static std::pair<int, int> createPair(int num_of_rounds, std::string& binary_use
     return {binaryStrToInt(str_sub_plain), binaryStrToInt(str_sub_cipher)};
 }
 
-// int attackAlgorithm1(int num_of_rounds, int num_of_inputs, std::string& binary_used_key,
-//                      vvvvd& pre_calculated_mat){
 int attackAlgorithm1(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
 
     std::string binary_used_key;

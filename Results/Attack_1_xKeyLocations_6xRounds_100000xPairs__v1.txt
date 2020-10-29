@@ -1,0 +1,14 @@
+Rounds: 6.
+Attack Algorithm 1
+Iteration number: 1. Location is: 7
+Iteration number: 2. Location is: 1
+Iteration number: 3. Location is: 52
+Iteration number: 4. Location is: 4
+Iteration number: 5. Location is: 10
+Iteration number: 6. Location is: 6
+Iteration number: 7. Location is: 61
+Iteration number: 8. Location is: 32
+Iteration number: 9. Location is: 34
+Iteration number: 10. Location is: 20
+
+Average - 6 rounds, 10 iterations, 100000 pairs - 22.700000

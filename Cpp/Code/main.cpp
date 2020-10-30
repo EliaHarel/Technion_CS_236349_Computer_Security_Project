@@ -9,7 +9,8 @@
 #include "cereal/archives/xml.hpp"
 
 #ifdef __linux__
-extern std::string separator = "/";
+extern std::string separator;
+std::string separator = "/";
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #elif _WIN32
@@ -38,6 +39,8 @@ void tableCreation(char* argv[]);
 // For Attack - "1 6 100 5  \Technion_CS_236349_Computer_Security_Project\Attack_Algorithm_1\Results"
 // For Table Creation - "tables 6" when 6 is the number of wanted rounds rounds
 int main(int argc, char* argv[]){
+
+
 
     if(argc == 3 && (std::string) argv[1] == "tables"){
         tableCreation(argv);

@@ -173,8 +173,8 @@ std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination)
 
 // num_of_rounds is the number of the rounds characteristics
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-                         int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
-    // int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
+//                         int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
+                         vvi& input_matrix, vvvvd& pre_calculated_mat){
     double distance = 0;
     const auto num_of_cells = matrix_size*matrix_size;
     for(int i = 0; i < matrix_size; i++){
@@ -212,8 +212,8 @@ int attackAlgorithm2(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated
      * 8 cipher bits = 4 output bits of s1 | 4 output bits of s5
      */
 
-//    vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
-    static int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
+    vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
+//    int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
 
 //    for(int key = 0; key < pow(2, 12); key ++){
 //        for(int combination = 0; combination < pow(2, 28); combination ++){

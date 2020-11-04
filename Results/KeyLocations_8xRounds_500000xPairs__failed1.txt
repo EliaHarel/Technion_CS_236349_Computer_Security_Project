@@ -1,0 +1,23 @@
+Rounds: 8. Key: 0110011111000110011010010111001101010001111111110100101011101100
+Iteration number: 0. Location is: 129
+Iteration number: 1. Location is: 33
+Iteration number: 2. Location is: 185
+Iteration number: 3. Location is: 229
+Iteration number: 4. Location is: 241
+Iteration number: 5. Location is: 61
+Iteration number: 6. Location is: 245
+Iteration number: 7. Location is: 37
+Iteration number: 8. Location is: 93
+Iteration number: 9. Location is: 5
+Iteration number: 10. Location is: 25
+Iteration number: 11. Location is: 97
+Iteration number: 12. Location is: 29
+Iteration number: 13. Location is: 25
+Iteration number: 14. Location is: 1
+Iteration number: 15. Location is: 101
+Iteration number: 16. Location is: 109
+Iteration number: 17. Location is: 1
+Iteration number: 18. Location is: 133
+Iteration number: 19. Location is: 129
+Iteration number: 20. Location is: 17
+91.666667

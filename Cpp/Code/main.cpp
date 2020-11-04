@@ -11,7 +11,9 @@
 #ifdef __linux__
 extern std::string separator;
 std::string separator = "/";
+
 #include <unistd.h>
+
 #define GetCurrentDir getcwd
 #elif _WIN32
 extern std::string separator;
@@ -35,13 +37,10 @@ std::string data_source_prefix = "cereal_data_", data_source_suffix = "_rounds.b
 void tableCreation(char* argv[]);
 
 // input: attack number, number of rounds, number of pairs, number of iterations, absolute path to output file directory
-//input examples
+// input examples
 // For Attack - "1 6 100 5  \Technion_CS_236349_Computer_Security_Project\Attack_Algorithm_1\Results"
 // For Table Creation - "tables 6" when 6 is the number of wanted rounds rounds
 int main(int argc, char* argv[]){
-
-
-
     if(argc == 3 && (std::string) argv[1] == "tables"){
         tableCreation(argv);
         return 0;
@@ -52,9 +51,14 @@ int main(int argc, char* argv[]){
     std::string file_path;
     extractingParams(argv, &attack_num, &rounds, &plain_cipher_pairs, &iterations, file_path);
 
+    std::string rounds_from_data(std::to_string(rounds));
+    if(attack_num == 2 || attack_num == 3){
+        rounds_from_data = std::to_string(rounds - 2);
+    }
     vvvvd pre_calculated_mat;
     std::ifstream data_source;
-    data_source.open(".." + separator + data_source_prefix + std::to_string(rounds) + data_source_suffix,
+
+    data_source.open(".." + separator + data_source_prefix + rounds_from_data + data_source_suffix,
                      std::ios::binary);
     {
         cereal::BinaryInputArchive iarchive(data_source); // Create an input archive

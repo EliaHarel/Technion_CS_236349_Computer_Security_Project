@@ -43,8 +43,12 @@ namespace masks {
                      {53, 28, 3,  22, 5,  4}, // 14 rounds
                      {},
                      {29, 4,  46, 61, 44, 11}}; // 16 rounds
-    vi key_mask_14_mid_rounds{51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26,
-                              12}; //starts at 0, repeated keys: 51, 49, 45, 12
+
+    vi key_mask_14_mid_rounds{19, 35, 54, 32, 22, 0, 55, 41, 29, 9, 60, 42, 28,
+                          10}; //starts at 0, repeated keys are: 9.
+                          
+    // vi key_mask_14_mid_rounds{51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26,
+                              // 12}; //starts at 0, repeated keys: 51, 49, 45, 12
 
     vvi s1{{14, 4,  13, 1, 2,  15, 11, 8,  3,  10, 6,  12, 5,  9,  0, 7},
            {0,  15, 7,  4, 14, 2,  13, 1,  10, 6,  12, 11, 9,  5,  3, 8},

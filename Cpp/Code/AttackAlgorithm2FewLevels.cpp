@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include <cmath>
 
 const int s1_out_shift_mask[] = {23, 15, 9, 1}; //{8, 16, 22, 30};
@@ -46,12 +47,65 @@ vvi s5{{2,  12, 4,  1,  7,  10, 11, 6,  8,  5,  3,  15, 13, 0, 14, 9},
        {4,  2,  1,  11, 10, 13, 7,  8,  15, 9,  12, 5,  6,  3, 0,  14},
        {11, 8,  12, 7,  1,  14, 2,  13, 6,  15, 0,  9,  10, 4, 5,  3}};
 
+/*
+Starting the count from 0
+first round mask  - {9, 50, 33, 59, 48, 16};
+last round mask -
+                 {12, 22, 29, 44, 62, 61}, // 6 rounds
+                 {11, 53, 60, 12, 30, 29}, // 8 rounds
+                 {54, 29, 36, 19, 6,  5}, // 10 rounds
+                 {22, 60, 4,  54, 37, 36}, // 12 rounds
+                 {53, 28, 3,  22, 5,  4}, // 14 rounds
+                 {29, 4,  46, 61, 44, 11}}; // 16 rounds
+key_mask_14_mid_rounds-
+{19, 35, 54, 32, 22, 0, 55, 41, 29, 9, 60, 42, 28, 10};
+
+common bits:
+    6_rounds - none
+    8_rounds - none
+    10_rounds - 19, 54
+    12_rounds - 9, 22, 54
+    14_rounds - 9, 22
+    16_rounds - 9, 29
+*/
+
+
+std::map<int, std::pair<vi, vi>> common_bits = {
+        //for each bit, the numbers represent thr number of bit to it's right
+        // in each mask - last key, middle key
+        //common bits of first key mask are treated differently
+        {10, std::pair<vi, vi>{vi{2, 5}, vi{7, 5}}},
+        {12, std::pair<vi, vi>{vi{5, 2}, vi{5, 7}}},
+        {14, std::pair<vi, vi>{vi{2}, vi{7}}},
+        {16, std::pair<vi, vi>{vi{5}, vi{5}}},
+};
+
+bool sameBits(int first_last_key, int middle_key, int num_of_rounds){
+    // Assumption - num_of_rounds in {6,8,10,12,14,16}
+    if(num_of_rounds == 6 || num_of_rounds == 8) return true; // different key's bits
+    if(num_of_rounds >= 12){
+        int first_key_bit = first_last_key >> 11;
+        int middle_bit = (middle_key >> (num_of_rounds - 12))&1; //the key for round number 11
+        if(first_key_bit != middle_bit) return false;
+    }
+
+    int last_key = first_last_key&63;
+    int num_of_bits = common_bits[num_of_rounds].first.size();
+    for(int i = 0; i < num_of_bits; i++){
+        int last_bit = (last_key >> common_bits[num_of_rounds].first[i])&1;
+        int middle_bit = (middle_key >> common_bits[num_of_rounds].second[i])&1;
+        if(last_bit != middle_bit) return false;
+    }
+
+    return true;
+}
+
 int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_calculated_mat){
     std::string binary_used_key;
     createBinText(binary_used_key);
     vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
 //    int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
-    for(int i = 0; i < num_of_inputs; i ++){
+    for(int i = 0; i < num_of_inputs; i++){
         std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds,
                                                                                    binary_used_key);
         std::string plain_left = plain_cipher_pair.first.substr(0, 32);
@@ -72,7 +126,7 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
         int s1_out_last = calcOutSbox(c_right, s1_out_shift_mask); // char_cipher_right (swap!!!)
         int s5_out_last = calcOutSbox(c_left, s5_out_shift_mask);
 
-        for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; ++ first_last_key){
+        for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; ++first_last_key){
             //std::pair<int, int> char_plain_cipher_pair = calcCharPlainCipher(first_round, last_round, first_last_key);
 
             int first_key = (first_last_key&4032) >> 6; // Bin - 111111000000
@@ -87,7 +141,7 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
             int char_plain = (s5_out_first << 4) + char_plain_right;
             int char_cipher = (char_cipher_left << 4) + s1_out_last;
 
-            input_matrix[first_last_key][char_plain][char_cipher] ++;
+            input_matrix[first_last_key][char_plain][char_cipher]++;
         }
     }
 
@@ -107,13 +161,14 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
                                                  num_of_inputs, input_matrix[curr_first_last_key],
                                                  pre_calculated_mat);
 
-    for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; first_last_key ++){
-        for(int middle_key = 0; middle_key < pow(2, char_rounds); middle_key ++){
-            if( first_last_key == curr_first_last_key && middle_key == curr_middle_key_by_rounds ) continue;
+    for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; first_last_key++){
+        for(int middle_key = 0; middle_key < pow(2, char_rounds); middle_key++){
+            if(first_last_key == curr_first_last_key && middle_key == curr_middle_key_by_rounds) continue;
+            if(!sameBits(first_last_key, middle_key, num_of_rounds)) continue;
             double curr_dist = calculateDistance(middle_key, char_rounds, num_of_inputs,
                                                  input_matrix[first_last_key], pre_calculated_mat);
-            if( curr_dist > used_key_distance ){
-                location ++;
+            if(curr_dist > used_key_distance){
+                location++;
             }
         }
     }

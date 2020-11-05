@@ -15,18 +15,17 @@
 #include "AttackAlgorithm2FewLevels.h"
 
 using namespace types;
+extern std::string separator;
 
 #ifdef __linux__
-extern std::string separator;
-  #include <unistd.h>
-  #define GetCurrentDir getcwd
+#include <unistd.h>
+#define GetCurrentDir getcwd
 #elif _WIN32
-extern std::string separator;
 
 #include <direct.h>
 #include <fstream>
 
-  #define GetCurrentDir _wgetcwd
+#define GetCurrentDir _wgetcwd
 #else
 #endif
 
@@ -53,9 +52,9 @@ static std::string findOpenResultPath(int attack_num, int rounds, int plain_ciph
             "xPairs__v";
 
     int counter = 0;
-    std::string temp_path = path + std::to_string(counter ++) + ".txt";
+    std::string temp_path = path + std::to_string(counter++) + ".txt";
     while(fileExists(temp_path)){
-        temp_path = path + std::to_string(counter ++) + ".txt";
+        temp_path = path + std::to_string(counter++) + ".txt";
     }
     return temp_path;
 }
@@ -68,14 +67,13 @@ void initializeOpenOutputFile(std::fstream& output_file, int attack_num, int rou
     //creates a file if does not exist
     output_file.open(output_file_path.c_str(), std::fstream::in|std::fstream::out|std::fstream::app);
 
-    // output_file << "Rounds: " << std::to_string(rounds) << ". Key: " << binary_key << std::endl;
     output_file << "Rounds: " << std::to_string(rounds) << "." << std::endl;
 }
 
 void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations,
             std::fstream& output_file, vvvvd& pre_calculated_mat){
     double location_sum = 0; //using double for later division
-    for(int i = 1; i <= iterations; ++ i){
+    for(int i = 1; i <= iterations; ++i){
         int location;
         switch (attackNumber){
             case 1:
@@ -85,7 +83,7 @@ void attack(int attackNumber, int rounds, int plain_cipher_pairs, int iterations
                 location = attackAlgorithm2(rounds, plain_cipher_pairs, pre_calculated_mat);
                 break;
             case 3:
-                 location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, pre_calculated_mat);
+                location = attackAlgorithm2FewLevels(rounds, plain_cipher_pairs, pre_calculated_mat);
                 break;
             default:
                 return;

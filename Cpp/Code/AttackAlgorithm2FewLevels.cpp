@@ -104,7 +104,6 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
     std::string binary_used_key;
     createBinText(binary_used_key);
     vvvi input_matrix{static_cast<size_t>(pow(2, 12)), vvi{matrix_size, vi(matrix_size, 0)}};
-//    int input_matrix[NUM_OF_FIRST_LAST_KEYS][matrix_size][matrix_size] = {0};
     for(int i = 0; i < num_of_inputs; i++){
         std::pair<std::string, std::string> plain_cipher_pair = getPlainCipherPair(num_of_rounds,
                                                                                    binary_used_key);
@@ -127,7 +126,6 @@ int attackAlgorithm2FewLevels(int num_of_rounds, int num_of_inputs, vvvvd& pre_c
         int s5_out_last = calcOutSbox(c_left, s5_out_shift_mask);
 
         for(int first_last_key = 0; first_last_key < NUM_OF_FIRST_LAST_KEYS; ++first_last_key){
-            //std::pair<int, int> char_plain_cipher_pair = calcCharPlainCipher(first_round, last_round, first_last_key);
 
             int first_key = (first_last_key&4032) >> 6; // Bin - 111111000000
             int last_key = first_last_key&63; // Bin- 000000111111

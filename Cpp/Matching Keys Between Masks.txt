@@ -1,0 +1,28 @@
+
+
+First Mask 	= 9, 50, 33, 59, 48, 16
+
+Middle Mask = 19, 35, 54, 32, 22, 0, 55, 41, 29, 9, 60, 42, 28, 10
+
+Last Masks
+		Round 6 : 	12, 22,	29,	44, 62,	61
+    	Round 8 :   11, 53,	60,	12, 30,	29
+        Round 10 :  54, 29,	36,	19, 6,	5
+        Round 12 :  22, 60,	4,	54, 37,	36
+        Round 14 :  53, 28,	3,	22, 5,	4
+        Round 16 :  29, 4,	46,	61, 44,	11
+
+
+
+
+Common Bits:
+    Round 6 :	 none
+    Round 8 :	 none
+    Round 10 :	 19, 54
+    Round 12 :	 9, 22, 54
+    Round 14 :	 9, 22
+    Round 16 :	 9, 29
+
+
+
+

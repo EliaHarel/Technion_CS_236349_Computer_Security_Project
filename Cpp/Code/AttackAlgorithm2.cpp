@@ -15,17 +15,17 @@ namespace masks {
 
     const int s1_out_shift_mask[] = {23, 15, 9, 1}; //{8, 16, 22, 30};
     const int s5_out_shift_mask[] = {24, 18, 7, 29}; //{7, 13, 24, 2};
-    vi plain_L_mask{8, 16, 22, 30};
-    vi plain_R_mask{7, 13, 24, 2, 31, 0, 1, 2, 3, 4};
-    vi cipher_L_mask{7, 13, 24, 2};
-    vi cipher_R_mask{8, 16, 22, 30, 15, 16, 17, 18, 19, 20};
+    // plain_L_mask{8, 16, 22, 30};
+    // plain_R_mask{7, 13, 24, 2, 31, 0, 1, 2, 3, 4};
+    // cipher_L_mask{7, 13, 24, 2};
+    // cipher_R_mask{8, 16, 22, 30, 15, 16, 17, 18, 19, 20};
 
-// key_mask[i] - the key bit we use in level i+1
+    // key_mask[i] - the key bit we use in level i+1
     vi key_mask{27, 51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26, 12, 2};  // starts at 0
 
-    // vi k1_s1_mask{10, 51, 34, 60, 49, 17};
-    // vi k16_s5_mask{30, 5, 47, 62, 45, 12};
-    // vi first_last_mask = {10, 51, 34, 60, 49, 17, 30, 5, 47, 62, 45, 12};
+    // k1_s1_mask{10, 51, 34, 60, 49, 17};
+    // k16_s5_mask{30, 5, 47, 62, 45, 12};
+    // first_last_mask = {10, 51, 34, 60, 49, 17, 30, 5, 47, 62, 45, 12};
     vi first_mask = {9, 50, 33, 59, 48, 16}; //starts at 0
     vvi last_mask = {{},
                      {},
@@ -45,10 +45,7 @@ namespace masks {
                      {29, 4,  46, 61, 44, 11}}; // 16 rounds
 
     vi key_mask_14_mid_rounds{19, 35, 54, 32, 22, 0, 55, 41, 29, 9, 60, 42, 28,
-                          10}; //starts at 0, repeated keys are: 9.
-                          
-    // vi key_mask_14_mid_rounds{51, 3, 48, 38, 16, 6, 49, 45, 25, 13, 58, 44, 26,
-                              // 12}; //starts at 0, repeated keys: 51, 49, 45, 12
+                              10}; //starts at 0, repeated keys are: 9.
 
     vvi s1{{14, 4,  13, 1, 2,  15, 11, 8,  3,  10, 6,  12, 5,  9,  0, 7},
            {0,  15, 7,  4, 14, 2,  13, 1,  10, 6,  12, 11, 9,  5,  3, 8},
@@ -177,7 +174,6 @@ std::pair<int, int> calculate_P_C_from_key_combination(int key, int combination)
 
 // num_of_rounds is the number of the rounds characteristics
 double calculateDistance(int middle_key, int num_of_rounds, int num_of_inputs,
-//                         int input_matrix[matrix_size][matrix_size], vvvvd& pre_calculated_mat){
                          vvi& input_matrix, vvvvd& pre_calculated_mat){
     double distance = 0;
     const auto num_of_cells = matrix_size*matrix_size;
